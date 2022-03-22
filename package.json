@@ -4,7 +4,7 @@
     "nodemon": "^2.0.15"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "npx nodemon server.js"
   },
   "name": "jack-whatley-alevel-project",
   "version": "1.0.0",
