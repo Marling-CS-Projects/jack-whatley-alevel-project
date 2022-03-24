@@ -1,6 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+
 body {
 
     margin: 0px;
     padding: 0px;
+
+}
+
+.container {
+
+    width: 100vw;
+    height: 100vh;
+
+    background: #14213d;
+    font-family: 'Roboto Condensed', sans-serif;
+
+}
+
+.game-title {
+
+    margin: 0px;
+
+    width: max-content;
+    height: min-content;
+
+    position: relative;
+    top: 20%;
+    left: 20%;
+
+    color: white;
+    font-size: 5em;
+
+}
+
+.button-container {
+
+    margin: 0px;
+
+    width: max-content;
+    height: max-content;
+
+    position: relative;
+    top: 40%;
+    left: 20%;
+
+}
+
+.menu-button {
+
+    width: 8em;
+    height: 4em;
+
+    margin-right: 1em;
 
 }
