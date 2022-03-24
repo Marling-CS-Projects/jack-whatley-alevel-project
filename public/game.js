@@ -1,6 +1,7 @@
-kaboom();
+kaboom({
 
-add([
-    text("hello"),
-    pos(120, 80),
-]);
+    width: 640,
+    height: 480,
+    background: [0,0,225],
+
+})
