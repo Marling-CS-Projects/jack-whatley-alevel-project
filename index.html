@@ -28,6 +28,34 @@
 
         </div>
 
+        <div class="options-menu hidden" id="option-menu">
+
+            <h1 id="close-options">╳</h1>
+
+            <h1 class="game-title">Options Menu</h1>
+
+        </div>
+
+        <script type="text/javascript">
+
+            const oButton = document.getElementById("options-button");
+            const oMenu = document.getElementById("option-menu");
+            const oClose = document.getElementById("close-options");
+
+            oButton.addEventListener("click", () => {
+
+                oMenu.classList.remove("hidden");
+
+            });
+
+            oClose.addEventListener("click", () => {
+
+                oMenu.classList.add("hidden");
+
+            });
+
+        </script>
+
     </body>
 
 </html>

@@ -12,6 +12,11 @@ body {
     width: 100vw;
     height: 100vh;
 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
     background: #14213d;
     font-family: 'Roboto Condensed', sans-serif;
 
@@ -52,5 +57,46 @@ body {
     height: 4em;
 
     margin-right: 1em;
+
+}
+
+.options-menu {
+
+    width: 100vw;
+    height: 100vh;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    background: #14213d;
+    color: white;
+    z-index: 1000;
+
+    font-family: 'Roboto Condensed', sans-serif;
+
+}
+
+.hidden {
+
+    display: none;
+
+}
+
+#close-options {
+
+    position: absolute;
+    top: 1.5%;
+    left: 95%;
+
+    width: max-content;
+    height: max-content;
+
+}
+
+#close-options:hover {
+
+    cursor: default;
 
 }
