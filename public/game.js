@@ -1,8 +1,7 @@
 kaboom({
 
-    width: 1280,
-    height: 720,
-    background: [0,0,225],
+    scale: 1,
+    background: [0,0,0],
 
 });
 
@@ -12,9 +11,8 @@ const LEVELS = [
 
     [
 
-        "====================",
-        "====================",
-        "===================="
+        "",
+        "================================================================================================="
 
     ]
 
@@ -30,16 +28,33 @@ const levelConf = {
 
         sprite("floor"),
         area(),
-        solid(),
-        origin("bot")
+        solid()
 
     ]
 
 }
 
-scene("game", (levelNumber = 0) => {
+scene("game", () => {
 
-    const level = addLevel(LEVELS[levelNumber], levelConf);
+    //const level = addLevel(LEVELS[levelNumber], levelConf);
+    
+    add([
+        pos(width() * 0.5, height() * 0.5),
+        rect(700, 700),
+        origin("center"),
+        outline(5, (255, 0, 0)),
+    
+    ])
+
+    add([
+
+        text("Systems:", {
+            size: 20,
+
+        }),
+        pos(width() * 0.01, height() * 0.08),
+
+    ])
 
 });
 
