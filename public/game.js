@@ -1,7 +1,7 @@
 kaboom({
 
     scale: 1,
-    background: [0,0,0],
+    background: [108, 117, 125],
 
 });
 
@@ -42,17 +42,41 @@ scene("game", () => {
         pos(width() * 0.5, height() * 0.5),
         rect(700, 700),
         origin("center"),
-        outline(5, (255, 0, 0)),
+        outline(3),
+        color(2, 62, 125)
     
     ])
 
-    add([
+    const mapButton = add([
 
-        text("Systems:", {
+        text("Map", {
             size: 20,
 
         }),
-        pos(width() * 0.01, height() * 0.08),
+        pos(width() * 0.30, height() * 0.1),
+        origin("center")
+
+    ])
+    
+    const sysButton = add([
+
+        text("Systems", {
+            size: 20,
+
+        }),
+        pos(width() * 0.35, height() * 0.1),
+        origin("center")
+
+    ])
+
+    const crewButton = add([
+
+        text("Crew", {
+            size: 20,
+
+        }),
+        pos(width() * 0.40, height() * 0.1),
+        origin("center")
 
     ])
 
