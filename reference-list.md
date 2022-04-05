@@ -9,3 +9,10 @@ Epstein, A. (2020). _The pandemic has turned everyone into gamers_. \[online] Qu
 Clement, J. (2021). _U.S. average age of video gamers 2019_. \[online] Statista. Available at: [https://www.statista.com/statistics/189582/age-of-us-video-game-players/](https://www.statista.com/statistics/189582/age-of-us-video-game-players/) \[Accessed 17 Mar. 2022].
 
 Entertainment Software Association (2021). _2021 Essential Facts About the Video Game Industry_. \[online] Entertainment Software Association. Available at: [https://www.theesa.com/resource/2021-essential-facts-about-the-video-game-industry/](https://www.theesa.com/resource/2021-essential-facts-about-the-video-game-industry/) \[Accessed 17 Mar. 2022].
+
+### [1.2 Stakeholders](1-analysis/1.2-stakeholders.md)
+
+VSC Rating Board (n.d.). All About: PEGI Age Ratings. \[online] www.askaboutgames.com. Available at: https://www.askaboutgames.com/pegi-age-ratings#:\~:text=Essentially%2C%20the%20PEGI%20rating%20on%20a%20game%20confirms \[Accessed 5 Apr. 2022].
+
+PEGI (2017). _What do the labels mean? | Pegi Public Site_. \[online] Pegi.info. Available at: https://pegi.info/what-do-the-labels-mean \[Accessed 5 Apr. 2022].
+
