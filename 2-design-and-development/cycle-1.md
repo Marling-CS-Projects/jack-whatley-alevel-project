@@ -4,38 +4,186 @@
 
 ### Objectives
 
-[describe the cycle]
+In Cycle 1 I wanted to make sure that the game was able to be run from my own computer which involved setting up a server with Express.js and also a HTML file for the Kaboom.js canvas.
 
-* [x] Do a thing
-* [x] Do another thing
+* [x] Setup an Express.js server
+* [x] Post a HTML file with Express
+* [x] Setup a basic menu structure
+* [x] Created a basic Kaboom Canvas to work with
 
 ### Usability Features
 
-
 ### Key Variables
 
-| Variable Name            | Use                                                                                                          |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------ |
-| foo                       | does something useful |
-
+| Variable Name | Use                                                                                 |
+| ------------- | ----------------------------------------------------------------------------------- |
+| app           | Holds the functionality of the express library and is how I can create a server.    |
+| path          | Allows me to work with directories for express to send a HTML file from the server. |
 
 ### Pseudocode
 
 ```
-procedure do_something
-    
-end procedure
-
+// Some code
 ```
 
 ## Development
 
 ### Outcome
 
+In the server.js file I have created a server that allows me to send my HTML file (containing the game canvas) to the user. I setup a basic menu structure as the first page the user comes to which at the moment when new game is pressed it takes them to the game, I can also go directly to the canvas whilst developing by going to localhost:5000/game.html. I have also created the kaboom canvas with a basic colour so that I can see it is working.
+
+```
+File Structure:
+|- 📁 Node Modules
+|- 📁 Public
+    |- favicon.ico
+    |- game.html
+    |- game.js
+    |- style.css
+|- index.html
+|- package.json
+|- readme.md
+|- server.js
+```
+
+{% tabs %}
+{% tab title="server.js" %}
+```javascript
+const express = require("express");
+const app = express();
+const path = require("path");
+
+app.use(express.static("public"));
+// ^ this sends everything in the public folder to the user on connection
+
+app.get("/", function(req, res) {
+
+    res.sendFile(path.join(__dirname, "/index.html"));
+
+});
+
+app.listen(5000);
+```
+{% endtab %}
+
+{% tab title="index.html" %}
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Kaboom Game</title>
+
+        <link rel="stylesheet" href="./style.css">
+
+    </head>
+
+    <body>
+
+        <div class="container">
+
+            <h1 class="game-title">Untitled Game</h1>
+
+            <div class="button-container">
+
+                <button class="menu-button" id="new-button" onclick="window.location.href='./game.html'">New Game</button>
+                <button class="menu-button" id="load-button">Load Game</button>
+                <button class="menu-button" id="options-button">Options</button>
+
+            </div>
+
+        </div>
+
+        <div class="options-menu hidden" id="option-menu">
+
+            <h1 id="close-options">╳</h1>
+
+            <h1 class="game-title">Options Menu</h1>
+
+        </div>
+
+        <script type="text/javascript">
+
+            const oButton = document.getElementById("options-button");
+            const oMenu = document.getElementById("option-menu");
+            const oClose = document.getElementById("close-options");
+
+            oButton.addEventListener("click", () => {
+
+                oMenu.classList.remove("hidden");
+
+            });
+
+            oClose.addEventListener("click", () => {
+
+                oMenu.classList.add("hidden");
+
+            });
+
+        </script>
+
+    </body>
+
+</html>
+```
+{% endtab %}
+
+{% tab title="game.html" %}
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Kaboom Game</title>
+
+        <link rel="stylesheet" href="./style.css">
+
+    </head>
+
+    <body>
+
+        <script src="https://unpkg.com/kaboom/dist/kaboom.js"></script>
+        <script src="./game.js"></script>
+
+    </body>
+
+</html>
+```
+{% endtab %}
+
+{% tab title="game.js" %}
+```javascript
+kaboom({ // kaboom is already imported in the html file
+
+    // a basic kaboom canvas for testing
+    width: 640,
+    height: 480,
+    background: [0,0,225],
+
+})
+```
+{% endtab %}
+{% endtabs %}
+
+I have also used the npm package nodemon, this updates the server every time it detects a change in a javascript file. I have also setup the commands `npm install` to install all dependencies and `npm start` to make the command `npx nodemon server.js` much simpler.
 
 ### Challenges
 
-Description of challenges
+When I was programming this project I had a number of errors, first of all was trying to use the kaboom.js CDN to load it, rather than trying to install it as an npm module. However it was struggling to get it to work as I kept seeing the error below, however it was because of the school internet blocking the kaboom CDN. So I discovered I have to use my mobile hotspot for development.
+
+![The School WIFI did not authorise my connection to the Kaboom CDN.](<../.gitbook/assets/image (1).png>)
+
+Another error I had was when I tried to link to another file, but I was met with a 404 error (as seen below), this was because the server was not sending the other files to the user on connection. This was fixed by adding the `app.use(express.static("public"));` this means that everything in the public folder is sent to the user and that I can now link to it.
+
+![I was getting a 404 error every time before I knew about sending static files.](../.gitbook/assets/image.png)
 
 ## Testing
 
@@ -43,10 +191,9 @@ Evidence for testing
 
 ### Tests
 
-| Test | Instructions                         | What I expect                                      | What actually happens | Pass/Fail |
-| ---- | ------------------------------------ | -------------------------------------------------- | --------------------- | --------- |
-| 1    | Run code                             | Thing happens        | As expected           | Pass      |
+| Test | Instructions  | What I expect     | What actually happens | Pass/Fail |
+| ---- | ------------- | ----------------- | --------------------- | --------- |
+| 1    | Run code      | Thing happens     | As expected           | Pass      |
 | 2    | Press buttons | Something happens | As expected           | Pass      |
 
 ### Evidence
-
