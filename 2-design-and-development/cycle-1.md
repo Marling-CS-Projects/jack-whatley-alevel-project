@@ -179,7 +179,7 @@ I have also used the npm package nodemon, this updates the server every time it 
 
 When I was programming this project I had a number of errors, first of all was trying to use the kaboom.js CDN to load it, rather than trying to install it as an npm module. However it was struggling to get it to work as I kept seeing the error below, however it was because of the school internet blocking the kaboom CDN. So I discovered I have to use my mobile hotspot for development.
 
-![The School WIFI did not authorise my connection to the Kaboom CDN.](<../.gitbook/assets/image (1).png>)
+![The School WIFI did not authorise my connection to the Kaboom CDN.](<../.gitbook/assets/image (1) (1).png>)
 
 Another error I had was when I tried to link to another file, but I was met with a 404 error (as seen below), this was because the server was not sending the other files to the user on connection. This was fixed by adding the `app.use(express.static("public"));` this means that everything in the public folder is sent to the user and that I can now link to it.
 
@@ -187,13 +187,16 @@ Another error I had was when I tried to link to another file, but I was met with
 
 ## Testing
 
-Evidence for testing
+For Cycle 1 the elements I needed to test were: is the server working, can I make a connection; is the menu functioning, can I browse it without errors; is the canvas displaying, is the kaboom code working.
 
 ### Tests
 
-| Test | Instructions  | What I expect     | What actually happens | Pass/Fail |
-| ---- | ------------- | ----------------- | --------------------- | --------- |
-| 1    | Run code      | Thing happens     | As expected           | Pass      |
-| 2    | Press buttons | Something happens | As expected           | Pass      |
+| Test | Instructions           | What I expect                                                                                   | What actually happens                                                                                 | Pass/Fail |
+| ---- | ---------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | --------- |
+| 1    | Run the server.        | The server should start without error and I should be able to connect                           | The server started without error and connecting to localhost works.                                   | Pass      |
+| 2    | Browse the menus.      | The menu buttons should work without error and the new game button should take me to the canvas | The menu is browsable but the load game button doesn't work as it hasn't been implemented yet         | Pass      |
+| 3    | View the Kaboom Canvas | I should be able to press the new game button and it will redirect me to the kaboom page.       | It redirects me to the kaboom page and I can view the kaboom canvas with the colour I have set for it | Pass      |
 
 ### Evidence
+
+![](<../.gitbook/assets/image (1).png>)
