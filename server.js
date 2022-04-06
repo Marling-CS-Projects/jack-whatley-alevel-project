@@ -10,4 +10,10 @@ app.get("/", function(req, res) {
 
 });
 
+app.get("/game", function(req, res) {
+
+    res.sendFile(path.join(__dirname + "/public/game.html"));
+
+});
+
 app.listen(5000);
