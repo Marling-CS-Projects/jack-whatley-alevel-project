@@ -34,9 +34,9 @@ const levelConf = {
 
 }
 
-scene("game", () => {
+scene("map-menu", () => {
 
-    //const level = addLevel(LEVELS[levelNumber], levelConf);
+    // const level = addLevel(LEVELS[levelNumber], levelConf);
     
     add([
         pos(width() * 0.5, height() * 0.5),
@@ -48,7 +48,6 @@ scene("game", () => {
     ])
 
     const mapButton = add([
-
         text("Map", {
             size: 20,
 
@@ -59,7 +58,6 @@ scene("game", () => {
     ])
     
     const sysButton = add([
-
         text("Systems", {
             size: 20,
 
@@ -70,7 +68,6 @@ scene("game", () => {
     ])
 
     const crewButton = add([
-
         text("Crew", {
             size: 20,
 
@@ -80,6 +77,27 @@ scene("game", () => {
 
     ])
 
+    const entranceButton = add([
+
+
+
+    ])
+
 });
 
-go("game");
+scene("sys-menu", () => {
+    add([
+        pos(width() * 0.5, height() * 0.5),
+        rect(700, 700),
+        origin("center"),
+        outline(3),
+        color(2, 62, 125)
+    
+    ])
+
+});
+
+const sysButton = get("sysButton");
+onClick("sysButton", () => {go("sys-menu")})
+
+go("map-menu");
