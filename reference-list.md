@@ -12,7 +12,8 @@ Entertainment Software Association (2021). _2021 Essential Facts About the Video
 
 ### [1.2 Stakeholders](1-analysis/1.2-stakeholders.md)
 
-VSC Rating Board (n.d.). All About: PEGI Age Ratings. \[online] www.askaboutgames.com. Available at: https://www.askaboutgames.com/pegi-age-ratings#:\~:text=Essentially%2C%20the%20PEGI%20rating%20on%20a%20game%20confirms \[Accessed 5 Apr. 2022].
+VSC Rating Board (n.d.). All About: PEGI Age Ratings. \[online] www.askaboutgames.com. Available at: [https://www.askaboutgames.com/pegi-age-ratings#:\~:text=Essentially%2C%20the%20PEGI%20rating%20on%20a%20game%20confirms ](https://www.askaboutgames.com/pegi-age-ratings#:\~:text=Essentially%2C%20the%20PEGI%20rating%20on%20a%20game%20confirms)\[Accessed 5 Apr. 2022].
 
-PEGI (2017). _What do the labels mean? | Pegi Public Site_. \[online] Pegi.info. Available at: https://pegi.info/what-do-the-labels-mean \[Accessed 5 Apr. 2022].
+PEGI (2017). _What do the labels mean? | Pegi Public Site_. \[online] Pegi.info. Available at: [https://pegi.info/what-do-the-labels-mean](https://pegi.info/what-do-the-labels-mean) \[Accessed 5 Apr. 2022].
 
+Penney, A. (2020). _In-Game Cosmetics Are Starting To Feel Cheap_. \[online] TheGamer. Available at: [https://www.thegamer.com/in-game-cosmetics-feel-cheap/](https://www.thegamer.com/in-game-cosmetics-feel-cheap/) \[Accessed 12 May 2022].
