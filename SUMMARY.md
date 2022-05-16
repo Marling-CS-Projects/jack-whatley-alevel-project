@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Jack Whatley - A Level Project](README.md)
+* [Untitled Horror Game](README.md)
 * [Reference List](reference-list.md)
 
 ## Analysis
