@@ -179,11 +179,11 @@ I have also used the npm package nodemon, this updates the server every time it 
 
 When I was programming this project I had a number of errors, first of all was trying to use the kaboom.js CDN to load it, rather than trying to install it as an npm module. However it was struggling to get it to work as I kept seeing the error below, however it was because of the school internet blocking the kaboom CDN. So I discovered I have to use my mobile hotspot for development.
 
-![The School WIFI did not authorise my connection to the Kaboom CDN.](<../.gitbook/assets/image (1) (1) (1).png>)
+![The School WIFI did not authorise my connection to the Kaboom CDN.](<../.gitbook/assets/image (1) (1) (1) (1).png>)
 
 Another error I had was when I tried to link to another file, but I was met with a 404 error (as seen below), this was because the server was not sending the other files to the user on connection. This was fixed by adding the `app.use(express.static("public"));` this means that everything in the public folder is sent to the user and that I can now link to it.
 
-![I was getting a 404 error every time before I knew about sending static files.](../.gitbook/assets/image.png)
+![I was getting a 404 error every time before I knew about sending static files.](<../.gitbook/assets/image (1).png>)
 
 ## Testing
 
@@ -199,4 +199,4 @@ For Cycle 1 the elements I needed to test were: is the server working, can I mak
 
 ### Evidence
 
-![](<../.gitbook/assets/image (1) (1).png>)
+![](<../.gitbook/assets/image (1) (1) (1).png>)
