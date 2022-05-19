@@ -18,6 +18,6 @@ PEGI (2017). _What do the labels mean? | Pegi Public Site_. \[online] Pegi.info.
 
 Penney, A. (2020). _In-Game Cosmetics Are Starting To Feel Cheap_. \[online] TheGamer. Available at: [https://www.thegamer.com/in-game-cosmetics-feel-cheap/](https://www.thegamer.com/in-game-cosmetics-feel-cheap/) \[Accessed 12 May 2022].
 
-### [1.4a Features of Proposed Solution](1-analysis/1.4a-features-of-the-proposed-solution.md)
+### [1.4 Features of Proposed Solution](1-analysis/1.4a-features-of-the-proposed-solution.md)
 
 Thompson, T. (2017). _The Perfect Organism_. \[online] Medium. Available at: [https://becominghuman.ai/the-perfect-organism-d350c05d8960](https://becominghuman.ai/the-perfect-organism-d350c05d8960) \[Accessed 19 May 2022].
