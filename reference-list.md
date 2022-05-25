@@ -23,3 +23,6 @@ Penney, A. (2020). _In-Game Cosmetics Are Starting To Feel Cheap_. \[online] The
 Thompson, T. (2017). _The Perfect Organism_. \[online] Medium. Available at: [https://becominghuman.ai/the-perfect-organism-d350c05d8960](https://becominghuman.ai/the-perfect-organism-d350c05d8960) \[Accessed 19 May 2022].
 
 BBC (2019). _Introduction to computational thinking - Revision 1 - KS3 Computer Science - BBC Bitesize_. \[online] BBC Bitesize. Available at: [https://www.bbc.co.uk/bitesize/guides/zp92mp3/revision/1](https://www.bbc.co.uk/bitesize/guides/zp92mp3/revision/1) \[Accessed 20 May 2022].
+
+### [1.6 Hardware and Software Requirements](1-analysis/1.6-hardware-and-software-requirements.md)
+
