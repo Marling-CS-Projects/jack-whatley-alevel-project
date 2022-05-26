@@ -33,3 +33,7 @@ Mozilla. (2022). _Firefox 100.0.2 System Requirements_. \[online] Available at: 
 Opera. (2019). _Opera system requirements | Opera_. \[online] Available at: [https://www.opera.com/download/requirements](https://www.opera.com/download/requirements) \[Accessed 26 May 2022].
 
 Edge. (2021). _Microsoft Edge Supported Operating Systems_. \[online] Available at: [https://docs.microsoft.com/en-us/deployedge/microsoft-edge-supported-operating-systems](https://docs.microsoft.com/en-us/deployedge/microsoft-edge-supported-operating-systems) \[Accessed 26 May 2022].
+
+Cloud66. (2021). _Recommended minimum server sizes • Node_. \[online] Available at: [https://help.cloud66.com/node/references/non-recommended-server-sizes.html](https://help.cloud66.com/node/references/non-recommended-server-sizes.html) \[Accessed 26 May 2022].
+
+Visual Studio Code. (2022). _Requirements for Visual Studio Code_. \[online] Available at: [https://code.visualstudio.com/docs/supporting/requirements](https://code.visualstudio.com/docs/supporting/requirements) \[Accessed 26 May 2022].
