@@ -26,3 +26,10 @@ BBC (2019). _Introduction to computational thinking - Revision 1 - KS3 Computer 
 
 ### [1.6 Hardware and Software Requirements](1-analysis/1.6-hardware-and-software-requirements.md)
 
+Google. (2022). _Chrome Browser system requirements - Google Chrome Enterprise Help_. \[online] Available at: [https://support.google.com/chrome/a/answer/7100626?hl=en](https://support.google.com/chrome/a/answer/7100626?hl=en) \[Accessed 26 May 2022].
+
+Mozilla. (2022). _Firefox 100.0.2 System Requirements_. \[online] Available at: [https://www.mozilla.org/en-US/firefox/100.0.2/system-requirements/](https://www.mozilla.org/en-US/firefox/100.0.2/system-requirements/) \[Accessed 26 May 2022].
+
+Opera. (2019). _Opera system requirements | Opera_. \[online] Available at: [https://www.opera.com/download/requirements](https://www.opera.com/download/requirements) \[Accessed 26 May 2022].
+
+Edge. (2021). _Microsoft Edge Supported Operating Systems_. \[online] Available at: [https://docs.microsoft.com/en-us/deployedge/microsoft-edge-supported-operating-systems](https://docs.microsoft.com/en-us/deployedge/microsoft-edge-supported-operating-systems) \[Accessed 26 May 2022].
