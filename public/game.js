@@ -5,38 +5,29 @@ kaboom({
 
 });
 
-loadSprite("floor", "sprites/floor.png");
+function addButton(name, x, y, f) {
 
-const LEVELS = [
+	const btn = add([
+		sprite(name),
+		pos(width() * x, height() * y),
+		scale(4),
+		origin("center"),
+	])
 
-    [
-
-        "",
-        "================================================================================================="
-
-    ]
-
-]
-
-const levelConf = {
-
-    width: 16,
-    height: 16,
-    pos: vec2(0,0),
-
-    "=": () => [
-
-        sprite("floor"),
-        area(),
-        solid()
-
-    ]
+	btn.onClick(f)
 
 }
 
+loadSprite("floor", "sprites/floor.png");
+loadSprite("corridor", "sprites/corridor.png");
+loadSprite("corridor90", "sprites/corridor90.png");
+loadSprite("connector", "sprites/connector.png");
+
+const left = 0.376;
+const right = 0.624;
+const heights = [0.801, 0.681, 0.56, 0.451, 0.33, 0.21]
+
 scene("map-menu", () => {
-
-    // const level = addLevel(LEVELS[levelNumber], levelConf);
     
     add([
         pos(width() * 0.5, height() * 0.5),
@@ -47,45 +38,139 @@ scene("map-menu", () => {
     
     ])
 
-    const mapButton = add([
-        text("Map", {
-            size: 20,
+    addButton("corridor", 0.5, heights[0], () => debug.log("among us"))
 
-        }),
-        pos(width() * 0.30, height() * 0.1),
+    /*const entrance = add([
+
+        sprite("corridor"),
+        pos(width() * 0.5, height() * heights[0]),
+        scale(4),
         origin("center")
+        
 
-    ])
-    
-    const sysButton = add([
-        text("Systems", {
-            size: 20,
+    ])*/
 
-        }),
-        pos(width() * 0.35, height() * 0.1),
-        origin("center")
+    const connector = add([
 
-    ])
-
-    const crewButton = add([
-        text("Crew", {
-            size: 20,
-
-        }),
-        pos(width() * 0.40, height() * 0.1),
+        sprite("connector"),
+        pos(width() * 0.5, height() * heights[1]),
+        scale(4),
         origin("center")
 
     ])
 
-    const entranceButton = add([
+    const left90 = add([
 
+        sprite("corridor90"),
+        pos(width() * 0.438, height() * heights[1]),
+        scale(4),
+        origin("center")
 
+    ])
+
+    const right90 = add([
+
+        sprite("corridor90"),
+        pos(width() * 0.562, height() * heights[1]),
+        scale(4),
+        origin("center")
+
+    ])
+
+    const connectorL = add([
+
+        sprite("connector"),
+        pos(width() * left, height() * heights[1]),
+        scale(4),
+        origin("center")
+
+    ])
+
+    const connectorR = add([
+
+        sprite("connector"),
+        pos(width() * right, height() * heights[1]),
+        scale(4),
+        origin("center")
+
+    ])
+
+    const left1 = add([
+
+        sprite("corridor"),
+        pos(width() * left, height() * heights[2]),
+        scale(4),
+        origin("center")
+
+    ])
+
+    const right1 = add([
+
+        sprite("corridor"),
+        pos(width() * right, height() * heights[2]),
+        scale(4),
+        origin("center")
+
+    ])
+
+    const connectorL1 = add([
+
+        sprite("connector"),
+        pos(width() * left, height() * heights[3]),
+        scale(4),
+        origin("center")
+
+    ])
+
+    const connectorR1 = add([
+
+        sprite("connector"),
+        pos(width() * right, height() * heights[3]),
+        scale(4),
+        origin("center")
+
+    ])
+
+    const left2 = add([
+
+        sprite("corridor"),
+        pos(width() * left, height() * heights[4]),
+        scale(4),
+        origin("center")
+
+    ])
+
+    const right2 = add([
+
+        sprite("corridor"),
+        pos(width() * right, height() * heights[4]),
+        scale(4),
+        origin("center")
+
+    ])
+
+    const connectorL2 = add([
+
+        sprite("connector"),
+        pos(width() * left, height() * heights[5]),
+        scale(4),
+        origin("center")
+
+    ])
+
+    const connectorR2 = add([
+
+        sprite("connector"),
+        pos(width() * right, height() * heights[5]),
+        scale(4),
+        origin("center")
 
     ])
 
 });
 
-scene("sys-menu", () => {
+scene("test-menu", () => {
+
     add([
         pos(width() * 0.5, height() * 0.5),
         rect(700, 700),
@@ -95,9 +180,6 @@ scene("sys-menu", () => {
     
     ])
 
-});
-
-const sysButton = get("sysButton");
-onClick("sysButton", () => {go("sys-menu")})
+})
 
 go("map-menu");

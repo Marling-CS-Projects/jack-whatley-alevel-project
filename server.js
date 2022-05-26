@@ -1,18 +1,23 @@
 const express = require("express");
 const app = express();
-const path = require("path");
 
 app.use(express.static("public"));
 
-app.get("/", function(req, res) {
+app.get("/", (req, res) => {
 
-    res.sendFile(path.join(__dirname, "/index.html"));
+    res.redirect("/menu");
 
 });
 
-app.get("/game", function(req, res) {
+app.get("/menu", (req, res) => {
 
-    res.sendFile(path.join(__dirname + "/public/game.html"));
+    res.sendFile(__dirname + "/index.html");
+
+})
+
+app.get("/game", (req, res) => {
+
+    res.sendFile(__dirname + "/public/game.html");
 
 });
 
