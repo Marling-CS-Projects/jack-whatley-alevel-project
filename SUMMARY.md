@@ -16,7 +16,7 @@
 
 * [2.1 Design Frame](2-design-and-development/systems-diagram.md)
 * [2.2 Cycles](design-and-development/2.2-cycles.md)
-* [2.2.1 Cycle 0](2-design-and-development/cycle-1.md)
+* [CYCLE 0 Server Setup](2-design-and-development/cycle-1.md)
 
 ## Testing
 
