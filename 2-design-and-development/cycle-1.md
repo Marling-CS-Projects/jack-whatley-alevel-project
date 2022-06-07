@@ -1,4 +1,4 @@
-# 2.2.1 Cycle 0
+# CYCLE 0 Server Setup
 
 ## Design
 
@@ -15,7 +15,7 @@ In Cycle 0 I wanted to make sure that the game was able to be run from my own co
 
 ### Key Variables
 
-| Variable Name | Use                                                                                 |
+| Variable Name | Usage                                                                               |
 | ------------- | ----------------------------------------------------------------------------------- |
 | app           | Holds the functionality of the express library and is how I can create a server.    |
 | path          | Allows me to work with directories for express to send a HTML file from the server. |
