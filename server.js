@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 
 app.use(express.static("public"));
-app.use(express.static("node_modules"));
+app.use("/THREE", express.static("node_modules/three"));
 
 app.get("/", (req, res) => {
 
