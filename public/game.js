@@ -2,7 +2,7 @@ import * as THREE from "three";
 // import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { createCube } from "/scripts/createCube.js";
-import { transition } from "./scripts/transition";
+import { transitionUp, transitionDown } from "/scripts/transition.js";
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xa0a0a0);
@@ -29,9 +29,15 @@ sun.lookAt(0,1,0);
 sun.castShadow = true;
 scene.add(sun);
 
-sun.shadow.bias = -0.0001;
-sun.shadow.mapSize.width = 1024 * 4;
-sun.shadow.mapSize.height = 1024 * 4;
+const sun2 = new THREE.DirectionalLight( 0xffffff );
+sun2.position.set(-10, 5, 10);
+sun2.lookAt(0,1,0);
+sun2.castShadow = true;
+scene.add(sun2);
+
+sun.shadow.bias = -0.000001;
+sun.shadow.mapSize.width = 2048 * 4;
+sun.shadow.mapSize.height = 2048 * 4;
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.listenToKeyEvents(window);
@@ -67,12 +73,12 @@ controls.maxPolarAngle = Math.PI / 2;
 
 });*/
 
-const basicCube = createCube([10, 1, 10], 0xddff00);
+const basicCube = createCube([10, 1, 10], 0xffffff);
 basicCube.receiveShadow = true;
 basicCube.castShadow = true;
 scene.add(basicCube);
 
-const moveableCube = createCube([1, 1, 1], 0x1d3557);
+const moveableCube = createCube([1, 1, 1], 0xddff00);
 moveableCube.receiveShadow = true;
 moveableCube.castShadow = true;
 scene.add(moveableCube);
@@ -86,6 +92,7 @@ camera.position.y = 5;
 camera.lookAt(0,1,0);
 
 scene.add( new THREE.CameraHelper( sun.shadow.camera ) );
+scene.add( new THREE.CameraHelper( sun2.shadow.camera ) );
 
 scene.add( new THREE.AxesHelper(500) );
 
@@ -138,6 +145,7 @@ window.addEventListener("keyup", (e) => {
 function onWindowResize() {
 
     camera.aspect = window.innerWidth / window.innerHeight;
+    
     camera.updateProjectionMatrix();
 
     renderer.setSize( window.innerWidth, window.innerHeight );
@@ -146,6 +154,7 @@ function onWindowResize() {
 
 function animate() {
     requestAnimationFrame( animate );
+    
     if (wKey === true) {
 
         moveableCube.position.x += moveSpeed;
@@ -166,16 +175,20 @@ function animate() {
         moveableCube.position.z += moveSpeed;
         camera.position.z += moveSpeed;
 
-    } if (shKey === true) {
+    } 
+    
+    if (shKey === true) {
 
         moveSpeed = 0.2;
 
-    } else if (shKey === false) {
+    } else {
 
         moveSpeed = 0.1;
 
     }
+    
     // controls.update();
+    
     renderer.render( scene, camera );
 
 }
