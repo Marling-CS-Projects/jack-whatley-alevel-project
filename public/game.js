@@ -2,11 +2,31 @@ import * as THREE from "three";
 // import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { createCube } from "/scripts/createCube.js";
-import { transitionUp, transitionDown } from "/scripts/transition.js";
+// import { collisionCalc } from "/scripts/collisionCalc.js";
+
+const collisionCalc = (mesh, scale, type="collision") => {
+
+    let bbox = new THREE.Box3().setFromObject(mesh);
+
+    let bounds = {
+        type: type,
+        xMin: bbox.min.x,
+        xMax: bbox.max.x,
+        yMin: bbox.min.y,
+        yMax: bbox.max.y,
+        zMin: bbox.min.z,
+        zMax: bbox.max.z,
+    };
+
+    collisions.push(bounds);
+
+}
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xa0a0a0);
+scene.background = new THREE.Color(0x87ceeb);
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+let collisions = [];
 
 let moveSpeed = 0.1;
 
@@ -18,26 +38,31 @@ let shKey = false;
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
-// renderer.setClearColor(0xaaaaff, 1);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
-const sun = new THREE.SpotLight( 0xffffff );
+const sun = new THREE.SpotLight( 0xffffff, 2 );
+scene.add(sun);
 sun.position.set(-5, 25, 10);
 sun.lookAt(0,1,0);
 sun.castShadow = true;
-scene.add(sun);
-
-const sun2 = new THREE.DirectionalLight( 0xffffff );
-sun2.position.set(-10, 5, 10);
-sun2.lookAt(0,1,0);
-sun2.castShadow = true;
-scene.add(sun2);
 
 sun.shadow.bias = -0.000001;
 sun.shadow.mapSize.width = 2048 * 4;
 sun.shadow.mapSize.height = 2048 * 4;
+
+const backgroundLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+scene.add(backgroundLight);
+backgroundLight.castShadow = false;
+backgroundLight.position.set(-5, 5, -5);
+backgroundLight.lookAt(0,1,0);
+
+const backgroundLight2 = new THREE.DirectionalLight( 0xffffff, 0.5 );
+scene.add(backgroundLight2);
+backgroundLight2.castShadow = false;
+backgroundLight2.position.set(5, 5, -5);
+backgroundLight2.lookAt(0,1,0);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.listenToKeyEvents(window);
@@ -78,6 +103,8 @@ basicCube.receiveShadow = true;
 basicCube.castShadow = true;
 scene.add(basicCube);
 
+collisionCalc( basicCube );
+
 const moveableCube = createCube([1, 1, 1], 0xddff00);
 moveableCube.receiveShadow = true;
 moveableCube.castShadow = true;
@@ -89,10 +116,10 @@ controls.target = moveableCube.position;
 
 camera.position.x = -5;
 camera.position.y = 5;
+
 camera.lookAt(0,1,0);
 
-scene.add( new THREE.CameraHelper( sun.shadow.camera ) );
-scene.add( new THREE.CameraHelper( sun2.shadow.camera ) );
+// scene.add( new THREE.CameraHelper( sun.shadow.camera ) );
 
 scene.add( new THREE.AxesHelper(500) );
 
