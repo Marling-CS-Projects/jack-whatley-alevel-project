@@ -2,31 +2,11 @@ import * as THREE from "three";
 // import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { createCube } from "/scripts/createCube.js";
-// import { collisionCalc } from "/scripts/collisionCalc.js";
-
-const collisionCalc = (mesh, scale, type="collision") => {
-
-    let bbox = new THREE.Box3().setFromObject(mesh);
-
-    let bounds = {
-        type: type,
-        xMin: bbox.min.x,
-        xMax: bbox.max.x,
-        yMin: bbox.min.y,
-        yMax: bbox.max.y,
-        zMin: bbox.min.z,
-        zMax: bbox.max.z,
-    };
-
-    collisions.push(bounds);
-
-}
+import { generateCorridor } from "/scripts/generateRoom.js";
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x87ceeb);
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-
-let collisions = [];
 
 let moveSpeed = 0.1;
 
@@ -77,38 +57,18 @@ controls.maxDistance = 500;
 
 controls.maxPolarAngle = Math.PI / 2;
 
-// const loader = new GLTFLoader();
-
-/*loader.load("/models/boat.glb", (gltf) => {
-
-    scene.add(gltf.scene);
-
-    const boat = gltf.scene;
-    
-    boat.scale.x = 10;
-    boat.scale.y = 10;
-    boat.scale.z = 10;
-    boat.rotation.x = 0.5;
-
-    return { boat };
-
-}, undefined, function (error) {
-
-    console.error( error );
-
-});*/
-
 const basicCube = createCube([10, 1, 10], 0xffffff);
 basicCube.receiveShadow = true;
 basicCube.castShadow = true;
 scene.add(basicCube);
 
-collisionCalc( basicCube );
-
 const moveableCube = createCube([1, 1, 1], 0xddff00);
 moveableCube.receiveShadow = true;
 moveableCube.castShadow = true;
 scene.add(moveableCube);
+
+const room = generateCorridor([5, 1, 5], 0xffffff, [10, 0, 0]);
+scene.add(room);
 
 moveableCube.position.set(0, 1, 0);
 
@@ -118,8 +78,6 @@ camera.position.x = -5;
 camera.position.y = 5;
 
 camera.lookAt(0,1,0);
-
-// scene.add( new THREE.CameraHelper( sun.shadow.camera ) );
 
 scene.add( new THREE.AxesHelper(500) );
 
