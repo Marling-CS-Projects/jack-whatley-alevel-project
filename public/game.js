@@ -1,14 +1,14 @@
 import * as THREE from "three";
-// import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { createCube } from "/scripts/createCube.js";
-import { generateCorridor } from "/scripts/generateRoom.js";
+import Stats from "./examples/jsm/libs/stats.module.js";
+
+import { OrbitControls, EffectComposer, RenderPass, ShaderPass, GlitchPass, GLTFLoader } from "/exports.js";
+import { createCube, generateCorridor  } from "/exports.js";
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x87ceeb);
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-let moveSpeed = 0.1;
+let moveSpeed = 0.05;
 
 let wKey = false;
 let aKey = false;
@@ -22,7 +22,17 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
-const sun = new THREE.SpotLight( 0xffffff, 2 );
+const composer = new EffectComposer( renderer );
+const renderPass = new RenderPass( scene, camera );
+composer.addPass( renderPass );
+
+/*(const glitchPass = new GlitchPass();
+composer.addPass( glitchPass );*/
+
+const stats = new Stats();
+document.body.appendChild( stats.dom );
+
+const sun = new THREE.SpotLight( 0xffffff, 1 );
 scene.add(sun);
 sun.position.set(-5, 25, 10);
 sun.lookAt(0,1,0);
@@ -164,17 +174,17 @@ function animate() {
     
     if (shKey === true) {
 
-        moveSpeed = 0.2;
+        moveSpeed = 0.1;
 
     } else {
 
-        moveSpeed = 0.1;
+        moveSpeed = 0.05;
 
     }
-    
-    // controls.update();
-    
-    renderer.render( scene, camera );
+
+    stats.update();
+
+    composer.render();
 
 }
 
