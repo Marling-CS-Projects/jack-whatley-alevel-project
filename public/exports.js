@@ -4,6 +4,7 @@ export { EffectComposer } from "/examples/jsm/postprocessing/EffectComposer.js";
 export { RenderPass } from "/examples/jsm/postprocessing/RenderPass.js";
 export { ShaderPass } from "/examples/jsm/postprocessing/ShaderPass.js";
 export { GlitchPass } from "/examples/jsm/postprocessing/GlitchPass.js";
+export { SAOPass } from "/examples/jsm/postprocessing/SAOPass.js";
 
 export { createCube } from "/scripts/createCube.js";
 export { generateCorridor } from "/scripts/generateRoom.js";
