@@ -2,8 +2,8 @@
 import * as THREE from "three";
 import Stats from "./examples/jsm/libs/stats.module.js";
 
-import { OrbitControls, EffectComposer, RenderPass, ShaderPass, GlitchPass, GLTFLoader } from "/exports.js";
-import { createCube, generateCorridor  } from "/exports.js";
+import { OrbitControls, EffectComposer, RenderPass, GlitchPass, GLTFLoader } from "/exports.js";
+import { createCube, generateCorridor, Corridor, Junction  } from "/exports.js";
 
 // consts:
 const scene = new THREE.Scene();
@@ -16,9 +16,6 @@ const sun = new THREE.SpotLight( 0xffffff, 1 );
 const backgroundLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
 const backgroundLight2 = new THREE.DirectionalLight( 0xffffff, 0.5 );
 const controls = new OrbitControls(camera, renderer.domElement);
-const basicCube = createCube([10, 1, 10], 0xffffff);
-const moveableCube = createCube([1, 1, 1], 0xddff00);
-const room = generateCorridor([5, 1, 5], 0xffffff, [10, 0, 0]);
 
 // variables:
 let moveSpeed = 0.05;
@@ -36,14 +33,16 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 composer.addPass( renderPass );
 
+// lighting
+
 scene.add(sun);
 sun.position.set(-5, 25, 10);
 sun.lookAt(0,1,0);
 sun.castShadow = true;
 
-sun.shadow.bias = -0.000001;
-sun.shadow.mapSize.width = 2048 * 4;
-sun.shadow.mapSize.height = 2048 * 4;
+sun.shadow.bias = -0.000000000000001;
+sun.shadow.mapSize.width = 2048 * 8;
+sun.shadow.mapSize.height = 2048 * 8;
 
 scene.add(backgroundLight);
 backgroundLight.castShadow = false;
@@ -54,6 +53,39 @@ scene.add(backgroundLight2);
 backgroundLight2.castShadow = false;
 backgroundLight2.position.set(5, 5, -5);
 backgroundLight2.lookAt(0,1,0);
+
+// objects
+
+const basicCube = createCube([10, 1, 10], 0xffffff);
+const moveableCube = createCube([1, 1, 1], 0xddff00);
+const room = generateCorridor([5, 1, 5], 0xffffff, [10, 0, 0]);
+const room2 = generateCorridor([8, 1, 10], 0xffffff, [20, 0, 0]);
+
+const corridor = generateCorridor([20, 1, 5], 0xffffff, [30, 0, 0]);
+
+scene.add(basicCube);
+
+scene.add(moveableCube);
+
+scene.add(room.floor);
+scene.add(room.wallLeft);
+scene.add(room.wallRight);
+scene.add(corridor.floor);
+scene.add(corridor.wallLeft);
+scene.add(corridor.wallRight);
+
+moveableCube.position.set(0, 1, 0);
+
+// other
+
+camera.position.x = -5;
+camera.position.y = 5;
+
+camera.lookAt(0,1,0);
+
+scene.add( new THREE.AxesHelper(1000) );
+
+// controls
 
 controls.listenToKeyEvents(window);
 
@@ -67,26 +99,7 @@ controls.maxDistance = 500;
 
 controls.maxPolarAngle = Math.PI / 2;
 
-basicCube.receiveShadow = true;
-basicCube.castShadow = true;
-scene.add(basicCube);
-
-moveableCube.receiveShadow = true;
-moveableCube.castShadow = true;
-scene.add(moveableCube);
-
-scene.add(room);
-
-moveableCube.position.set(0, 1, 0);
-
 controls.target = moveableCube.position;
-
-camera.position.x = -5;
-camera.position.y = 5;
-
-camera.lookAt(0,1,0);
-
-scene.add( new THREE.AxesHelper(1000) );
 
 window.addEventListener("keydown", (e) => {
 

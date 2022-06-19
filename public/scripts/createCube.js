@@ -6,6 +6,9 @@ function createCube(size, col) {
     let material = new THREE.MeshStandardMaterial({color: col});
     let shape = new THREE.Mesh(mesh, material);
 
+    shape.castShadow = true;
+    shape.receiveShadow = true;
+
     return shape;
 
 }

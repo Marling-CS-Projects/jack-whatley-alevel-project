@@ -8,3 +8,4 @@ export { SAOPass } from "/examples/jsm/postprocessing/SAOPass.js";
 
 export { createCube } from "/scripts/createCube.js";
 export { generateCorridor } from "/scripts/generateRoom.js";
+export { Corridor, Junction } from "/scripts/roomClass.js";
