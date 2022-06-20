@@ -2,7 +2,7 @@
 import * as THREE from "three";
 import Stats from "./examples/jsm/libs/stats.module.js";
 
-import { OrbitControls, EffectComposer, RenderPass, GlitchPass, GLTFLoader } from "/exports.js";
+import { OrbitControls, EffectComposer, RenderPass, GlitchPass, GLTFLoader, GUI } from "/exports.js";
 import { createCube, generateCorridor, Corridor, Junction  } from "/exports.js";
 
 // consts:
@@ -18,11 +18,12 @@ const backgroundLight2 = new THREE.DirectionalLight( 0xffffff, 0.5 );
 const controls = new OrbitControls(camera, renderer.domElement);
 
 // variables:
+let showStats = false;
 let moveSpeed = 0.05;
 let wKey, aKey, sKey, dKey, shKey;
 
 // body appends:
-document.body.appendChild( stats.dom );
+// document.body.appendChild( stats.dom );
 document.body.appendChild( renderer.domElement );
 
 scene.background = new THREE.Color(0x87ceeb);
@@ -73,6 +74,7 @@ scene.add(room.wallRight);
 scene.add(corridor.floor);
 scene.add(corridor.wallLeft);
 scene.add(corridor.wallRight);
+corridor.floor.rotation.y = 1.57079633;
 
 moveableCube.position.set(0, 1, 0);
 
@@ -147,6 +149,32 @@ window.addEventListener("keyup", (e) => {
 
 });
 
+function createPanel() {
+
+    const panel = new GUI( { width: 310 } );
+
+    const helpFolder = panel.addFolder( "Help" );
+    const settingFolder = panel.addFolder( "Settings" );
+
+    let settings = {
+
+        "Use the show stats button to see stats.": "SIUUUUUUUUUUUUU",
+        "Show Stats": function() {
+
+            document.body.appendChild( stats.dom );
+
+        }
+
+    }
+
+    helpFolder.add( settings, "Use the show stats button to see stats." );
+    settingFolder.add( settings, "Show Stats" );
+
+    helpFolder.open();
+    settingFolder.open();
+
+}
+
 function onWindowResize() {
 
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -194,8 +222,10 @@ function animate() {
     }
 
     stats.update();
+
     composer.render();
 
 }
 
 animate();
+createPanel();
