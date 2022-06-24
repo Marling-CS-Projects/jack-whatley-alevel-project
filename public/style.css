@@ -100,3 +100,9 @@ body {
     cursor: default;
 
 }
+
+.lil-gui.autoPlace { /* gui touching border */
+
+    right: 0px !important;
+
+}
