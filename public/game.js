@@ -2,20 +2,27 @@
 import * as THREE from "three";
 import Stats from "./examples/jsm/libs/stats.module.js";
 
-import { OrbitControls, EffectComposer, RenderPass, GlitchPass, GLTFLoader, GUI } from "/exports.js";
-import { createCube, generateCorridor, Corridor, Junction  } from "/exports.js";
+import { OrbitControls, EffectComposer, RenderPass, UnrealBloomPass, GlitchPass, GLTFLoader, GUI } from "/exports.js";
+import { createCube, generateCorridor, Corridor, Junction, degToRad } from "/exports.js";
 
 // consts:
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer( { antialias: true } );
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+const renderer = new THREE.WebGLRenderer( { antialias: false } );
 const composer = new EffectComposer( renderer );
 const renderPass = new RenderPass( scene, camera );
 const stats = new Stats();
-const sun = new THREE.SpotLight( 0xffffff, 1 );
-const backgroundLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-const backgroundLight2 = new THREE.DirectionalLight( 0xffffff, 0.5 );
+const sun = new THREE.SpotLight( 0x87ceeb, 8 );
+const backgroundLight = new THREE.DirectionalLight( 0xffffff, 3 );
+const backgroundLight2 = new THREE.DirectionalLight( 0xffffff, 3 );
 const controls = new OrbitControls(camera, renderer.domElement);
+
+const params = {
+    exposure: 1,
+    bloomStrength: 5,
+    bloomThreshold: 0,
+    bloomRadius: 0
+};
 
 // variables:
 let showStats = false;
@@ -23,16 +30,26 @@ let moveSpeed = 0.05;
 let wKey, aKey, sKey, dKey, shKey;
 
 // body appends:
-// document.body.appendChild( stats.dom );
+document.body.appendChild( stats.dom );
 document.body.appendChild( renderer.domElement );
 
 scene.background = new THREE.Color(0x87ceeb);
 
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.toneMapping = THREE.ReinhardToneMapping;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
+const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
+bloomPass.threshold = params.bloomThreshold;
+bloomPass.strength = params.bloomStrength;
+bloomPass.radius = params.bloomRadius;
+
+composer.addPass( bloomPass );
 composer.addPass( renderPass );
+
+/*const glitchPass = new GlitchPass();
+composer.addPass( glitchPass );*/
 
 // lighting
 
@@ -57,12 +74,9 @@ backgroundLight2.lookAt(0,1,0);
 
 // objects
 
-const basicCube = createCube([10, 1, 10], 0xffffff);
+const basicCube = createCube([10, 1, 10], 0xfffffff);
 const moveableCube = createCube([1, 1, 1], 0xddff00);
 const room = generateCorridor([5, 1, 5], 0xffffff, [10, 0, 0]);
-const room2 = generateCorridor([8, 1, 10], 0xffffff, [20, 0, 0]);
-
-const corridor = generateCorridor([20, 1, 5], 0xffffff, [30, 0, 0]);
 
 scene.add(basicCube);
 
@@ -71,10 +85,20 @@ scene.add(moveableCube);
 scene.add(room.floor);
 scene.add(room.wallLeft);
 scene.add(room.wallRight);
-scene.add(corridor.floor);
-scene.add(corridor.wallLeft);
-scene.add(corridor.wallRight);
-corridor.floor.rotation.y = 1.57079633;
+
+// rotation testing
+/*
+room.floor.rotation.y = degToRad(90);
+room.wallLeft.rotation.y = degToRad(90);
+room.wallRight.rotation.y = degToRad(90);
+
+room.wallLeft.position.x += 3;
+room.wallLeft.position.z += 2.5;
+
+room.wallRight.position.x -= 3;
+room.wallRight.position.z -= 2.5;
+*/
+// scene setup 2
 
 moveableCube.position.set(0, 1, 0);
 
@@ -174,6 +198,8 @@ function createPanel() {
     settingFolder.open();
 
 }
+
+window.addEventListener( "resize", onWindowResize() );
 
 function onWindowResize() {
 
