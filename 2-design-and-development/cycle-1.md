@@ -203,7 +203,7 @@ Another error I had was when I tried to link to another file, but I was met with
 
 ## Testing
 
-For Cycle 1 the elements I needed to test were: is the server working, can I make a connection; is the menu functioning, can I browse it without errors; is the canvas displaying, is the kaboom code working.
+For Cycle 0 the elements I needed to test were: is the server working, can I make a connection; is the menu functioning, can I browse it without errors; is the canvas displaying, is the kaboom code working.
 
 ### Tests
 
