@@ -112,9 +112,6 @@ camera.lookAt(0,1,0);
 scene.add( new THREE.AxesHelper(1000) );
 
 // controls
-
-controls.listenToKeyEvents(window);
-
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
 
