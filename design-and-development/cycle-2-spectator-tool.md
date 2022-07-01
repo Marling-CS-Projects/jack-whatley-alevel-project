@@ -196,3 +196,45 @@ function onWindowResize() {
 {% endtab %}
 {% endtabs %}
 
+```
+Updated File Structure:
+|- 📁 Node Modules
+|- 📁 Public
+    |- 📁 models
+        |- boat.glb
+    |- 📁 scripts
+    |- exports.js
+    |- favicon.ico
+    |- game.html
+    |- game.js
+    |- style.css
+|- .gitignore
+|- index.html
+|- package-lock.json
+|- package.json
+|- readme.md
+|- server.js
+```
+
+### Challenges
+
+The way the THREE docs were setup was not for a node.js server but instead for just creating a HTML file and directly importing it so when I looked at the docs and tried their solution it didn't work. Therefore I had to follow the same solutions as before in [Cycle 1](cycle-1-migration-to-three.md) where I had to work out where the OrbitControls.js module was posted to by the server and link to that.
+
+![I followed the docs link and it wasn't finding the modules.](<../.gitbook/assets/image (4).png>)
+
+## Testing
+
+For Cycle 2 the elements I needed to test were: is OrbitControls imported correctly, are the OrbitControls working correctly and does the cube move when I press WASD. On top of this it also needs to get faster when I press the Shift key.
+
+### Tests
+
+| Test | Instructions                                            | What I expect                                                 | What actually happens                                      | Pass/Fail |
+| ---- | ------------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------- | --------- |
+| 1    | Open the game after importing OrbitControls.            | The game scene will show up as the import is correct.         | The game scene displays correctly.                         | Pass      |
+| 2    | Click and drag with the mouse around the cube.          | I will be able to rotate the camera around the moveable cube. | I am able to rotate the camera around the cube.            | Pass      |
+| 3    | Press the WASD keys and the cube should move on screen. | I will press the keys and the cube will move in x and z axes. | I can move the cube around the screen on the x and z axes. | Pass      |
+| 4    | Press the Shift key with a move key and move faster.    | I will be able to go faster when holding the Shift key.       | The cube moves faster when holding the Shift key.          | Pass      |
+
+### Evidence
+
+![Screenshot of the moveable cube in the environment.](<../.gitbook/assets/image (3).png>)
