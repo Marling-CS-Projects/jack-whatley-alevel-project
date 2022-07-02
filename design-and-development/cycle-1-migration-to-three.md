@@ -108,7 +108,7 @@ animate();
 
 When migrating to THREE I had a number of issues with importing THREE as I had installed it locally this time rather than loading a CDN like with Kaboom. However I had not done this before and did not know about using import maps so I used `import * as THREE from "three"` which normally works with node.js however it does not work in a web browser. Therefore I had to post the  THREE files using the server and use the import map to get the browser to recognise the import.
 
-![The browser doesn't automatically handle imports unlike node.js.](<../.gitbook/assets/image (4) (1).png>)
+![The browser doesn't automatically handle imports unlike node.js.](<../.gitbook/assets/image (4) (1) (1).png>)
 
 ## Testing
 
@@ -124,4 +124,4 @@ For CYCLE 1 I needed to test a number of things: was THREE imported correctly, i
 
 ### Evidence
 
-![The cube is displaying correctly meaning that THREE is imported and working correctly.](<../.gitbook/assets/image (5).png>)
+![The cube is displaying correctly meaning that THREE is imported and working correctly.](<../.gitbook/assets/image (5) (1).png>)
