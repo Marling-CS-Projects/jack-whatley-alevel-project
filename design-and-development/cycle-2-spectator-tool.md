@@ -194,6 +194,13 @@ function onWindowResize() {
 }
 ```
 {% endtab %}
+
+{% tab title=".gitignore" %}
+```
+// means node_modules file is ignored to save space
+node_modules
+```
+{% endtab %}
 {% endtabs %}
 
 ```
