@@ -228,7 +228,7 @@ For Cycle 2 the elements I needed to test were: is OrbitControls imported correc
 
 ### Tests
 
-| Test | Instructions                                            | What I expect                                                 | What actually happens                                      | Pass/Fail |
+| Test | Instructions                                            | What I expect                                                 | What happened                                              | Pass/Fail |
 | ---- | ------------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------- | --------- |
 | 1    | Open the game after importing OrbitControls.            | The game scene will show up as the import is correct.         | The game scene displays correctly.                         | Pass      |
 | 2    | Click and drag with the mouse around the cube.          | I will be able to rotate the camera around the moveable cube. | I am able to rotate the camera around the cube.            | Pass      |

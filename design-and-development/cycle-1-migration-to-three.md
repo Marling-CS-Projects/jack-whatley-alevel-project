@@ -116,7 +116,7 @@ For CYCLE 1 I needed to test a number of things: was THREE imported correctly, i
 
 ### Tests
 
-| Tests | Instructions                                                     | What I expect                                                                         | What actually happens                                     | Pass/Fail |
+| Tests | Instructions                                                     | What I expect                                                                         | What happened                                             | Pass/Fail |
 | ----- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------- | --------------------------------------------------------- | --------- |
 | 1     | Check if Kaboom is still present in package.json.                | Kaboom will not be in package.json.                                                   | Kaboom js is successfully uninstalled                     | Pass      |
 | 2     | Check for an import error when running the server with THREE.    | After the import map there should not be an import error.                             | There is no longer an import error when I run the server. | Pass      |

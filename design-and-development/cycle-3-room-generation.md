@@ -195,3 +195,27 @@ export { Corridor, Junction };
 
 ### Challenges
 
+One of my main issues was getting the walls to line up with the corridor, and on my first attempt for a function I got the wall positions wrong and they were either too far away or out of position on the X or Y axis.
+
+![An example screenshot of when I got the positioning wrong for the Y axis.](<../.gitbook/assets/image (6).png>)
+
+## Testing
+
+In Cycle 3 I needed to make sure that corridor was generating correctly and that it was the right size and colour specified.
+
+### Tests
+
+| Test | Instructions                                       | What I expect                                               | What happened                                            | Pass/Fail |
+| ---- | -------------------------------------------------- | ----------------------------------------------------------- | -------------------------------------------------------- | --------- |
+| 1    | Use the create cube function.                      | The generate cube function will create a square of terrain. | The generate cube function created the terrain.          | Pass      |
+| 2    | Use the generate corridor function in the X axis   | The corridor will be created with everything in line.       | The corridor was generated correctly.                    | Pass      |
+| 3    | Use the generate corridor function in the Z axis.  | The corridor will be created with everything in line.       | The corridor was generated wide and the wrong direction. | Fail      |
+| 4    | Use the generate corridor function with its class. | The corridor will be created without errors in a class.     | I can call parts of the corridor from the class.         | Pass      |
+
+### Evidence
+
+![The two basic cubes, updated to use the createCube() method.](<../.gitbook/assets/image (1).png>)
+
+![Successful corridor generation, using the class and in the X axis direction.](<../.gitbook/assets/image (7).png>)
+
+![Corridor generation doesn't work for the Z axis yet, it still generates as if facing X.](<../.gitbook/assets/image (8).png>)

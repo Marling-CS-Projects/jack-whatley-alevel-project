@@ -152,7 +152,7 @@ export { GUI } from '/examples/jsm/libs/lil-gui.module.min.js';
 
 ### Challenges
 
-I had an issue with the order of rendering passes, so if the bloom pass doesn't go before the render pass the screen is white and it doesn't render. This also happens if the renderer is set to `THREE.WebGLRenderer( { antialias: true } );`.
+I had an issue with the order of rendering passes, so if the bloom pass doesn't go before the render pass the screen is white and it doesn't render.
 
 ![The screen didn't render if the order was wrong, despite the lack of errors in the console.](<../.gitbook/assets/image (4).png>)
 
@@ -162,7 +162,7 @@ In Cycle 2.5 I needed to make sure that the passes were working and that the lig
 
 ### Tests
 
-| Test | Instructions                                 | What I expect                                               | What actually happens                                       | Pass/Fail     |
+| Test | Instructions                                 | What I expect                                               | What happened                                               | Pass/Fail     |
 | ---- | -------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------- | ------------- |
 | 1    | Import all the passes and check if it loads. | The game to open and not throw an error.                    | The game loads correctly and there are no import errors.    | Pass          |
 | 2    | Add the glitch pass and check it is working. | The game to open and the screen to have glitch effects.     | The game opens and the screen has glitchy effects.          | Pass          |
