@@ -78,6 +78,8 @@ const basicCube = createCube([10, 1, 10], 0xfffffff);
 const moveableCube = createCube([1, 1, 1], 0xddff00);
 const room = generateCorridor([5, 1, 5], 0xffffff, [10, 0, 0]);
 
+const roomzexample = generateCorridor([5, 1, 5], 0xffffff, [0, 0, 10])
+
 scene.add(basicCube);
 
 scene.add(moveableCube);
@@ -85,6 +87,10 @@ scene.add(moveableCube);
 scene.add(room.floor);
 scene.add(room.wallLeft);
 scene.add(room.wallRight);
+
+scene.add(roomzexample.floor);
+scene.add(roomzexample.wallLeft);
+scene.add(roomzexample.wallRight);
 
 // rotation testing
 /*
