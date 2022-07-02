@@ -19,7 +19,7 @@
 * [CYCLE 1 Migration to THREE](design-and-development/cycle-1-migration-to-three.md)
 * [CYCLE 2 Spectator Tool](design-and-development/cycle-2-spectator-tool.md)
 * [CYCLE 2.5 Post Processing](design-and-development/cycle-2.5-post-processing.md)
-* [CYCLE 3 Room Generation](design-and-development/cycle-3-room-generation.md)
+* [CYCLE 3 Room Generation v1](design-and-development/cycle-3-room-generation-v1.md)
 
 ## Testing
 
