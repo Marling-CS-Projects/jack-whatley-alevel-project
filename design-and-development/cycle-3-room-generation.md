@@ -194,6 +194,29 @@ export { Corridor, Junction };
 {% endtab %}
 {% endtabs %}
 
+```
+Updated File Structure:
+|- 📁 Node Modules
+|- 📁 Public
+    |- 📁 models
+        |- boat.glb
+    |- 📁 scripts
+        |- createCube.js
+        |- generateRoom.js
+        |- roomClass.js
+    |- exports.js
+    |- favicon.ico
+    |- game.html
+    |- game.js
+    |- style.css
+|- .gitignore
+|- index.html
+|- package-lock.json
+|- package.json
+|- readme.md
+|- server.js
+```
+
 ### Challenges
 
 One of my main issues was getting the walls to line up with the corridor, and on my first attempt for a function I got the wall positions wrong and they were either too far away or out of position on the X or Y axis.
