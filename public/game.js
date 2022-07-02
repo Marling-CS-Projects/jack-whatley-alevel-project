@@ -8,7 +8,7 @@ import { createCube, generateCorridor, Corridor, Junction, degToRad } from "/exp
 // consts:
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
-const renderer = new THREE.WebGLRenderer( { antialias: false } );
+const renderer = new THREE.WebGLRenderer( { antialias: true } );
 const composer = new EffectComposer( renderer );
 const renderPass = new RenderPass( scene, camera );
 const stats = new Stats();
