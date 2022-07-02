@@ -11,6 +11,7 @@ The class will also be much useful later as it will allow me to control what uni
 * [x] Create a cube generation function.
 * [x] Create a basic corridor and junction class for rooms (will be expanded later).
 * [x] Create a basic corridor generating function.
+* [ ] Make the corridor function work on both axis.
 * [x] Organise everything above into separate javascript files, and export them.&#x20;
 
 ### Key Variables
