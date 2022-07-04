@@ -14,20 +14,41 @@ I also had to create the basis of the generateJunction() function which would al
 
 ### Key Variables
 
-| Variable Name | Usage |
-| ------------- | ----- |
-|               |       |
-|               |       |
-|               |       |
+| Variable Name      | Usage                                                          |
+| ------------------ | -------------------------------------------------------------- |
+| Corridor           | The class for storing all the elements in a corridor.          |
+| room, room2, room3 | The variables used for testing that the rotation of corridors. |
+| wallHeight         | The constant used to keep the height of walls the same.        |
 
 ### Pseudocode
 
 ```
+function generateCorridor(size, colour, position, rotation) {
+    floor = createCube(size, colour)
+    floor.setPosition(position[0], position[1], position[2])
+    
+    wall1 = createCube(size[0], wallHeight, size[1], colour)
+    wall2 = createCube(size[0], wallHeight, size[1], colour)
+    
+    wall1.setPosition(position[0], position[1], position[2])
+    wall2.setPosition(position[0], position[1], position[2])
+    
+    corridor = new Corridor(floor, wall1, wall2)
+    
+    return corridor
+
+}
 ```
 
 ## Development
 
+I started by creating a degrees to radians function as THREE handles rotation in radians, however it was more intuitive for me to just rotate it 90 degrees. This meant I had to look up the formula for converting degrees to radians which in javascript is `degrees * (Math.PI / 180)`. I then added this to my exports.js file so I could import it into the main.js file.
 
+I then experimented in the main file with just some basic rotations of the corridor I created in [CYCLE 3](cycle-3-room-generation.md), that lead to some of the images that can be seen below in the Challenges section. However once I had it working (I ended up making a better position solution which used the local position of the floor and its width to align it perfectly) I added it to the generateCorridor() function.&#x20;
+
+This involved adding another element to the function when parsing it, so if it sees "z" input into it, it rotates the corridor 90 degrees onto the z axis and repositions the walls.
+
+I also began work on the generateJunction() function, only the floor for now as I would have to create a lot of walls if I was to fully make it in this cycle. This meant creating a new function and importing it: _---text about function here---_
 
 ### Challenges
 
