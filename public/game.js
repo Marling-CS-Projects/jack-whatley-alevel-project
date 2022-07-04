@@ -3,7 +3,7 @@ import * as THREE from "three";
 import Stats from "./examples/jsm/libs/stats.module.js";
 
 import { OrbitControls, EffectComposer, RenderPass, UnrealBloomPass, GlitchPass, GLTFLoader, GUI } from "/exports.js";
-import { createCube, generateCorridor, Corridor, Junction, degToRad } from "/exports.js";
+import { createCube, generateCorridor, generateJunction, Corridor, Junction, degToRad } from "/exports.js";
 
 // consts:
 const scene = new THREE.Scene();
@@ -22,7 +22,7 @@ const params = {
     bloomStrength: 5,
     bloomThreshold: 0,
     bloomRadius: 0
-};
+}
 
 // variables:
 let showStats = false;
@@ -76,11 +76,10 @@ backgroundLight2.lookAt(0,1,0);
 
 const basicCube = createCube([10, 1, 10], 0xfffffff);
 const moveableCube = createCube([1, 1, 1], 0xddff00);
-const room = generateCorridor([5, 1, 8], 0xffffff, [10, 0, 0], "z");
-const room2 = generateCorridor([10, 1, 5], 0xff11ff, [0, 0, 15], "z");
-const room3 = generateCorridor([8, 1, 4], 0xff1111, [20, 0, 0], "z");
+const room = generateCorridor([8, 1, 5], 0xffffff, [12, 0, 0], "x");
+const roomzexample = generateCorridor([5, 1, 5], 0xff1111, [0, 0, 10], "z");
 
-const roomzexample = generateCorridor([5, 1, 5], 0xffffff, [0, 0, 10])
+const junction = generateJunction([5, 1, 5], 0x11ff11, [20, 0, 0])
 
 scene.add(basicCube);
 
@@ -90,24 +89,12 @@ scene.add(room.floor);
 scene.add(room.wallLeft);
 scene.add(room.wallRight);
 
-scene.add(room2.floor);
-scene.add(room2.wallLeft);
-scene.add(room2.wallRight);
+scene.add(junction.floor)
 
 scene.add(roomzexample.floor);
 scene.add(roomzexample.wallLeft);
 scene.add(roomzexample.wallRight);
 
-// rotation testing
-/*
-room.floor.rotation.y = degToRad(90);
-room.wallLeft.rotation.y = degToRad(90);
-room.wallRight.rotation.y = degToRad(90);
-
-scene.add(room3.floor);
-scene.add(room3.wallLeft);
-scene.add(room3.wallRight);
-*/
 // scene setup 2
 
 moveableCube.position.set(0, 1, 0);

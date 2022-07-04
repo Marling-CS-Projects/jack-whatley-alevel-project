@@ -8,6 +8,6 @@ export { UnrealBloomPass } from "/examples/jsm/postprocessing/UnrealBloomPass.js
 export { GUI } from '/examples/jsm/libs/lil-gui.module.min.js';
 
 export { createCube } from "/scripts/createCube.js";
-export { generateCorridor } from "/scripts/generateRoom.js";
+export { generateCorridor, generateJunction } from "/scripts/generateRoom.js";
 export { Corridor, Junction } from "/scripts/roomClass.js";
 export { degToRad } from "/scripts/degToRad.js";

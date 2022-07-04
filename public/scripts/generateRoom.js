@@ -1,7 +1,6 @@
 import * as THREE from "three";
 import { Corridor, Junction } from "./roomClass.js";
 import { createCube } from "./createCube.js";
-import { Scene } from "three";
 import { degToRad } from "./degToRad.js";
 
 const wallHeight = 5;
@@ -39,4 +38,16 @@ function generateCorridor(size, colour, position, rotation) { // size [1, 10, 1]
 
 }
 
-export { generateCorridor };
+function generateJunction(size, colour, position) {
+
+    let floor = createCube(size, colour);
+    floor.receiveShadow = true;
+    floor.position.set(position[0], position[1], position[2]);
+
+    let room = new Junction(floor);
+
+    return room;
+
+}
+
+export { generateCorridor, generateJunction };
