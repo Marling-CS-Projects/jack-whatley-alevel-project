@@ -240,6 +240,6 @@ In Cycle 3 I needed to make sure that corridor was generating correctly and that
 
 ![The two basic cubes, updated to use the createCube() method.](<../.gitbook/assets/image (1).png>)
 
-![Successful corridor generation, using the class and in the X axis direction.](<../.gitbook/assets/image (7).png>)
+![Successful corridor generation, using the class and in the X axis direction.](<../.gitbook/assets/image (7) (1).png>)
 
-![Corridor generation doesn't work for the Z axis yet, it still generates as if facing X.](<../.gitbook/assets/image (8).png>)
+![Corridor generation doesn't work for the Z axis yet, it still generates as if facing X.](<../.gitbook/assets/image (8) (1).png>)

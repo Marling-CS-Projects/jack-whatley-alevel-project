@@ -8,9 +8,9 @@ In Cycle 4 I wanted to make sure the room generation for corridors worked perfec
 
 I also had to create the basis of the generateJunction() function which would allow me to create the floor generating element now; and then allow me in future cycles to work on the generation of the walls of junction.
 
-* [ ] Add rotation to the generateCorridor() function.
-* [ ] Test that it is working with multiple examples.
-* [ ] Begin work on the generateJunction() function.
+* [x] Add rotation to the generateCorridor() function.
+* [x] Test that it is working with multiple examples.
+* [x] Begin work on the generateJunction() function.
 
 ### Key Variables
 
@@ -165,7 +165,7 @@ export { degToRad } from "/scripts/degToRad.js";
 
 One of the challenges I face was getting the corridor to rotate correctly, with earlier attempts being out of alignment or further ahead/behind on the z axis. I was able to overcome this effectively by trial and error which also allowed me to come up with a solution that would work for all corridor shapes and sizes.
 
-![When initially just rotating, the walls would rotate inside each other.](<../.gitbook/assets/image (5).png>)
+![When initially just rotating, the walls would rotate inside each other.](<../.gitbook/assets/image (5) (1).png>)
 
 ![After some experimenting I managed to get one wall lined up.](<../.gitbook/assets/image (3).png>)
 
@@ -175,3 +175,16 @@ In Cycle 4 I needed to test that the corridor was generating correctly, that it 
 
 ### Tests
 
+| Test | Instructions                                               | What I expect                                                        | What happened                                            | Pass/Fail |
+| ---- | ---------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------- | --------- |
+| 1    | Create a new corridor and check if it generates correctly. | The corridor will generate in the x axis with everything inline.     | The corridor generates with everything in place.         | Pass      |
+| 2    | Generate a corridor on the z axis.                         | The corridor is correctly rotated and lined up.                      | The corridor is generated correctly.                     | Pass      |
+| 3    | Generate a new junction floor.                             | The junction floor will be in the right place with the right colour. | The floor appears in the right place and correct colour. | Pass      |
+
+### Evidence
+
+![A functioning corridor in the z axis (blue).](<../.gitbook/assets/image (7).png>)
+
+![The start of a junction.](<../.gitbook/assets/image (8).png>)
+
+![All of the test rooms generated. They can now be in any place, any size and aligned along the x or z axis.](<../.gitbook/assets/image (5).png>)
