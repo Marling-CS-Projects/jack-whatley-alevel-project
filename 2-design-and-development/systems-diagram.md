@@ -2,22 +2,22 @@
 
 ## Systems Diagram
 
-![A system diagram for my game, featuring most of the planned features.](../.gitbook/assets/system-diagram.png)
+![](../.gitbook/assets/system-diagram.png)
 
-text here
+This system diagram shows all of the major features that I will implement into my game. They are broken down to reduce complexity and also to make development easier as I can focus on one section. This system diagram also combines the success criteria and the features of proposed solution into a more legible diagram.
 
 ## Usability Features
 
-text here
+My game should try to be as accessible as it can be to most people, excluding those younger than the age rating. Therefore I will focus on making it suitable for the target audience and making sure that I create a fun user experience.
 
 ### Effective
 
-text here
+It is important for the player to have ideas about what they want to do in the game and achieve them, especially as this game is sort of sandbox with only one basic fixed objective, survive. It will also be imperative to have a well designed HUD as the player will not want to have to click many times to access parts of the game. Especially as whether they win or lose could depend on it.
 
 #### Aims
 
-* Create a clear goal to reach to determine the end of a level
-* Create a clear goal for any multiplayer modes
+* Have a clear goal of reaching a certain part of the map to escape (win condition).
+*
 
 ### Efficiency
 
