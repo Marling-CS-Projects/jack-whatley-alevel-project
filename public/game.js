@@ -8,7 +8,7 @@ import { createCube, generateCorridor, Corridor, Junction, degToRad } from "/exp
 // consts:
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
-const renderer = new THREE.WebGLRenderer( { antialias: false } );
+const renderer = new THREE.WebGLRenderer( { antialias: true } );
 const composer = new EffectComposer( renderer );
 const renderPass = new RenderPass( scene, camera );
 const stats = new Stats();
@@ -80,6 +80,8 @@ const room = generateCorridor([5, 1, 8], 0xffffff, [10, 0, 0], "z");
 const room2 = generateCorridor([10, 1, 5], 0xff11ff, [0, 0, 15], "z");
 const room3 = generateCorridor([8, 1, 4], 0xff1111, [20, 0, 0], "z");
 
+const roomzexample = generateCorridor([5, 1, 5], 0xffffff, [0, 0, 10])
+
 scene.add(basicCube);
 
 scene.add(moveableCube);
@@ -92,10 +94,20 @@ scene.add(room2.floor);
 scene.add(room2.wallLeft);
 scene.add(room2.wallRight);
 
+scene.add(roomzexample.floor);
+scene.add(roomzexample.wallLeft);
+scene.add(roomzexample.wallRight);
+
+// rotation testing
+/*
+room.floor.rotation.y = degToRad(90);
+room.wallLeft.rotation.y = degToRad(90);
+room.wallRight.rotation.y = degToRad(90);
+
 scene.add(room3.floor);
 scene.add(room3.wallLeft);
 scene.add(room3.wallRight);
-
+*/
 // scene setup 2
 
 moveableCube.position.set(0, 1, 0);
