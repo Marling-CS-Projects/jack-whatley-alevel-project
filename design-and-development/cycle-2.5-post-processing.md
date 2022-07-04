@@ -172,4 +172,4 @@ In Cycle 2.5 I needed to make sure that the passes were working and that the lig
 
 ![The cube with better lighting and bloom effects.](<../.gitbook/assets/image (2).png>)
 
-![The glitch effects; whilst a bit obnoxious at the moment, can be changed later.](<../.gitbook/assets/image (5).png>)
+![The glitch effects; whilst a bit obnoxious at the moment, can be changed later.](<../.gitbook/assets/image (5) (1).png>)

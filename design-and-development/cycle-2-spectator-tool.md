@@ -244,4 +244,4 @@ For Cycle 2 the elements I needed to test were: is OrbitControls imported correc
 
 ### Evidence
 
-![Screenshot of the moveable cube in the environment.](<../.gitbook/assets/image (3).png>)
+![Screenshot of the moveable cube in the environment.](<../.gitbook/assets/image (3) (1).png>)

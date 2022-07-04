@@ -20,6 +20,7 @@
 * [CYCLE 2 Spectator Tool](design-and-development/cycle-2-spectator-tool.md)
 * [CYCLE 2.5 Post Processing](design-and-development/cycle-2.5-post-processing.md)
 * [CYCLE 3 Room Generation v1](design-and-development/cycle-3-room-generation.md)
+* [CYCLE 4 Room Generation v2](design-and-development/cycle-4-room-generation-v2.md)
 
 ## Testing
 
