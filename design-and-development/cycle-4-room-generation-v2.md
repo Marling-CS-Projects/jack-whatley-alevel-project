@@ -48,7 +48,118 @@ I then experimented in the main file with just some basic rotations of the corri
 
 This involved adding another element to the function when parsing it, so if it sees "z" input into it, it rotates the corridor 90 degrees onto the z axis and repositions the walls.
 
-I also began work on the generateJunction() function, only the floor for now as I would have to create a lot of walls if I was to fully make it in this cycle. This meant creating a new function and importing it: _---text about function here---_
+I also began work on the generateJunction() function, only the floor for now as I would have to create a lot of walls if I was to fully make it in this cycle. This meant creating a new function and importing it: to do this I made a similar function to that of the corridor one and then I only added the floor for now.
+
+I then added it to the scene to check that it worked and it correctly imported and appeared with the colour.
+
+{% tabs %}
+{% tab title="game.js" %}
+This shows some of the major changes to the file but not the file in its entirety as it is quite long at this point.
+
+```javascript
+import * as THREE from "three";
+import Stats from "./examples/jsm/libs/stats.module.js";
+
+import { OrbitControls, EffectComposer, RenderPass, UnrealBloomPass, GlitchPass, GLTFLoader, GUI } from "/exports.js";
+import { createCube, generateCorridor, generateJunction, Corridor, Junction, degToRad } from "/exports.js";
+
+const basicCube = createCube([10, 1, 10], 0xfffffff);
+const moveableCube = createCube([1, 1, 1], 0xddff00);
+const room = generateCorridor([8, 1, 5], 0xffffff, [12, 0, 0], "x");
+const roomzexample = generateCorridor([5, 1, 5], 0xff1111, [0, 0, 10], "z");
+
+const junction = generateJunction([5, 1, 5], 0x11ff11, [20, 0, 0])
+
+scene.add(basicCube);
+
+scene.add(moveableCube);
+
+scene.add(room.floor);
+scene.add(room.wallLeft);
+scene.add(room.wallRight);
+
+scene.add(junction.floor)
+
+scene.add(roomzexample.floor);
+scene.add(roomzexample.wallLeft);
+scene.add(roomzexample.wallRight);s
+```
+{% endtab %}
+
+{% tab title="generateRoom.js" %}
+```javascript
+import * as THREE from "three";
+import { Corridor, Junction } from "./roomClass.js";
+import { createCube } from "./createCube.js";
+import { degToRad } from "./degToRad.js";
+
+const wallHeight = 5;
+
+function generateCorridor(size, colour, position, rotation) { // size [1, 10, 1]
+    let floor = createCube(size, colour);
+    floor.receiveShadow = true;
+    floor.position.set(position[0], position[1], position[2]);
+
+    let wall1 = createCube([size[0], wallHeight, size[1]], colour);
+    wall1.receiveShadow = true;
+    wall1.castShadow = false;
+    wall1.position.set(position[0], position[1] + (0.5 * wallHeight) - 0.5, position[2] - (size[2] / 2) + .5); // change wallheight to size[0] for reactiveness
+
+    let wall2 = createCube([size[0], wallHeight, size[1]], colour);
+    wall2.receiveShadow = true;
+    wall2.castShadow = false;
+    wall2.position.set(position[0], position[1] + (0.5 * wallHeight) - 0.5, position[2] + (size[2] / 2) - .5); // change wallheight to size[0] for reactiveness
+
+    if (rotation === "z") {
+
+        floor.rotation.y = degToRad(90);
+        wall1.rotation.y = degToRad(90);
+        wall2.rotation.y = degToRad(90);
+
+        wall1.position.set(floor.position.x + (size[2] / 2), wall1.position.y, floor.position.z);
+        wall2.position.set(floor.position.x - (size[2] / 2), wall2.position.y, floor.position.z);
+
+    }
+
+    let room = new Corridor(floor, wall1, wall2)
+
+    return room;
+
+}
+
+function generateJunction(size, colour, position) {
+    let floor = createCube(size, colour);
+    floor.receiveShadow = true;
+    floor.position.set(position[0], position[1], position[2]);
+
+    let room = new Junction(floor);
+
+    return room;
+
+}
+
+export { generateCorridor, generateJunction };
+```
+{% endtab %}
+
+{% tab title="exports.js" %}
+```javascript
+export { OrbitControls } from "/examples/jsm/controls/OrbitControls.js";
+export { GLTFLoader } from "/examples/jsm/loaders/GLTFLoader.js";
+export { EffectComposer } from "/examples/jsm/postprocessing/EffectComposer.js";
+export { RenderPass } from "/examples/jsm/postprocessing/RenderPass.js";
+export { ShaderPass } from "/examples/jsm/postprocessing/ShaderPass.js";
+export { GlitchPass } from "/examples/jsm/postprocessing/GlitchPass.js";
+export { UnrealBloomPass } from "/examples/jsm/postprocessing/UnrealBloomPass.js";
+export { GUI } from '/examples/jsm/libs/lil-gui.module.min.js';
+
+export { createCube } from "/scripts/createCube.js";
+export { generateCorridor, generateJunction } from "/scripts/generateRoom.js";
+export { Corridor, Junction } from "/scripts/roomClass.js";
+export { degToRad } from "/scripts/degToRad.js";
+```
+{% endtab %}
+{% endtabs %}
 
 ### Challenges
 
@@ -57,3 +168,10 @@ One of the challenges I face was getting the corridor to rotate correctly, with 
 ![When initially just rotating, the walls would rotate inside each other.](<../.gitbook/assets/image (5).png>)
 
 ![After some experimenting I managed to get one wall lined up.](<../.gitbook/assets/image (3).png>)
+
+## Testing
+
+In Cycle 4 I needed to test that the corridor was generating correctly, that it would rotate in the Z axis and that the junction floor was generating correctly in the correct colour.
+
+### Tests
+
