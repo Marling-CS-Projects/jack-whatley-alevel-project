@@ -26,7 +26,7 @@ const params = {
 
 // variables:
 let showStats = false;
-let moveSpeed = 0.05;
+let moveSpeed = 0.075;
 let wKey, aKey, sKey, dKey, shKey;
 
 // body appends:
@@ -76,7 +76,9 @@ backgroundLight2.lookAt(0,1,0);
 
 const basicCube = createCube([10, 1, 10], 0xfffffff);
 const moveableCube = createCube([1, 1, 1], 0xddff00);
-const room = generateCorridor([5, 1, 5], 0xffffff, [10, 0, 0]);
+const room = generateCorridor([5, 1, 8], 0xffffff, [10, 0, 0], "z");
+const room2 = generateCorridor([10, 1, 5], 0xff11ff, [0, 0, 15], "z");
+const room3 = generateCorridor([8, 1, 4], 0xff1111, [20, 0, 0], "z");
 
 scene.add(basicCube);
 
@@ -86,18 +88,14 @@ scene.add(room.floor);
 scene.add(room.wallLeft);
 scene.add(room.wallRight);
 
-// rotation testing
-/*
-room.floor.rotation.y = degToRad(90);
-room.wallLeft.rotation.y = degToRad(90);
-room.wallRight.rotation.y = degToRad(90);
+scene.add(room2.floor);
+scene.add(room2.wallLeft);
+scene.add(room2.wallRight);
 
-room.wallLeft.position.x += 3;
-room.wallLeft.position.z += 2.5;
+scene.add(room3.floor);
+scene.add(room3.wallLeft);
+scene.add(room3.wallRight);
 
-room.wallRight.position.x -= 3;
-room.wallRight.position.z -= 2.5;
-*/
 // scene setup 2
 
 moveableCube.position.set(0, 1, 0);
@@ -236,11 +234,11 @@ function animate() {
     
     if (shKey === true) {
 
-        moveSpeed = 0.1;
+        moveSpeed = 0.2;
 
     } else {
 
-        moveSpeed = 0.05;
+        moveSpeed = 0.075;
 
     }
 
@@ -251,4 +249,4 @@ function animate() {
 }
 
 animate();
-createPanel();
+//createPanel();
