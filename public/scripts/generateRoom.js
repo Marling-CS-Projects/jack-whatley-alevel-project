@@ -27,8 +27,8 @@ function generateCorridor(size, colour, position, rotation) { // size [1, 10, 1]
         wall1.rotation.y = degToRad(90);
         wall2.rotation.y = degToRad(90);
 
-        wall1.position.set(floor.position.x + (size[2] / 2), wall1.position.y, floor.position.z);
-        wall2.position.set(floor.position.x - (size[2] / 2), wall2.position.y, floor.position.z);
+        wall1.position.set(floor.position.x + (size[2] / 2) - 0.5, wall1.position.y, floor.position.z);
+        wall2.position.set(floor.position.x - (size[2] / 2) + 0.5, wall2.position.y, floor.position.z);
 
     }
 
