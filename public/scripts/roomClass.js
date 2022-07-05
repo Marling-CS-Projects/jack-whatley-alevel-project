@@ -9,8 +9,9 @@ class Corridor {
 }
 
 class Junction {
-    constructor(floor) {
+    constructor(floor, walls) {
         this.floor = floor;
+        this.walls = walls;
 
     }
 

@@ -44,7 +44,47 @@ function generateJunction(size, colour, position) {
     floor.receiveShadow = true;
     floor.position.set(position[0], position[1], position[2]);
 
-    let room = new Junction(floor);
+    let walls = [];
+
+    let wall1 = createCube([size[0] / 3, wallHeight, size[1]], colour);
+    wall1.position.set(floor.position.x + (size[0] / 3), position[1] + (wallHeight / 2) - 0.5, floor.position.z + (size[2] / 2) - 0.5)
+    walls.push(wall1);
+
+    let wall2 = createCube([size[0] / 3, wallHeight, size[1]], colour);
+    wall2.position.set(floor.position.x - (size[0] / 3), position[1] + (wallHeight / 2) - 0.5, floor.position.z + (size[2] / 2) - 0.5);
+    walls.push(wall2);
+
+    let wall3 = createCube([size[1], wallHeight, size[0] / 3], colour);
+    wall3.position.set(floor.position.x + (size[2] / 2) - 0.5,  position[1] + (wallHeight / 2) - 0.5, floor.position.z + (size[0] / 3));
+    walls.push(wall3);
+
+    let wall4 = createCube([size[1], wallHeight, size[0] / 3], colour);
+    wall4.position.set(floor.position.x + (size[2] / 2) - 0.5,  position[1] + (wallHeight / 2) - 0.5, floor.position.z - (size[0] / 3));
+    walls.push(wall4);
+
+    let wall5 = createCube([size[0] / 3, wallHeight, size[1]], colour);
+    wall5.position.set(floor.position.x + (size[0] / 3), position[1] + (wallHeight / 2) - 0.5, floor.position.z - (size[2] / 2) + 0.5);
+    walls.push(wall5);
+
+    let wall6 = createCube([size[0] / 3, wallHeight, size[1]], colour);
+    wall6.position.set(floor.position.x - (size[0] / 3), position[1] + (wallHeight / 2) - 0.5, floor.position.z - (size[2] / 2) + 0.5);
+    walls.push(wall6);
+
+    let wall7 = createCube([size[1], wallHeight, size[0] / 3], colour);
+    wall7.position.set(floor.position.x - (size[2] / 2) + 0.5,  position[1] + (wallHeight / 2) - 0.5, floor.position.z + (size[0] / 3));
+    walls.push(wall7);
+
+    let wall8 = createCube([size[1], wallHeight, size[0] / 3], colour);
+    wall8.position.set(floor.position.x - (size[2] / 2) + 0.5,  position[1] + (wallHeight / 2) - 0.5, floor.position.z - (size[0] / 3));
+    walls.push(wall8);
+
+    /*for (let i = 0; i < 8; i++) {
+
+
+
+    }*/
+
+    let room = new Junction(floor, walls);
 
     return room;
 
