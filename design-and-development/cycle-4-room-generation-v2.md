@@ -165,9 +165,9 @@ export { degToRad } from "/scripts/degToRad.js";
 
 One of the challenges I face was getting the corridor to rotate correctly, with earlier attempts being out of alignment or further ahead/behind on the z axis. I was able to overcome this effectively by trial and error which also allowed me to come up with a solution that would work for all corridor shapes and sizes.
 
-![When initially just rotating, the walls would rotate inside each other.](<../.gitbook/assets/image (5) (1).png>)
+![When initially just rotating, the walls would rotate inside each other.](<../.gitbook/assets/image (5) (1) (1).png>)
 
-![After some experimenting I managed to get one wall lined up.](<../.gitbook/assets/image (3).png>)
+![After some experimenting I managed to get one wall lined up.](<../.gitbook/assets/image (3) (1).png>)
 
 ## Testing
 
@@ -187,4 +187,4 @@ In Cycle 4 I needed to test that the corridor was generating correctly, that it 
 
 ![The start of a junction.](<../.gitbook/assets/image (8).png>)
 
-![All of the test rooms generated. They can now be in any place, any size and aligned along the x or z axis.](<../.gitbook/assets/image (5).png>)
+![All of the test rooms generated. They can now be in any place, any size and aligned along the x or z axis.](<../.gitbook/assets/image (5) (1).png>)

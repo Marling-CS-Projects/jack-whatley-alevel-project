@@ -124,4 +124,4 @@ For CYCLE 1 I needed to test a number of things: was THREE imported correctly, i
 
 ### Evidence
 
-![The cube is displaying correctly meaning that THREE is imported and working correctly.](<../.gitbook/assets/image (5) (1) (1) (1).png>)
+![The cube is displaying correctly meaning that THREE is imported and working correctly.](<../.gitbook/assets/image (5) (1) (1) (1) (1).png>)

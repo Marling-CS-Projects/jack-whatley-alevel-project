@@ -242,10 +242,31 @@ To do this test I wanted to put down as many corridors as possible in both diffe
 
 Like for Test 1 I wanted to put down as many junctions as possible to test that they were the correct alignment and that the colour was working correctly. However for junctions there is no need to worry about alignment as they always have four openings.
 
-| What I expect                                     | What happened | Pass/Fail |
-| ------------------------------------------------- | ------------- | --------- |
-| The junction will generate correctly at any size. |               |           |
-|                                                   |               |           |
+| What I expect                                       | What happened                                   | Pass/Fail |
+| --------------------------------------------------- | ----------------------------------------------- | --------- |
+| The junction will generate correctly at any size.   | The junction generates correctly at any size.   | Pass      |
+| The junction will generate with the correct colour. | The junction generates with the correct colour. | Pass      |
+
+{% hint style="info" %}
+**Exception**
+
+Due to the way the function is made, both the x and z values need to be the same. If not the function can generate other shapes. This will be fixed below by reducing the reliance on the z and instead just using x as it should be the same both directions.
+
+The left image below is from the z value being half the x; whereas the right image is the correct one with the x and z being 10.
+
+`generateJunction([10, 1, 5], 0x11ff11, [15, 0, 0]);`
+
+``<img src="../.gitbook/assets/image (3).png" alt="" data-size="original">``![](<../.gitbook/assets/image (2).png>)``
+{% endhint %}
+
+**Test 3:** Postprocessing & Spectator Tool
+
+For Test 3 I wanted to test everything else that had been added so far, this meant checking that the post processing patches were working: bloom, glitch and render. It also meant checking that the spectator tool had no errors and that the UI worked.
+
+| What I expect                                                 | What happened                                                  | Pass/Fail |
+| ------------------------------------------------------------- | -------------------------------------------------------------- | --------- |
+| The spectator tool should respond to inputs without error.    | Pressing the mouse and keyboard works and there are no errors. | Pass      |
+| The bloom pass should be visible and the settings changeable. | The bloom pass isn't working due to the colour background.     | Fail      |
 
 ## Bug Fixing / Changed Code
 
