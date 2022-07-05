@@ -154,7 +154,7 @@ export { GUI } from '/examples/jsm/libs/lil-gui.module.min.js';
 
 I had an issue with the order of rendering passes, so if the bloom pass doesn't go before the render pass the screen is white and it doesn't render.
 
-![The screen didn't render if the order was wrong, despite the lack of errors in the console.](<../.gitbook/assets/image (4).png>)
+![The screen didn't render if the order was wrong, despite the lack of errors in the console.](<../.gitbook/assets/image (4) (1).png>)
 
 ## Testing
 

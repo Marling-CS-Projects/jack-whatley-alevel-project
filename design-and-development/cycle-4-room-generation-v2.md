@@ -82,7 +82,7 @@ scene.add(junction.floor)
 
 scene.add(roomzexample.floor);
 scene.add(roomzexample.wallLeft);
-scene.add(roomzexample.wallRight);s
+scene.add(roomzexample.wallRight);
 ```
 {% endtab %}
 

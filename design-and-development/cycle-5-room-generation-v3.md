@@ -9,9 +9,9 @@ In Cycle 5 I wanted to complete the basic room generation so I could work on dif
 I also wanted to make sure that I have tested everything I have worked on so far, so that I can focus gameplay more in the next cycles. Rather than working on exclusively the level design or a spectator tool.
 
 * [x] Finish the Junction Generation function.
-* [ ] Test the junction generation function for all possibilities.
-* [ ] Test the corridor generation function for all possibilities.
-* [ ] Make sure everything works.
+* [x] Test the junction generation function for all possibilities.
+* [x] Test the corridor generation function for all possibilities.
+* [x] Make sure everything made so far works.
 
 ### Key Variables
 
@@ -23,4 +23,232 @@ I also wanted to make sure that I have tested everything I have worked on so far
 ### Pseudocode
 
 ```
+function generateJunction(size, colour, position):
+    floor = createCube(size, colour)
+    floor.position = position
+    
+    walls = []
+    
+    for i less than 8:
+        wall = createCube(size, colour)
+        wall.position = position
+        
+        walls.push(wall)
+        
+    return new Junction(floor, walls)
+
 ```
+
+## Development
+
+I began by testing that both the functions (corridor and junctions) worked; so that if I broke something I would know that I had working code to restore. Then I began adding walls to the junction, two at each corner. I then had to make sure they lined up and worked for any size of junction that I might need to make if I was to make a map.
+
+To make the walls I updated the Junction class to contain an array called walls which I used to keep all the elements. This meant I could easily add all of them to the game using a for loop and that it wasn't cluttering the class up with eight walls. I also added all the walls as separate variables in the function initially, however I am working on a solution using a for loop to make the function less cluttered.
+
+After this I had to test all of the new elements I've added, making sure that they always lined up, rendered correctly and that they worked for any size. This is because I'm not sure what size the map will be yet; therefore to make it future proof I need the functions to work for all sizes that I can input.
+
+{% tabs %}
+{% tab title="game.js" %}
+This shows some of the major changes to the file but not the file in its entirety as it is quite long at this point.
+
+```javascript
+import * as THREE from "three";
+import Stats from "./examples/jsm/libs/stats.module.js";
+
+import { OrbitControls, EffectComposer, RenderPass, UnrealBloomPass, GlitchPass, GLTFLoader, GUI } from "/exports.js";
+import { createCube, generateCorridor, generateJunction, Corridor, Junction, degToRad } from "/exports.js";
+
+const basicCube = createCube([10, 1, 10], 0xfffffff);
+const moveableCube = createCube([1, 1, 1], 0xddff00);
+
+const room = generateCorridor([10, 1, 5], 0x1111ff, [11, 0, 0], "x");
+const roomzexample = generateCorridor([5, 1, 5], 0xff1111, [0, 0, 10], "z");
+
+const junction = generateJunction([5, 1, 5], 0x11ff11, [20, 0, 0]);
+
+scene.add(basicCube);
+
+scene.add(moveableCube);
+
+scene.add(junction.floor)
+
+scene.add(room.floor);
+scene.add(room.wallLeft);
+scene.add(room.wallRight);
+
+scene.add(junction.floor);
+for(let i=0; i < junction.walls.length; i++){scene.add(junction.walls[i])};
+
+scene.add(roomzexample.floor);
+scene.add(roomzexample.wallLeft);
+scene.add(roomzexample.wallRight);
+
+const junction2 = generateJunction([10, 1, 10], 0x11ff11, [0, 0, 20]);
+
+scene.add(junction2.floor);
+for(let i=0; i < junction2.walls.length; i++){scene.add(junction2.walls[i])};
+```
+{% endtab %}
+
+{% tab title="generateRoom.js" %}
+```javascript
+import * as THREE from "three";
+import { Corridor, Junction } from "./roomClass.js";
+import { createCube } from "./createCube.js";
+import { degToRad } from "./degToRad.js";
+
+const wallHeight = 5;
+
+function generateCorridor(size, colour, position, rotation) { // size [1, 10, 1]
+
+    let floor = createCube(size, colour);
+    floor.receiveShadow = true;
+    floor.position.set(position[0], position[1], position[2]);
+
+    let wall1 = createCube([size[0], wallHeight, size[1]], colour);
+    wall1.receiveShadow = true;
+    wall1.castShadow = false;
+    wall1.position.set(position[0], position[1] + (0.5 * wallHeight) - 0.5, position[2] - (size[2] / 2) + .5); // change wallheight to size[0] for reactiveness
+
+    let wall2 = createCube([size[0], wallHeight, size[1]], colour);
+    wall2.receiveShadow = true;
+    wall2.castShadow = false;
+    wall2.position.set(position[0], position[1] + (0.5 * wallHeight) - 0.5, position[2] + (size[2] / 2) - .5); // change wallheight to size[0] for reactiveness
+
+    if (rotation === "z") {
+
+        floor.rotation.y = degToRad(90);
+        wall1.rotation.y = degToRad(90);
+        wall2.rotation.y = degToRad(90);
+
+        wall1.position.set(floor.position.x + (size[2] / 2), wall1.position.y, floor.position.z);
+        wall2.position.set(floor.position.x - (size[2] / 2), wall2.position.y, floor.position.z);
+
+    }
+
+    let room = new Corridor(floor, wall1, wall2)
+
+    return room;
+
+}
+
+function generateJunction(size, colour, position) {
+
+    let floor = createCube(size, colour);
+    floor.receiveShadow = true;
+    floor.position.set(position[0], position[1], position[2]);
+
+    let walls = [];
+
+    let wall1 = createCube([size[0] / 3, wallHeight, size[1]], colour);
+    wall1.position.set(floor.position.x + (size[0] / 3), position[1] + (wallHeight / 2) - 0.5, floor.position.z + (size[2] / 2) - 0.5)
+    walls.push(wall1);
+
+    let wall2 = createCube([size[0] / 3, wallHeight, size[1]], colour);
+    wall2.position.set(floor.position.x - (size[0] / 3), position[1] + (wallHeight / 2) - 0.5, floor.position.z + (size[2] / 2) - 0.5);
+    walls.push(wall2);
+
+    let wall3 = createCube([size[1], wallHeight, size[0] / 3], colour);
+    wall3.position.set(floor.position.x + (size[2] / 2) - 0.5,  position[1] + (wallHeight / 2) - 0.5, floor.position.z + (size[0] / 3));
+    walls.push(wall3);
+
+    let wall4 = createCube([size[1], wallHeight, size[0] / 3], colour);
+    wall4.position.set(floor.position.x + (size[2] / 2) - 0.5,  position[1] + (wallHeight / 2) - 0.5, floor.position.z - (size[0] / 3));
+    walls.push(wall4);
+
+    let wall5 = createCube([size[0] / 3, wallHeight, size[1]], colour);
+    wall5.position.set(floor.position.x + (size[0] / 3), position[1] + (wallHeight / 2) - 0.5, floor.position.z - (size[2] / 2) + 0.5);
+    walls.push(wall5);
+
+    let wall6 = createCube([size[0] / 3, wallHeight, size[1]], colour);
+    wall6.position.set(floor.position.x - (size[0] / 3), position[1] + (wallHeight / 2) - 0.5, floor.position.z - (size[2] / 2) + 0.5);
+    walls.push(wall6);
+
+    let wall7 = createCube([size[1], wallHeight, size[0] / 3], colour);
+    wall7.position.set(floor.position.x - (size[2] / 2) + 0.5,  position[1] + (wallHeight / 2) - 0.5, floor.position.z + (size[0] / 3));
+    walls.push(wall7);
+
+    let wall8 = createCube([size[1], wallHeight, size[0] / 3], colour);
+    wall8.position.set(floor.position.x - (size[2] / 2) + 0.5,  position[1] + (wallHeight / 2) - 0.5, floor.position.z - (size[0] / 3));
+    walls.push(wall8);
+
+    /*for (let i = 0; i < 8; i++) {
+
+
+
+    }*/
+
+    let room = new Junction(floor, walls);
+
+    return room;
+
+}
+
+export { generateCorridor, generateJunction }
+```
+{% endtab %}
+
+{% tab title="roomClass.js" %}
+```javascript
+class Corridor {
+    constructor(floor, wallLeft, wallRight) {
+        this.floor = floor;
+        this.wallLeft = wallLeft;
+        this.wallRight = wallRight;
+
+    }
+
+}
+
+class Junction {
+    constructor(floor, walls) {
+        this.floor = floor;
+        this.walls = walls;
+
+    }
+
+}
+
+export { Corridor, Junction };
+```
+{% endtab %}
+{% endtabs %}
+
+### Challenges
+
+One of the main challenges I faced in this cycle, similar to the last two, was aligning the different parts of the Junction. This required some experimentation but also some research into the THREE docs which showed I could use local positioning to align meshes. Meaning that I could use to the position of the floor to align the walls.
+
+![I had issues like this where the cubes would appear on the wrong side.](<../.gitbook/assets/image (9).png>)
+
+## Testing
+
+In cycle 5 I needed to do a lot of testing to make sure everything worked so that I could move on to the gameplay section. This meant I had to test corridors, junctions, colours and post processing.
+
+### Tests
+
+**Test 1:** Corridors
+
+To do this test I wanted to put down as many corridors as possible in both different sizes and rotations to make sure it was fully working and that there were no issues.
+
+| What I expect                                                            | What happened                                                 | Pass/Fail |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------- | --------- |
+| Corridor will generate in any size on the x axis with correct alignment. | The corridor generates on the x axis with proper alignment.   | Pass      |
+| Corridor will generate in any size on the z axis with correct alignment. | The corridor generates too wide when generated in the z axis. | Fail      |
+| Corridors will generate with the correct colour.                         | The corridors colour displays correctly.                      | Pass      |
+
+![Spawning two identical (except rotation) corridors inside each other with only the axis changes proves that z axis corridors generate incorrectly.](<../.gitbook/assets/image (4).png>)
+
+**Test 2:** Junctions
+
+Like for Test 1 I wanted to put down as many junctions as possible to test that they were the correct alignment and that the colour was working correctly. However for junctions there is no need to worry about alignment as they always have four openings.
+
+| What I expect                                     | What happened | Pass/Fail |
+| ------------------------------------------------- | ------------- | --------- |
+| The junction will generate correctly at any size. |               |           |
+|                                                   |               |           |
+
+## Bug Fixing / Changed Code
+
+
+
+![](<../.gitbook/assets/image (10).png>)
