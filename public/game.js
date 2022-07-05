@@ -77,7 +77,7 @@ backgroundLight2.lookAt(0,1,0);
 const basicCube = createCube([10, 1, 10], 0xfffffff);
 const moveableCube = createCube([1, 1, 1], 0xddff00);
 
-const room = generateCorridor([20, 1, 5], 0x1111ff, [20, 0, 10], "x");
+const room = generateCorridor([10, 1, 5], 0x1111ff, [11, 0, 0], "x");
 const roomzexample = generateCorridor([5, 1, 5], 0xff1111, [0, 0, 10], "z");
 
 const junction = generateJunction([5, 1, 5], 0x11ff11, [20, 0, 0]);
