@@ -89,8 +89,6 @@ scene.add(moveableCube);
 
 junction.add(scene);
 corridor.add(scene);
-//for(let i=0; i < junction.components.length; i++){scene.add(junction.components[i])};
-//for(let i=0; i < corridor.components.length; i++){scene.add(corridor.components[i])};
 
 // other
 
