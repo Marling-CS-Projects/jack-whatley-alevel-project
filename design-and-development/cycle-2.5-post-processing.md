@@ -170,6 +170,6 @@ In Cycle 2.5 I needed to make sure that the passes were working and that the lig
 
 ### Evidence
 
-![The cube with better lighting and bloom effects.](<../.gitbook/assets/image (2) (1).png>)
+![The cube with better lighting and bloom effects.](<../.gitbook/assets/image (2) (1) (1).png>)
 
 ![The glitch effects; whilst a bit obnoxious at the moment, can be changed later.](<../.gitbook/assets/image (5) (1) (1) (1).png>)

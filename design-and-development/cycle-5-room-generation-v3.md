@@ -256,7 +256,7 @@ The left image below is from the z value being half the x; whereas the right ima
 
 `generateJunction([10, 1, 5], 0x11ff11, [15, 0, 0]);`
 
-``<img src="../.gitbook/assets/image (3).png" alt="" data-size="original">``![](<../.gitbook/assets/image (2).png>)``
+``<img src="../.gitbook/assets/image (3).png" alt="" data-size="original">``![](<../.gitbook/assets/image (2) (1).png>)``
 {% endhint %}
 
 **Test 3:** Postprocessing & Spectator Tool
@@ -270,6 +270,193 @@ For Test 3 I wanted to test everything else that had been added so far, this mea
 
 ## Bug Fixing / Changed Code
 
+**Fix 1:** Corridor Rotation
+
+This was the most important thing to fix; to do this I just had to add a plus and minus 0.5 to both walls. This was what I did for the corridor in the x direction which made it thinner. However I had not copied this across when changing the position of the rotated walls.
+
+![The new, fixed, corridor layout.](<../.gitbook/assets/image (10).png>)
+
+**Fix 2:** Bloom Pass
+
+The Bloom Pass wasn't actually applying when I was using it; and when it did it would either result in a white screen (error) or it would make the game look horrible. Therefore, for the moment, I have decided to cut the Bloom Pass out as it is not really necessary as the lighting already looks passable without it.
+
+![The Bloom Pass made the game look way worse; and was incompatible with the blue background.](<../.gitbook/assets/image (1).png>)
+
+**Code Changed**
+
+When making the junctions I had an array to hold all of the walls and I was able to add them using a for loop. This was a much better solution then manually adding something; therefore I decided to do this for all elements in the class. This meant I had to combine the walls and floor into an array bur also that the constructor of the class was cleaner and will be able to have more in when I get to adding gameplay.
+
+{% tabs %}
+{% tab title="game.js" %}
+This is not the whole file just the updated methodology for adding all the parts of a junction or corridor to the scene.
+
+```javascript
+const junction = generateJunction([10, 1, 10], 0x11ff11, [15, 0, 0]);
+const corridor = generateCorridor([10, 1, 5], 0xff11ff, [0, 0, 15], "z");
+
+// this is more efficient than the previous method
+for(let i=0; i < junction.components.length; i++){scene.add(junction.components[i])};
+for(let i=0; i < corridor.components.length; i++){scene.add(corridor.components[i])};
+```
+{% endtab %}
+
+{% tab title="generateRoom.js" %}
+```javascript
+import * as THREE from "three";
+import { Corridor, Junction } from "./roomClass.js";
+import { createCube } from "./createCube.js";
+import { degToRad } from "./degToRad.js";
+
+const wallHeight = 5;
+
+function generateCorridor(size, colour, position, rotation) { // size [1, 10, 1]
+
+    let floor = createCube(size, colour);
+    floor.receiveShadow = true;
+    floor.position.set(position[0], position[1], position[2]);
+
+    let wall1 = createCube([size[0], wallHeight, size[1]], colour);
+    wall1.receiveShadow = true;
+    wall1.castShadow = false;
+    wall1.position.set(position[0], position[1] + (0.5 * wallHeight) - 0.5, position[2] - (size[2] / 2) + .5); // change wallheight to size[0] for reactiveness
+
+    let wall2 = createCube([size[0], wallHeight, size[1]], colour);
+    wall2.receiveShadow = true;
+    wall2.castShadow = false;
+    wall2.position.set(position[0], position[1] + (0.5 * wallHeight) - 0.5, position[2] + (size[2] / 2) - .5); // change wallheight to size[0] for reactiveness
+
+    if (rotation === "z") {
+
+        floor.rotation.y = degToRad(90);
+        wall1.rotation.y = degToRad(90);
+        wall2.rotation.y = degToRad(90);
+
+        wall1.position.set(floor.position.x + (size[2] / 2) - 0.5, wall1.position.y, floor.position.z);
+        wall2.position.set(floor.position.x - (size[2] / 2) + 0.5, wall2.position.y, floor.position.z);
+
+    }
+
+    let components = [floor, wall1, wall2];
+
+    let room = new Corridor(components);
+
+    return room;
+
+}
+
+function generateJunction(size, colour, position) {
+
+    let floor = createCube(size, colour);
+    floor.receiveShadow = true;
+    floor.position.set(position[0], position[1], position[2]);
+
+    let components = [];
+
+    let wall1 = createCube([size[0] / 3, wallHeight, size[1]], colour);
+    wall1.position.set(floor.position.x + (size[0] / 3), position[1] + (wallHeight / 2) - 0.5, floor.position.z + (size[2] / 2) - 0.5)
+    components.push(wall1);
+
+    let wall2 = createCube([size[0] / 3, wallHeight, size[1]], colour);
+    wall2.position.set(floor.position.x - (size[0] / 3), position[1] + (wallHeight / 2) - 0.5, floor.position.z + (size[2] / 2) - 0.5);
+    components.push(wall2);
+
+    let wall3 = createCube([size[1], wallHeight, size[0] / 3], colour);
+    wall3.position.set(floor.position.x + (size[2] / 2) - 0.5,  position[1] + (wallHeight / 2) - 0.5, floor.position.z + (size[0] / 3));
+    components.push(wall3);
+
+    let wall4 = createCube([size[1], wallHeight, size[0] / 3], colour);
+    wall4.position.set(floor.position.x + (size[2] / 2) - 0.5,  position[1] + (wallHeight / 2) - 0.5, floor.position.z - (size[0] / 3));
+    components.push(wall4);
+
+    let wall5 = createCube([size[0] / 3, wallHeight, size[1]], colour);
+    wall5.position.set(floor.position.x + (size[0] / 3), position[1] + (wallHeight / 2) - 0.5, floor.position.z - (size[2] / 2) + 0.5);
+    components.push(wall5);
+
+    let wall6 = createCube([size[0] / 3, wallHeight, size[1]], colour);
+    wall6.position.set(floor.position.x - (size[0] / 3), position[1] + (wallHeight / 2) - 0.5, floor.position.z - (size[2] / 2) + 0.5);
+    components.push(wall6);
+
+    let wall7 = createCube([size[1], wallHeight, size[0] / 3], colour);
+    wall7.position.set(floor.position.x - (size[2] / 2) + 0.5,  position[1] + (wallHeight / 2) - 0.5, floor.position.z + (size[0] / 3));
+    components.push(wall7);
+
+    let wall8 = createCube([size[1], wallHeight, size[0] / 3], colour);
+    wall8.position.set(floor.position.x - (size[2] / 2) + 0.5,  position[1] + (wallHeight / 2) - 0.5, floor.position.z - (size[0] / 3));
+    components.push(wall8);
+
+    /*for (let i = 0; i < 8; i++) {
 
 
-![](<../.gitbook/assets/image (10).png>)
+
+    }*/
+
+    components.push(floor);
+
+    let room = new Junction(components);
+
+    return room;
+
+}
+
+export { generateCorridor, generateJunction };
+```
+{% endtab %}
+{% endtabs %}
+
+**Code Changed 2**
+
+To make the above change more efficient I was able to add a function to the class which added all the elements to the scene. This meant the code used in the game.js file is very basic and simple meaning that it is less crowded. I did this by adding the function add(scene) to the classes which just had a for loop which looped through the components array and added each one to the scene.
+
+{% tabs %}
+{% tab title="game.js" %}
+This is not the whole game.js file; I have only shown the updated method of adding objects to the scene.
+
+```javascript
+const junction = generateJunction([10, 1, 10], 0x11ff11, [15, 0, 0]);
+const corridor = generateCorridor([10, 1, 5], 0xff11ff, [0, 0, 15], "z");
+
+junction.add(scene);
+corridor.add(scene);
+```
+{% endtab %}
+
+{% tab title="roomClass.js" %}
+```javascript
+class Corridor {
+    constructor(components) {
+        this.components = components;
+
+    }
+
+    add(scene) {
+        for (let i = 0; i < this.components.length; i++) {
+            scene.add(this.components[i]);
+
+        }
+
+    }
+
+}
+
+class Junction {
+    constructor(components) {
+        this.components = components;
+
+    }
+
+    add(scene) {
+        for (let i = 0; i < this.components.length; i++) {
+            scene.add(this.components[i]);
+
+        }
+
+    }
+
+}
+
+export { Corridor, Junction };
+```
+{% endtab %}
+{% endtabs %}
+
+![Proof that the new generation method works; here are the two test rooms.](<../.gitbook/assets/image (2).png>)

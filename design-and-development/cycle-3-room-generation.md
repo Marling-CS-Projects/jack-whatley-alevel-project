@@ -238,7 +238,7 @@ In Cycle 3 I needed to make sure that corridor was generating correctly and that
 
 ### Evidence
 
-![The two basic cubes, updated to use the createCube() method.](<../.gitbook/assets/image (1).png>)
+![The two basic cubes, updated to use the createCube() method.](<../.gitbook/assets/image (1) (1).png>)
 
 ![Successful corridor generation, using the class and in the X axis direction.](<../.gitbook/assets/image (7) (1).png>)
 
