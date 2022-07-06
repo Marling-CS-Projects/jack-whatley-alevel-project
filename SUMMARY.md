@@ -22,6 +22,7 @@
 * [CYCLE 3 Room Generation v1](design-and-development/cycle-3-room-generation.md)
 * [CYCLE 4 Room Generation v2](design-and-development/cycle-4-room-generation-v2.md)
 * [CYCLE 5 Room Generation v3](design-and-development/cycle-5-room-generation-v3.md)
+* [CYCLE 6 Character Handler v1](design-and-development/cycle-6-character-handler-v1.md)
 
 ## Testing
 
