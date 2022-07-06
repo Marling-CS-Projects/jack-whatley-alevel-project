@@ -1,17 +1,30 @@
 class Corridor {
-    constructor(floor, wallLeft, wallRight) {
-        this.floor = floor;
-        this.wallLeft = wallLeft;
-        this.wallRight = wallRight;
+    constructor(components) {
+        this.components = components;
+
+    }
+
+    add(scene) {
+        for (let i = 0; i < this.components.length; i++) {
+            scene.add(this.components[i]);
+
+        }
 
     }
 
 }
 
 class Junction {
-    constructor(floor, walls) {
-        this.floor = floor;
-        this.walls = walls;
+    constructor(components) {
+        this.components = components;
+
+    }
+
+    add(scene) {
+        for (let i = 0; i < this.components.length; i++) {
+            scene.add(this.components[i]);
+
+        }
 
     }
 

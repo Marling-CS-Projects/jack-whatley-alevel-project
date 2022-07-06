@@ -12,15 +12,15 @@ const renderer = new THREE.WebGLRenderer( { antialias: true } );
 const composer = new EffectComposer( renderer );
 const renderPass = new RenderPass( scene, camera );
 const stats = new Stats();
-const sun = new THREE.SpotLight( 0x87ceeb, 1 );
-const backgroundLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-const backgroundLight2 = new THREE.DirectionalLight( 0xffffff, 0.5 );
+const sun = new THREE.SpotLight( 0x87ceeb, 5 );
+const backgroundLight = new THREE.DirectionalLight( 0xffffff, 2 );
+const backgroundLight2 = new THREE.DirectionalLight( 0xffffff, 2 );
 const controls = new OrbitControls(camera, renderer.domElement);
 
 const params = {
     exposure: 1,
-    bloomStrength: 1.5,
-    bloomThreshold: 0,
+    bloomStrength: 0.5,
+    bloomThreshold: 1,
     bloomRadius: 0
 }
 
@@ -33,7 +33,7 @@ let wKey, aKey, sKey, dKey, shKey;
 document.body.appendChild( stats.dom );
 document.body.appendChild( renderer.domElement );
 
-//scene.background = new THREE.Color(0x87ceeb);
+scene.background = new THREE.Color(0x87ceeb);
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio( window.devicePixelRatio );
@@ -48,7 +48,7 @@ bloomPass.strength = params.bloomStrength;
 bloomPass.radius = params.bloomRadius;
 
 composer.addPass( renderPass );
-composer.addPass( bloomPass );
+//composer.addPass( bloomPass );
 
 /*const glitchPass = new GlitchPass();
 composer.addPass( glitchPass );*/
@@ -79,35 +79,18 @@ backgroundLight2.lookAt(0,1,0);
 const basicCube = createCube([10, 1, 10], 0xfffffff);
 const moveableCube = createCube([1, 1, 1], 0xddff00);
 
-/*const room = generateCorridor([10, 1, 5], 0x1111ff, [11, 0, 0], "x");
-const roomzexample = generateCorridor([5, 1, 5], 0xff1111, [0, 0, 10], "z");
-*/
+moveableCube.position.set(0, 1, 0);
+
 const junction = generateJunction([10, 1, 10], 0x11ff11, [15, 0, 0]);
+const corridor = generateCorridor([10, 1, 5], 0xff11ff, [0, 0, 15], "z");
 
 scene.add(basicCube);
 scene.add(moveableCube);
-/*
-scene.add(junction.floor)
 
-scene.add(room.floor);
-scene.add(room.wallLeft);
-scene.add(room.wallRight);
-*/
-scene.add(junction.floor);
-for(let i=0; i < junction.walls.length; i++){scene.add(junction.walls[i])};
-/*
-scene.add(roomzexample.floor);
-scene.add(roomzexample.wallLeft);
-scene.add(roomzexample.wallRight);
-
-const junction2 = generateJunction([10, 1, 10], 0x11ff11, [0, 0, 20]);
-
-scene.add(junction2.floor);
-for(let i=0; i < junction2.walls.length; i++){scene.add(junction2.walls[i])};
-*/
-// scene setup 2
-
-moveableCube.position.set(0, 1, 0);
+junction.add(scene);
+corridor.add(scene);
+//for(let i=0; i < junction.components.length; i++){scene.add(junction.components[i])};
+//for(let i=0; i < corridor.components.length; i++){scene.add(corridor.components[i])};
 
 // other
 
