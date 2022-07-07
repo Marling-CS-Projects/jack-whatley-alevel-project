@@ -222,7 +222,7 @@ function createPanel() {
     settingFolder.add( settings, "Lock Camera" );
     settingFolder.add( settings, "Free Camera" );
 
-    helpFolder.open();
+    helpFolder.close();
     settingFolder.open();
 
 }
