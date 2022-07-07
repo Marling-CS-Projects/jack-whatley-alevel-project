@@ -12,9 +12,7 @@ const renderer = new THREE.WebGLRenderer( { antialias: true } );
 const composer = new EffectComposer( renderer );
 const renderPass = new RenderPass( scene, camera );
 const stats = new Stats();
-const sun = new THREE.SpotLight( 0x87ceeb, 5 );
-const backgroundLight = new THREE.DirectionalLight( 0xffffff, 2 );
-const backgroundLight2 = new THREE.DirectionalLight( 0xffffff, 2 );
+let sun = new THREE.SpotLight( 0x87ceeb, 10 );
 const controls = new OrbitControls(camera, renderer.domElement);
 
 const params = {
@@ -33,7 +31,7 @@ let wKey, aKey, sKey, dKey, shKey;
 document.body.appendChild( stats.dom );
 document.body.appendChild( renderer.domElement );
 
-scene.background = new THREE.Color(0x87ceeb);
+//scene.background = new THREE.Color(0x87ceeb);
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio( window.devicePixelRatio );
@@ -55,40 +53,66 @@ composer.addPass( glitchPass );*/
 
 // lighting
 
-scene.add(sun);
-sun.position.set(-5, 25, 10);
-sun.lookAt(0,1,0);
+sun.target.position.set(-10, 0, 10);
+sun.position.set(-10, 50, 10);
 sun.castShadow = true;
 
-sun.shadow.bias = -0.000000000000001;
+sun.shadow.bias = -0.00000000000000000001;
 sun.shadow.mapSize.width = 2048 * 8;
 sun.shadow.mapSize.height = 2048 * 8;
 
-scene.add(backgroundLight);
-backgroundLight.castShadow = false;
-backgroundLight.position.set(-5, 5, -5);
-backgroundLight.lookAt(0,1,0);
-
-scene.add(backgroundLight2);
-backgroundLight2.castShadow = false;
-backgroundLight2.position.set(5, 5, -5);
-backgroundLight2.lookAt(0,1,0);
+scene.add( sun );
+scene.add( new THREE.SpotLightHelper( sun ) );
 
 // objects
 
-const basicCube = createCube([10, 1, 10], 0xfffffff);
+//const basicCube = createCube([10, 1, 10], 0xfffffff);
 const moveableCube = createCube([1, 1, 1], 0xddff00);
 
 moveableCube.position.set(0, 1, 0);
 
-const junction = generateJunction([10, 1, 10], 0x11ff11, [15, 0, 0]);
-const corridor = generateCorridor([10, 1, 5], 0xff11ff, [0, 0, 15], "z");
+sun.target = moveableCube;
 
-scene.add(basicCube);
+const light = new THREE.AmbientLight( 0x404040 ); // soft white light
+scene.add( light );
+
+//scene.add(basicCube);
 scene.add(moveableCube);
 
-junction.add(scene);
-corridor.add(scene);
+let testmap = [];
+
+const spawnJunction = generateJunction([10, 1, 10], 0xffffff, [0, 0, 0]);
+spawnJunction.add(scene);
+
+const c1 = generateCorridor([10, 1, 10 / 3 + 2], 0xffffff, [10, 0, 0]);
+c1.add(scene);
+
+const c2 = generateCorridor([10, 1, 10 / 3 + 2], 0xffffff, [-10, 0, 0]);
+c2.add(scene);
+
+const j1 = generateJunction([10, 1, 10], 0xffffff, [-20, 0, 0]);
+j1.add(scene);
+
+const c3 = generateCorridor([10, 1, 10 / 3 + 2], 0xffffff, [20, 0, 0]);
+c3.add(scene);
+
+const c4 = generateCorridor([10, 1, 10 / 3 + 2], 0xffffff, [0, 0, 10], "z");
+c4.add(scene);
+
+const c5 = generateCorridor([10, 1, 10 / 3 + 2], 0xffffff, [-20, 0, 10], "z");
+c5.add(scene);
+
+const j2 = generateJunction([10, 1, 10], 0xffffff, [-20, 0, 20]);
+j2.add(scene);
+
+const c6 = generateCorridor([10, 1, 10 / 3 + 2], 0xffffff, [-10, 0, 20]);
+c6.add(scene);
+
+const j3 = generateJunction([10, 1, 10], 0xffffff, [0, 0, 20]);
+j3.add(scene);
+
+const j4 = generateJunction([10, 1, 10], 0xffffff, [30, 0, 0]);
+j4.add(scene);
 
 // other
 
