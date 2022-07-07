@@ -4,6 +4,7 @@ import Stats from "./examples/jsm/libs/stats.module.js";
 
 import { OrbitControls, EffectComposer, RenderPass, UnrealBloomPass, GlitchPass, GLTFLoader, GUI } from "/exports.js";
 import { createCube, generateCorridor, generateJunction, Corridor, Junction, degToRad } from "/exports.js";
+import { THREEx } from "./exports.js";
 
 // consts:
 const scene = new THREE.Scene();
@@ -14,6 +15,7 @@ const renderPass = new RenderPass( scene, camera );
 const stats = new Stats();
 let sun = new THREE.SpotLight( 0x87ceeb, 10 );
 const controls = new OrbitControls(camera, renderer.domElement);
+let domEvent = new THREEx.DomEvents( camera, renderer.domElement );
 
 const params = {
     exposure: 1,
@@ -114,6 +116,12 @@ j3.add(scene);
 
 const j4 = generateJunction([10, 1, 10], 0xffffff, [30, 0, 0]);
 j4.add(scene);
+
+domEvent.addEventListener(spawnJunction, "click", (e) => {
+
+    alert("Test");
+
+});
 
 // other
 
