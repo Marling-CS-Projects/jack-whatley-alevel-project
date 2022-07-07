@@ -38,6 +38,8 @@ To start with I began by making the map; for now it will be basic and created wi
 
 To add the locked camera I had to add two functions to the GUI which when activated move the cameras position and where it is looking, it also disables OrbitControls. Then when pressing free cam this creates the opposite effect.
 
+I also removed the bit of code that meant the background was a blue colour as with all the new terrain, because it was a solid colour, it was causing performance issues.
+
 {% tabs %}
 {% tab title="Map Code" %}
 ```javascript
@@ -124,6 +126,10 @@ createPanel();
 ```
 {% endtab %}
 {% endtabs %}
+
+![The test map that I have created.](<../.gitbook/assets/image (11).png>)
+
+![The locked camera mode, with all the controls disabled.](<../.gitbook/assets/image (4).png>)
 
 **Development Part 2:** Creating Character Classes
 

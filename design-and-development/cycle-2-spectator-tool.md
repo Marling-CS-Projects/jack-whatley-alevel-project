@@ -227,7 +227,7 @@ Updated File Structure:
 
 The way the THREE docs were setup was not for a node.js server but instead for just creating a HTML file and directly importing it so when I looked at the docs and tried their solution it didn't work. Therefore I had to follow the same solutions as before in [Cycle 1](cycle-1-migration-to-three.md) where I had to work out where the OrbitControls.js module was posted to by the server and link to that.
 
-![I followed the docs link and it wasn't finding the modules.](<../.gitbook/assets/image (4) (1) (1).png>)
+![I followed the docs link and it wasn't finding the modules.](<../.gitbook/assets/image (4) (1) (1) (1).png>)
 
 ## Testing
 

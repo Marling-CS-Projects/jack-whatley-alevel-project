@@ -236,7 +236,7 @@ To do this test I wanted to put down as many corridors as possible in both diffe
 | Corridor will generate in any size on the z axis with correct alignment. | The corridor generates too wide when generated in the z axis. | Fail      |
 | Corridors will generate with the correct colour.                         | The corridors colour displays correctly.                      | Pass      |
 
-![Spawning two identical (except rotation) corridors inside each other with only the axis changes proves that z axis corridors generate incorrectly.](<../.gitbook/assets/image (4).png>)
+![Spawning two identical (except rotation) corridors inside each other with only the axis changes proves that z axis corridors generate incorrectly.](<../.gitbook/assets/image (4) (1).png>)
 
 **Test 2:** Junctions
 
