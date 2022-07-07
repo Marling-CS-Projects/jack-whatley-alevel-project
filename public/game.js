@@ -26,6 +26,7 @@ const params = {
 let showStats = false;
 let moveSpeed = 0.075;
 let wKey, aKey, sKey, dKey, shKey;
+let freecam = true;
 
 // body appends:
 document.body.appendChild( stats.dom );
@@ -84,28 +85,28 @@ let testmap = [];
 const spawnJunction = generateJunction([10, 1, 10], 0xffffff, [0, 0, 0]);
 spawnJunction.add(scene);
 
-const c1 = generateCorridor([10, 1, 10 / 3 + 2], 0xffffff, [10, 0, 0]);
+const c1 = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [10, 0, 0]);
 c1.add(scene);
 
-const c2 = generateCorridor([10, 1, 10 / 3 + 2], 0xffffff, [-10, 0, 0]);
+const c2 = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [-10, 0, 0]);
 c2.add(scene);
 
 const j1 = generateJunction([10, 1, 10], 0xffffff, [-20, 0, 0]);
 j1.add(scene);
 
-const c3 = generateCorridor([10, 1, 10 / 3 + 2], 0xffffff, [20, 0, 0]);
+const c3 = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [20, 0, 0]);
 c3.add(scene);
 
-const c4 = generateCorridor([10, 1, 10 / 3 + 2], 0xffffff, [0, 0, 10], "z");
+const c4 = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [0, 0, 10], "z");
 c4.add(scene);
 
-const c5 = generateCorridor([10, 1, 10 / 3 + 2], 0xffffff, [-20, 0, 10], "z");
+const c5 = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [-20, 0, 10], "z");
 c5.add(scene);
 
 const j2 = generateJunction([10, 1, 10], 0xffffff, [-20, 0, 20]);
 j2.add(scene);
 
-const c6 = generateCorridor([10, 1, 10 / 3 + 2], 0xffffff, [-10, 0, 20]);
+const c6 = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [-10, 0, 20]);
 c6.add(scene);
 
 const j3 = generateJunction([10, 1, 10], 0xffffff, [0, 0, 20]);
@@ -135,6 +136,8 @@ controls.maxDistance = 500;
 controls.maxPolarAngle = Math.PI / 2;
 
 controls.target = moveableCube.position;
+
+controls.enablePan = false;
 
 window.addEventListener("keydown", (e) => {
 
@@ -196,12 +199,28 @@ function createPanel() {
 
             document.body.appendChild( stats.dom );
 
+        },
+        "Lock Camera": function() {
+
+            camera.position.set(-10, 40, 10);
+            camera.lookAt(-10, 0, 10);
+            freecam = false;
+
+        },
+        "Free Camera": function() {
+
+            camera.position.set(moveableCube.position.x - 5, moveableCube.position.y + 5, moveableCube.position.z);
+            camera.lookAt(moveableCube.position);
+            freecam = true;
+
         }
 
     }
 
     helpFolder.add( settings, "Use the show stats button to see stats." );
     settingFolder.add( settings, "Show Stats" );
+    settingFolder.add( settings, "Lock Camera" );
+    settingFolder.add( settings, "Free Camera" );
 
     helpFolder.open();
     settingFolder.open();
@@ -224,35 +243,47 @@ function animate() {
     
     requestAnimationFrame( animate );
     
-    if (wKey === true) {
+    if (wKey === true && freecam === true) {
 
         moveableCube.position.x += moveSpeed;
         camera.position.x += moveSpeed;
 
-    } if (aKey === true) {
+    } if (aKey === true && freecam === true) {
 
         moveableCube.position.z -= moveSpeed;
         camera.position.z -= moveSpeed;
 
-    } if (sKey === true) {
+    } if (sKey === true && freecam === true) {
 
         moveableCube.position.x -= moveSpeed;
         camera.position.x -= moveSpeed;
 
-    } if (dKey === true) {
+    } if (dKey === true && freecam === true) {
 
         moveableCube.position.z += moveSpeed;
         camera.position.z += moveSpeed;
 
     } 
     
-    if (shKey === true) {
+    if (shKey === true && freecam === true) {
 
         moveSpeed = 0.2;
 
     } else {
 
         moveSpeed = 0.075;
+
+    }
+
+    if (freecam === false) {
+
+        controls.enableRotate = false;
+        controls.enableZoom = false;
+
+    } else if (freecam === true) {
+
+        controls.enableRotate = true;
+        controls.enableZoom = true;
 
     }
 
@@ -263,4 +294,4 @@ function animate() {
 }
 
 animate();
-//createPanel();
+createPanel();
