@@ -3,7 +3,7 @@ import * as THREE from "three";
 import Stats from "./examples/jsm/libs/stats.module.js";
 
 import { OrbitControls, EffectComposer, RenderPass, UnrealBloomPass, GlitchPass, GLTFLoader, GUI } from "/exports.js";
-import { createCube, generateCorridor, generateJunction, Corridor, Junction, degToRad, Enemy } from "/exports.js";
+import { createCube, generateCorridor, generateJunction, Corridor, Junction, degToRad, Enemy, Character } from "/exports.js";
 import { THREEx } from "./exports.js";
 
 // consts:
@@ -125,6 +125,9 @@ domEvent.addEventListener(spawnJunction.components[0], "click", (e) => {
 
 const enemy = new Enemy(j4, createCube([1, 5, 1], 0xffff11));
 enemy.setPos(scene);
+
+const character = new Character(spawnJunction, createCube([1, 5, 1], 0xff1111));
+character.setPos(scene);
 
 // other
 
