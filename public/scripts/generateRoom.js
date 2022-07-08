@@ -42,11 +42,13 @@ function generateCorridor(size, colour, position, rotation) { // size [1, 10, 1]
 
 function generateJunction(size, colour, position) {
 
+    let components = [];
+    
     let floor = createCube(size, colour);
     floor.receiveShadow = true;
     floor.position.set(position[0], position[1], position[2]);
 
-    let components = [];
+    components.push(floor);
 
     let wall1 = createCube([size[0] / 3, wallHeight, size[1]], colour);
     wall1.position.set(floor.position.x + (size[0] / 3), position[1] + (wallHeight / 2) - 0.5, floor.position.z + (size[2] / 2) - 0.5)
@@ -85,8 +87,6 @@ function generateJunction(size, colour, position) {
 
 
     }*/
-
-    components.push(floor);
 
     let room = new Junction(components);
 
