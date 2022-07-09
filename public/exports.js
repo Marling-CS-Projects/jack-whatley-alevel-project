@@ -13,5 +13,6 @@ export { Corridor, Junction } from "/scripts/roomClass.js";
 export { degToRad } from "/scripts/degToRad.js";
 export { Enemy } from "/scripts/characterClasses.js";
 export { Character } from "/scripts/characterClasses.js";
+export { multipleOf } from "/scripts/multipleOf.js";
 
 export { THREEx } from "/threex-domevents/threex.domevents.js";

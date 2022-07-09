@@ -3,7 +3,7 @@ import * as THREE from "three";
 import Stats from "./examples/jsm/libs/stats.module.js";
 
 import { OrbitControls, EffectComposer, RenderPass, UnrealBloomPass, GlitchPass, GLTFLoader, GUI } from "/exports.js";
-import { createCube, generateCorridor, generateJunction, Corridor, Junction, degToRad, Enemy, Character } from "/exports.js";
+import { createCube, generateCorridor, generateJunction, Corridor, Junction, degToRad, Enemy, Character, multipleOf } from "/exports.js";
 import { THREEx } from "./exports.js";
 
 // consts:
@@ -16,6 +16,10 @@ const stats = new Stats();
 let sun = new THREE.SpotLight( 0x87ceeb, 10 );
 const controls = new OrbitControls(camera, renderer.domElement);
 let domEvent = new THREEx.DomEvents( camera, renderer.domElement );
+
+const clock = new THREE.Clock();
+let delta = 0;
+let loopNum = 0;
 
 const params = {
     exposure: 1,
@@ -298,6 +302,37 @@ function animate() {
 
         controls.enableRotate = true;
         controls.enableZoom = true;
+
+    }
+
+    delta = clock.getDelta();
+
+    if (multipleOf(20, delta) === true) {
+
+        loopNum++;
+        
+        switch(loopNum) {
+            case 1:
+                enemy.room = j1;
+                enemy.setPos(scene);
+                break;
+            case 2:
+                enemy.room = j2;
+                enemy.setPos(scene);
+                break;
+            case 3:
+                enemy.room = j3;
+                enemy.setPos(scene);
+                break;
+            case 4:
+                enemy.room = j4;
+                enemy.setPos(scene);
+                break;
+            case 5:
+                loopNum = 0;
+                break;
+
+        }
 
     }
 
