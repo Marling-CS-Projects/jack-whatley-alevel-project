@@ -15,7 +15,7 @@ There will also be a top down camera mode which will lock the OrbitControls and 
 * [x] Create a test map.
 * [x] Create a top down Camera.
 * [x] **Update:** Import and test the method for detecting clicks on objects.
-* [ ] Create classes for characters.
+* [x] Create classes for characters.
 * [ ] Create an update function at the end of game.js.
 
 ### Key Variables
@@ -603,4 +603,62 @@ Updated File Structure:
 ```
 
 **Development Part 3:** Character Classes
+
+Like for creating the room classes; I created a separate javascript file for the character and enemy classes as I have decided to use object orientated programming. Meaning that the functions for the characters and enemy will be contained within the respective classes. I also need to make sure there is an update function as I would like to be able to update the position every frame but also I need to balance this in a way that it doesn't cause performance issues.
+
+To set the position of the character I made sure that each character and enemy is tied to a room and then that is used to set the position of the character. Meaning that it will be easy to have this working in the final game as I can run setPos to update the position of the character after they have changed room.
+
+{% tabs %}
+{% tab title="characters (game.js)" %}
+Shown below is the code used to test out the character classes.
+
+```javascript
+const enemy = new Enemy(j4, createCube([1, 5, 1], 0xffff11));
+enemy.setPos(scene);
+
+const character = new Character(spawnJunction, createCube([1, 5, 1], 0xff1111));
+character.setPos(scene);
+
+// the create cube is used to act as a temporary character model
+// the spawnJunction and j4 are rooms the character is assigned to
+```
+{% endtab %}
+
+{% tab title="characterClasses.js" %}
+```javascript
+class Enemy {
+    constructor(room, mesh) {
+        this.room = room;
+        this.mesh = mesh;
+
+    }
+
+    setPos(scene) {
+        scene.add(this.mesh);
+        this.mesh.position.set(this.room.components[0].position.x, this.room.components[0].position.y /*+ (this.mesh.height / 2)*/, this.room.components[0].position.z);
+
+    }
+
+}
+
+class Character {
+    constructor(room, mesh, inventory) {
+        this.room = room;
+        this.mesh = mesh;
+        this.inventory = inventory;
+
+    }
+
+    setPos(scene) {
+        scene.add(this.mesh);
+        this.mesh.position.set(this.room.components[0].position.x, this.room.components[0].position.y /*+ (this.mesh.height / 2)*/, this.room.components[0].position.z);
+
+    }
+
+}
+
+export { Enemy, Character }
+```
+{% endtab %}
+{% endtabs %}
 
