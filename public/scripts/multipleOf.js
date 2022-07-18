@@ -1,17 +1,19 @@
 function multipleOf(multiple, number) {
 
-    while (number > 0) {
-        number -= multiple;
-
-    }
+    number = number - multiple;
+    console.log(number)
 
     if (number === 0) {
 
         return true;
 
+    } else if (number < 0) {
+
+        return false;
+
     }
 
-    return false;
+    multipleOf(multiple, number);
 
 }
 

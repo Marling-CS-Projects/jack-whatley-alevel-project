@@ -305,16 +305,27 @@ function animate() {
 
     }
 
-    delta = clock.getDelta();
+    delta += clock.getDelta();
 
-    if (multipleOf(20, delta) === true) {
+    let multiple = false;
+    
+    if (delta * 1000 > 20) {
 
-        loopNum++;
+        multiple = multipleOf(20, delta * 1000);
+
+    }
+
+    if (multiple === true) {
+
+        console.log("working")
+        
+        /*loopNum++;
         
         switch(loopNum) {
             case 1:
                 enemy.room = j1;
                 enemy.setPos(scene);
+                console.log(enemy.position)
                 break;
             case 2:
                 enemy.room = j2;
@@ -332,7 +343,7 @@ function animate() {
                 loopNum = 0;
                 break;
 
-        }
+        }*/
 
     }
 
