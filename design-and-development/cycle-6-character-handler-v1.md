@@ -662,3 +662,30 @@ export { Enemy, Character }
 {% endtab %}
 {% endtabs %}
 
+I also wanted to add a temporary system that would allow me to wait a number of frames before moving on to another action. This meant I had to use the clock function in THREE and make sure it was updated every time the animate function was run.
+
+This meant I had to use the clocks delta function which would allow me to update and animate things in real time. Thankfully to make this simpler this is already a part of THREE by default and I only had to create a new THREE.clock(). I also had to make it so the delta variable updated every frame using `delta = clock.getDelta()`.
+
+{% tabs %}
+{% tab title="animate function" %}
+This is the animate function contained inside game.js however it is not all visible; only the new code added is.
+
+```
+```
+{% endtab %}
+{% endtabs %}
+
+### Challenges
+
+One of the main problems I had was getting the rooms to update properly. This was because initially I was only changing the room by doing `character.room = roomName`. This caused some issues as it would often say the room was undefined and when it then tried to changed the room it caused an error.
+
+To fix this temporarily I made the room part of the class an array; this meant I could also add a function to the class which removed the old room and then pushed the new room. It also meant I could call the setPos() in the same function.
+
+
+
+## Testing
+
+In Cycle 6 I needed to test that the map was displaying correctly without any errors; I also needed to make sure it was visible on the locked camera and that transitioning between the two didn't cause issues. I also needed to make sure the characters were working correctly and that their position could be updated.
+
+### Tests
+
