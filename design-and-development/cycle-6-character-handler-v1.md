@@ -670,18 +670,32 @@ This meant I had to use the clocks delta function which would allow me to update
 {% tab title="animate function" %}
 This is the animate function contained inside game.js however it is not all visible; only the new code added is.
 
-```
+```javascript
+// this was used to test if the cube moves
+setTimeout(() => enemy.changeRoom(spawnJunction, scene), 10000)
+setTimeout(() => enemy.changeRoom(j2, scene), 10000)
+setTimeout(() => enemy.changeRoom(j3, scene), 10000)
 ```
 {% endtab %}
 {% endtabs %}
 
+What the above code does is move the cube; and then it pauses the game temporarily for 10 seconds which allows me to see whether the cube has moved or not. See below for the new change room function.
+
 ### Challenges
 
-One of the main problems I had was getting the rooms to update properly. This was because initially I was only changing the room by doing `character.room = roomName`. This caused some issues as it would often say the room was undefined and when it then tried to changed the room it caused an error.
+It was annoying and inefficient to have to change the room value and also to then have to call the setPos() function again. To fix this I added another function to combine both the functions; it changes the room and also updates the position.
 
-To fix this temporarily I made the room part of the class an array; this meant I could also add a function to the class which removed the old room and then pushed the new room. It also meant I could call the setPos() in the same function.
+```javascript
+// this is the update function (part of the class)
 
+changeRoom(room, scene) {
 
+        this.room = room;
+        this.setPos(scene);
+
+}
+
+```
 
 ## Testing
 
