@@ -212,7 +212,7 @@ function createPanel() {
 
     let settings = {
 
-        "Use the show stats button to see stats.": "SIUUUUUUUUUUUUU",
+        "Use the show stats button to see stats.": delta,
         "Show Stats": function() {
 
             document.body.appendChild( stats.dom );
@@ -305,47 +305,9 @@ function animate() {
 
     }
 
-    delta += clock.getDelta();
-
-    let multiple = false;
-    
-    if (delta * 1000 > 20) {
-
-        multiple = multipleOf(20, delta * 1000);
-
-    }
-
-    if (multiple === true) {
-
-        console.log("working")
-        
-        /*loopNum++;
-        
-        switch(loopNum) {
-            case 1:
-                enemy.room = j1;
-                enemy.setPos(scene);
-                console.log(enemy.position)
-                break;
-            case 2:
-                enemy.room = j2;
-                enemy.setPos(scene);
-                break;
-            case 3:
-                enemy.room = j3;
-                enemy.setPos(scene);
-                break;
-            case 4:
-                enemy.room = j4;
-                enemy.setPos(scene);
-                break;
-            case 5:
-                loopNum = 0;
-                break;
-
-        }*/
-
-    }
+    setTimeout(() => enemy.changeRoom(spawnJunction, scene), 10000)
+    setTimeout(() => enemy.changeRoom(j2, scene), 10000)
+    setTimeout(() => enemy.changeRoom(j3, scene), 10000)
 
     stats.update();
 

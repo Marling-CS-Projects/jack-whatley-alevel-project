@@ -20,6 +20,13 @@ class Enemy {
 
     }
 
+    changeRoom(room, scene) {
+
+        this.room = room;
+        this.setPos(scene);
+
+    }
+
 }
 
 class Character {
