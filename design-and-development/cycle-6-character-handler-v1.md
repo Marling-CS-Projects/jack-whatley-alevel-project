@@ -662,24 +662,35 @@ export { Enemy, Character }
 {% endtab %}
 {% endtabs %}
 
-I also wanted to add a temporary system that would allow me to wait a number of frames before moving on to another action. This meant I had to use the clock function in THREE and make sure it was updated every time the animate function was run.
-
-This meant I had to use the clocks delta function which would allow me to update and animate things in real time. Thankfully to make this simpler this is already a part of THREE by default and I only had to create a new THREE.clock(). I also had to make it so the delta variable updated every frame using `delta = clock.getDelta()`.
-
-{% tabs %}
-{% tab title="animate function" %}
-This is the animate function contained inside game.js however it is not all visible; only the new code added is.
+To test out whether the characters could move around the rooms; I used the DomEvents from earlier and when the room was clicked on it would move the character to there.
 
 ```javascript
-// this was used to test if the cube moves
-setTimeout(() => enemy.changeRoom(spawnJunction, scene), 10000)
-setTimeout(() => enemy.changeRoom(j2, scene), 10000)
-setTimeout(() => enemy.changeRoom(j3, scene), 10000)
-```
-{% endtab %}
-{% endtabs %}
+// domevents from game.js
 
-What the above code does is move the cube; and then it pauses the game temporarily for 10 seconds which allows me to see whether the cube has moved or not. See below for the new change room function.
+domEvent.addEventListener(spawnJunction.components[0], "click", (e) => {
+    enemy.changeRoom(spawnJunction, scene);
+
+});
+
+domEvent.addEventListener(j1.components[0], "click", (e) => {
+    enemy.changeRoom(j1, scene);
+
+});
+
+domEvent.addEventListener(j2.components[0], "click", (e) => {
+    enemy.changeRoom(j2, scene);
+
+});
+
+domEvent.addEventListener(j3.components[0], "click", (e) => {
+    enemy.changeRoom(j3, scene);
+
+});
+```
+
+{% embed url="https://youtu.be/T0Jdj1pmE4k" %}
+A video demonstrating everything that has been added this cycle.
+{% endembed %}
 
 ### Challenges
 
