@@ -712,5 +712,27 @@ changeRoom(room, scene) {
 
 In Cycle 6 I needed to test that the map was displaying correctly without any errors; I also needed to make sure it was visible on the locked camera and that transitioning between the two didn't cause issues. I also needed to make sure the characters were working correctly and that their position could be updated.
 
+{% hint style="info" %}
+The YouTube video up above demonstrates most of these tests.
+{% endhint %}
+
 ### Tests
 
+**Test 1:** Map & Locked Camera
+
+For this test I wanted to make sure that the map was visible and that the transition between locked and free camera was seamless. I also needed to make sure that the locked camera mode had orbit controls disabled for it.
+
+| What I expect                                                      | What happened                                                                    | Pass/Fail |
+| ------------------------------------------------------------------ | -------------------------------------------------------------------------------- | --------- |
+| The whole map will be visible and in the correct colour.           | All 11 sections of the map are visible and the corridors are the correct colour. | Pass      |
+| The camera moves to the correct locked position and back.          | The camera jumps between the two positions correctly.                            | Pass      |
+| The locked camera will not be able to rotate like the free camera. | The locked camera has orbit controls disabled for it.                            | Pass      |
+
+**Test 2:** Character Test
+
+For this test I wanted to make sure that the DomEvents were working correctly and also that the characters were moving correctly when the DomEvents were activating.
+
+| What I expect                                                      | What happened                                                      | Pass/Fail |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------ | --------- |
+| The DomEvents will work when I click on the floor of a junction.   | The DomEvents activate correctly when I click on a junction floor. | Pass      |
+| The character will move to the room where the DomEvents activated. | The character moves to the correct room.                           | Pass      |
