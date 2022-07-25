@@ -3,30 +3,24 @@ import * as THREE from "three";
 import Stats from "./examples/jsm/libs/stats.module.js";
 
 import { OrbitControls, EffectComposer, RenderPass, UnrealBloomPass, GlitchPass, GLTFLoader, GUI } from "/exports.js";
-import { createCube, generateCorridor, generateJunction, Corridor, Junction, degToRad, Enemy, Character, multipleOf } from "/exports.js";
+import { createCube, generateCorridor, generateJunction, Corridor, Junction, degToRad, Enemy, Character, Map } from "/exports.js";
 import { THREEx } from "./exports.js";
 
 // consts:
 const scene = new THREE.Scene();
+
+const MapView = new THREE.Scene();
+
+let SCENES = scene;
+
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 100 );
 const renderer = new THREE.WebGLRenderer( { antialias: true } );
 const composer = new EffectComposer( renderer );
-const renderPass = new RenderPass( scene, camera );
+let renderPass = new RenderPass( SCENES, camera );
 const stats = new Stats();
 let sun = new THREE.SpotLight( 0x87ceeb, 10 );
-const controls = new OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls( camera, renderer.domElement );
 let domEvent = new THREEx.DomEvents( camera, renderer.domElement );
-
-const clock = new THREE.Clock();
-let delta = 0;
-let loopNum = 0;
-
-const params = {
-    exposure: 1,
-    bloomStrength: 0.5,
-    bloomThreshold: 1,
-    bloomRadius: 0
-}
 
 // variables:
 let showStats = false;
@@ -46,11 +40,6 @@ renderer.toneMapping = THREE.ReinhardToneMapping;
 
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
-const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
-bloomPass.threshold = params.bloomThreshold;
-bloomPass.strength = params.bloomStrength;
-bloomPass.radius = params.bloomRadius;
 
 composer.addPass( renderPass );
 //composer.addPass( bloomPass );
@@ -78,52 +67,58 @@ const moveableCube = createCube([1, 1, 1], 0xddff00);
 
 moveableCube.position.set(0, 1, 0);
 
-sun.target = moveableCube;
-
 const light = new THREE.AmbientLight( 0x404040 ); // soft white light
 scene.add( light );
 
 //scene.add(basicCube);
 scene.add(moveableCube);
 
-let testmap = [];
-
 const spawnJunction = generateJunction([10, 1, 10], 0xffffff, [0, 0, 0]);
-spawnJunction.add(scene);
 
 const c1 = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [10, 0, 0]);
-c1.add(scene);
 
 const c2 = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [-10, 0, 0]);
-c2.add(scene);
 
 const j1 = generateJunction([10, 1, 10], 0xffffff, [-20, 0, 0]);
-j1.add(scene);
 
 const c3 = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [20, 0, 0]);
-c3.add(scene);
 
 const c4 = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [0, 0, 10], "z");
-c4.add(scene);
 
 const c5 = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [-20, 0, 10], "z");
-c5.add(scene);
 
 const j2 = generateJunction([10, 1, 10], 0xffffff, [-20, 0, 20]);
-j2.add(scene);
 
 const c6 = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [-10, 0, 20]);
-c6.add(scene);
 
 const j3 = generateJunction([10, 1, 10], 0xffffff, [0, 0, 20]);
-j3.add(scene);
 
 const j4 = generateJunction([10, 1, 10], 0xffffff, [30, 0, 0]);
-j4.add(scene);
+
+let MAP = new Map([], [], [spawnJunction, c1, c2, c3, c4, c5, c6, j1, j2, j3, j4])
+MAP.createScene(scene);
 
 domEvent.addEventListener(spawnJunction.components[0], "click", (e) => {
 
-    alert("Test");
+    enemy.changeRoom(spawnJunction, scene);
+
+});
+
+domEvent.addEventListener(j1.components[0], "click", (e) => {
+
+    enemy.changeRoom(j1, scene);
+
+});
+
+domEvent.addEventListener(j2.components[0], "click", (e) => {
+
+    enemy.changeRoom(j2, scene);
+
+});
+
+domEvent.addEventListener(j3.components[0], "click", (e) => {
+
+    enemy.changeRoom(j3, scene);
 
 });
 
@@ -231,6 +226,11 @@ function createPanel() {
             camera.lookAt(moveableCube.position);
             freecam = true;
 
+        },
+        "Default Scene": function() {
+
+            SCENES = MapView;
+
         }
 
     }
@@ -304,10 +304,6 @@ function animate() {
         controls.enableZoom = true;
 
     }
-
-    setTimeout(() => enemy.changeRoom(spawnJunction, scene), 10000)
-    setTimeout(() => enemy.changeRoom(j2, scene), 10000)
-    setTimeout(() => enemy.changeRoom(j3, scene), 10000)
 
     stats.update();
 
