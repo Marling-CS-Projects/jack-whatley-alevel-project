@@ -8,15 +8,14 @@ import { THREEx } from "./exports.js";
 
 // consts:
 const scene = new THREE.Scene();
-
 const MapView = new THREE.Scene();
 
 let SCENES = scene;
 
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 100 );
 const renderer = new THREE.WebGLRenderer( { antialias: true } );
-const composer = new EffectComposer( renderer );
-let renderPass = new RenderPass( SCENES, camera );
+//const composer = new EffectComposer( renderer );
+//let renderPass = new RenderPass( SCENES, camera );
 const stats = new Stats();
 let sun = new THREE.SpotLight( 0x87ceeb, 10 );
 const controls = new OrbitControls( camera, renderer.domElement );
@@ -41,7 +40,7 @@ renderer.toneMapping = THREE.ReinhardToneMapping;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-composer.addPass( renderPass );
+//composer.addPass( renderPass );
 //composer.addPass( bloomPass );
 
 /*const glitchPass = new GlitchPass();
@@ -62,13 +61,16 @@ scene.add( new THREE.SpotLightHelper( sun ) );
 
 // objects
 
-//const basicCube = createCube([10, 1, 10], 0xfffffff);
+const basicCube = createCube([10, 1, 10], 0xfffffff);
 const moveableCube = createCube([1, 1, 1], 0xddff00);
+
+MapView.add( basicCube );
 
 moveableCube.position.set(0, 1, 0);
 
 const light = new THREE.AmbientLight( 0x404040 ); // soft white light
 scene.add( light );
+MapView.add( light );
 
 //scene.add(basicCube);
 scene.add(moveableCube);
@@ -200,14 +202,14 @@ window.addEventListener("keyup", (e) => {
 
 function createPanel() {
 
-    const panel = new GUI( { width: 310 } );
+    const panel = new GUI( { width: 300 } );
 
     const helpFolder = panel.addFolder( "Help" );
     const settingFolder = panel.addFolder( "Settings" );
 
     let settings = {
 
-        "Use the show stats button to see stats.": delta,
+        "Use the show stats button to see stats.": "0",
         "Show Stats": function() {
 
             document.body.appendChild( stats.dom );
@@ -227,9 +229,14 @@ function createPanel() {
             freecam = true;
 
         },
-        "Default Scene": function() {
+        "Map Scene": function() {
 
             SCENES = MapView;
+
+        },
+        "Other Scene": function() {
+
+            SCENES = scene;
 
         }
 
@@ -239,8 +246,10 @@ function createPanel() {
     settingFolder.add( settings, "Show Stats" );
     settingFolder.add( settings, "Lock Camera" );
     settingFolder.add( settings, "Free Camera" );
+    settingFolder.add( settings, "Map Scene" );
+    settingFolder.add( settings, "Other Scene" );
 
-    helpFolder.close();
+    helpFolder.open();
     settingFolder.open();
 
 }
@@ -307,7 +316,7 @@ function animate() {
 
     stats.update();
 
-    composer.render();
+    renderer.render( SCENES, camera );
 
 }
 
