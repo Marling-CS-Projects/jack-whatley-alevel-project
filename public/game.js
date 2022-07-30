@@ -5,17 +5,22 @@ import Stats from "./examples/jsm/libs/stats.module.js";
 import { OrbitControls, EffectComposer, RenderPass, UnrealBloomPass, GlitchPass, GLTFLoader, GUI } from "/exports.js";
 import { createCube, generateCorridor, generateJunction, Corridor, Junction, degToRad, Enemy, Character, Map } from "/exports.js";
 import { THREEx } from "./exports.js";
+import { Camera } from "three";
 
 // consts:
 const scene = new THREE.Scene();
 const MapView = new THREE.Scene();
 
-let SCENES = scene;
+let SCENE = scene;
 
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 100 );
+const MapCamera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 100 );
+
+let CAMERA = camera;
+
 const renderer = new THREE.WebGLRenderer( { antialias: true } );
 //const composer = new EffectComposer( renderer );
-//let renderPass = new RenderPass( SCENES, camera );
+//let renderPass = new RenderPass( SCENE, camera );
 const stats = new Stats();
 let sun = new THREE.SpotLight( 0x87ceeb, 10 );
 const controls = new OrbitControls( camera, renderer.domElement );
@@ -135,7 +140,12 @@ character.setPos(scene);
 camera.position.x = -5;
 camera.position.y = 5;
 
+MapCamera.position.x = -5;
+MapCamera.position.y = 5;
+
 camera.lookAt(0,1,0);
+
+MapCamera.lookAt(0,1,0);
 
 scene.add( new THREE.AxesHelper(1000) );
 
@@ -231,12 +241,14 @@ function createPanel() {
         },
         "Map Scene": function() {
 
-            SCENES = MapView;
+            SCENE = MapView;
+            CAMERA = MapCamera;
 
         },
-        "Other Scene": function() {
+        "Test Scene": function() {
 
-            SCENES = scene;
+            SCENE = scene;
+            CAMERA = camera;
 
         }
 
@@ -247,7 +259,7 @@ function createPanel() {
     settingFolder.add( settings, "Lock Camera" );
     settingFolder.add( settings, "Free Camera" );
     settingFolder.add( settings, "Map Scene" );
-    settingFolder.add( settings, "Other Scene" );
+    settingFolder.add( settings, "Test Scene" );
 
     helpFolder.open();
     settingFolder.open();
@@ -316,7 +328,7 @@ function animate() {
 
     stats.update();
 
-    renderer.render( SCENES, camera );
+    renderer.render( SCENE, CAMERA );
 
 }
 
