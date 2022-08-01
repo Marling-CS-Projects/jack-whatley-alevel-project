@@ -121,4 +121,9 @@ animate();
 createPanel();
 ```
 
-**Development Part 2:** t
+**Development Part 2:** Map Generation
+
+For this part of development I wanted to take what I had learnt in Dev Part 1 and Cycle 6 to make sure the core game logic was in place. To do this I came up with a hierarchy chart style diagram to help plan my implementation.
+
+![A simple plan that will allow me to add the first iteration of game logic.](../.gitbook/assets/comp-logic-plan.png)
+

@@ -217,4 +217,4 @@ For Cycle 0 the elements I needed to test were: is the server working, can I mak
 
 ![Image example of me running the express server.](<../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png>)
 
-![My games placeholder main menu.](../.gitbook/assets/image.png)
+![My games placeholder main menu.](<../.gitbook/assets/image (2).png>)

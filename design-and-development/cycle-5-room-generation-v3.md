@@ -459,4 +459,4 @@ export { Corridor, Junction };
 {% endtab %}
 {% endtabs %}
 
-![Proof that the new generation method works; here are the two test rooms.](<../.gitbook/assets/image (2).png>)
+![Proof that the new generation method works; here are the two test rooms.](<../.gitbook/assets/image (2) (2).png>)
