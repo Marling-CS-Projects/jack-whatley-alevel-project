@@ -5,7 +5,6 @@ import Stats from "./examples/jsm/libs/stats.module.js";
 import { OrbitControls, EffectComposer, RenderPass, UnrealBloomPass, GlitchPass, GLTFLoader, GUI } from "/exports.js";
 import { createCube, generateCorridor, generateJunction, Corridor, Junction, degToRad, Enemy, Character, Map } from "/exports.js";
 import { THREEx } from "./exports.js";
-import { Camera } from "three";
 
 // consts:
 const scene = new THREE.Scene();
@@ -23,6 +22,7 @@ const renderer = new THREE.WebGLRenderer( { antialias: true } );
 //let renderPass = new RenderPass( SCENE, camera );
 const stats = new Stats();
 let sun = new THREE.SpotLight( 0x87ceeb, 10 );
+let sun2 = new THREE.SpotLight( 0x87ceeb, 10 );
 const controls = new OrbitControls( camera, renderer.domElement );
 let domEvent = new THREEx.DomEvents( camera, renderer.domElement );
 
@@ -57,19 +57,27 @@ sun.target.position.set(-10, 0, 10);
 sun.position.set(-10, 50, 10);
 sun.castShadow = true;
 
+sun2.target.position.set(-10, 0, 10);
+sun2.position.set(-10, 50, 10);
+sun2.castShadow = true;
+
 sun.shadow.bias = -0.00000000000000000001;
 sun.shadow.mapSize.width = 2048 * 8;
 sun.shadow.mapSize.height = 2048 * 8;
 
+sun2.shadow.bias = -0.00000000000000000001;
+sun2.shadow.mapSize.width = 2048 * 8;
+sun2.shadow.mapSize.height = 2048 * 8;
+
 scene.add( sun );
+MapView.add( sun2 );
 scene.add( new THREE.SpotLightHelper( sun ) );
 
 // objects
 
-const basicCube = createCube([10, 1, 10], 0xfffffff);
 const moveableCube = createCube([1, 1, 1], 0xddff00);
 
-MapView.add( basicCube );
+//MapView.add( basicCube );
 
 moveableCube.position.set(0, 1, 0);
 
@@ -102,8 +110,10 @@ const j3 = generateJunction([10, 1, 10], 0xffffff, [0, 0, 20]);
 
 const j4 = generateJunction([10, 1, 10], 0xffffff, [30, 0, 0]);
 
-let MAP = new Map([], [], [spawnJunction, c1, c2, c3, c4, c5, c6, j1, j2, j3, j4])
+let MAP = new Map([], [], [spawnJunction, c1, c2, c3, c4, c5, c6, j1, j2, j3, j4], [])
 MAP.createScene(scene);
+MAP.createMapScreen(MapView);
+//MAP.mapScreen.generateMap(MapView);
 
 domEvent.addEventListener(spawnJunction.components[0], "click", (e) => {
 
