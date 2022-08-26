@@ -111,9 +111,13 @@ const j3 = generateJunction([10, 1, 10], 0xffffff, [0, 0, 20]);
 const j4 = generateJunction([10, 1, 10], 0xffffff, [30, 0, 0]);
 
 let MAP = new Map([], [], [spawnJunction, c1, c2, c3, c4, c5, c6, j1, j2, j3, j4], [])
-MAP.createScene(scene);
-MAP.createMapScreen(MapView);
-//MAP.mapScreen.generateMap(MapView);
+//MAP.createScene(scene);
+console.log(MAP.rooms.length);
+MAP.createMapScreen();
+MAP.createMap(MapView);
+console.log(MAP.map);
+
+console.log(MapView);
 
 domEvent.addEventListener(spawnJunction.components[0], "click", (e) => {
 

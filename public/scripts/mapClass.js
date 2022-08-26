@@ -2,11 +2,11 @@ import { Corridor, Junction } from "/scripts/roomClass.js";
 import { createCube } from "/scripts/createCube.js";
 
 class Map {
-    constructor(characters, enemy, rooms, mapScreen) {
+    constructor(characters, enemy, rooms, map) {
         this.characters = characters;
         this.enemy = enemy;
         this.rooms = rooms;
-        this.mapScreen = mapScreen;
+        this.map = map;
 
     }
 
@@ -18,28 +18,20 @@ class Map {
 
     }
 
-    createMapScreen(scene) {
+    createMapScreen() {
         for (let i = 0; i < this.rooms.length; i++) {
-            scene.add(createCube([this.rooms[i].size[0], 1, this.rooms[i].size[2]], 0xffffff));
+            let mapRoom = createCube([this.rooms[i].size[0], 1, this.rooms[i].size[2]], 0xffffff);
+            this.map.push(mapRoom);
 
         }
 
     }
 
-}
+    createMap(scene) {
+        this.map.forEach(element => {
+            scene.add(element);
 
-class MapScreen {
-    constructor(rooms, maprooms) {
-        this.rooms = rooms;
-        this.maprooms = maprooms;
-
-    }
-
-    generateMap(scene) {
-        for (let i = 0; i < this.rooms.length; i++) {
-            scene.add(createCube([this.rooms[i].size[0], 1, this.rooms[i].size[2]], 0xffffff));
-
-        }
+        })
 
     }
 
