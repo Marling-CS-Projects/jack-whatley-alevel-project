@@ -110,10 +110,9 @@ const j3 = generateJunction([10, 1, 10], 0xffffff, [0, 0, 20]);
 
 const j4 = generateJunction([10, 1, 10], 0xffffff, [30, 0, 0]);
 
-let MAP = new Map([], [], [spawnJunction, c1, c2, c3, c4, c5, c6, j1, j2, j3, j4], [])
-//MAP.createScene(scene);
+let MAP = new Map([], [], [spawnJunction, c1, c2, c3, c4, c5, c6, j1, j2, j3, j4], []);
 console.log(MAP.rooms.length);
-MAP.createMapScreen();
+MAP.createScene(scene);
 MAP.createMap(MapView);
 console.log(MAP.map);
 
@@ -154,12 +153,13 @@ character.setPos(scene);
 camera.position.x = -5;
 camera.position.y = 5;
 
-MapCamera.position.x = -5;
-MapCamera.position.y = 5;
+MapCamera.position.x = 0;
+MapCamera.position.y = 30;
+MapCamera.position.z = 8;
 
 camera.lookAt(0,1,0);
 
-MapCamera.lookAt(0,1,0);
+MapCamera.lookAt(0,1,8);
 
 scene.add( new THREE.AxesHelper(1000) );
 

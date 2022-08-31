@@ -34,7 +34,7 @@ function generateCorridor(size, colour, position, rotation) { // size [1, 10, 1]
 
     let components = [floor, wall1, wall2];
 
-    let room = new Corridor(size, components);
+    let room = new Corridor(size, components, position, rotation);
 
     return room;
 
@@ -88,7 +88,7 @@ function generateJunction(size, colour, position) {
 
     }*/
 
-    let room = new Junction(size, components);
+    let room = new Junction(size, components, position);
 
     return room;
 

@@ -1,7 +1,9 @@
 class Corridor {
-    constructor(size, components) {
+    constructor(size, components, position, orientation) {
         this.size = size;
         this.components = components;
+        this.position = position;
+        this.orientation = orientation;
 
     }
 
@@ -16,9 +18,10 @@ class Corridor {
 }
 
 class Junction {
-    constructor(size, components) {
+    constructor(size, components, position) {
         this.size = size;
         this.components = components;
+        this.position = position;
 
     }
 
