@@ -1,10 +1,9 @@
 import * as THREE from "three";
 
-function createCube(size, col) {
+function createCube(size, mat) {
 
     let mesh = new THREE.BoxGeometry(size[0], size[1], size[2]);
-    let material = new THREE.MeshStandardMaterial({color: col});
-    let shape = new THREE.Mesh(mesh, material);
+    let shape = new THREE.Mesh(mesh, mat);
 
     shape.castShadow = true;
     shape.receiveShadow = true;

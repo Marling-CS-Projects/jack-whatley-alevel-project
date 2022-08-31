@@ -75,7 +75,9 @@ scene.add( new THREE.SpotLightHelper( sun ) );
 
 // objects
 
-const moveableCube = createCube([1, 1, 1], 0xddff00);
+let material1 = new THREE.MeshStandardMaterial({color: 0xddff00});
+
+const moveableCube = createCube([1, 1, 1], material1);
 
 //MapView.add( basicCube );
 
@@ -142,10 +144,14 @@ domEvent.addEventListener(j3.components[0], "click", (e) => {
 
 });
 
-const enemy = new Enemy(j4, createCube([1, 5, 1], 0xffff11));
+let material2 = new THREE.MeshStandardMaterial({color: 0xffff11});
+
+const enemy = new Enemy(j4, createCube([1, 5, 1], material2));
 enemy.setPos(scene);
 
-const character = new Character(spawnJunction, createCube([1, 5, 1], 0xff1111));
+let material3 = new THREE.MeshStandardMaterial({color: 0xff1111});
+
+const character = new Character(spawnJunction, createCube([1, 5, 1], material3));
 character.setPos(scene);
 
 // other
