@@ -159,13 +159,13 @@ character.setPos(scene);
 camera.position.x = -5;
 camera.position.y = 5;
 
-MapCamera.position.x = 0;
-MapCamera.position.y = 30;
+MapCamera.position.x = 5;
+MapCamera.position.y = 50;
 MapCamera.position.z = 8;
 
 camera.lookAt(0,1,0);
 
-MapCamera.lookAt(0,1,8);
+MapCamera.lookAt(5,1,8);
 
 scene.add( new THREE.AxesHelper(1000) );
 

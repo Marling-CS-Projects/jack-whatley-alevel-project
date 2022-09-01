@@ -25,8 +25,8 @@ class Map {
             let material = new THREE.MeshStandardMaterial({color: 0x000000});
             let outlineMaterial = new THREE.MeshBasicMaterial({color: 0xffffff, side: THREE.BackSide});
 
-            let component = createCube([this.rooms[i].size[0] - 1, 1, this.rooms[i].size[2] - 1], material);
-            let outline = createCube([this.rooms[i].size[0] - 1, 1, this.rooms[i].size[2] - 1], outlineMaterial);
+            let component = createCube([this.rooms[i].size[0] - 1.5, 1, this.rooms[i].size[2] - 1.5], material);
+            let outline = createCube([this.rooms[i].size[0] - 1.5, 1, this.rooms[i].size[2] - 1.5], outlineMaterial);
 
             component.position.set(this.rooms[i].position[0], 1, this.rooms[i].position[2]);
             outline.position.set(this.rooms[i].position[0], 1, this.rooms[i].position[2]);
