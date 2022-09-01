@@ -3,7 +3,7 @@ import * as THREE from "three";
 import Stats from "./examples/jsm/libs/stats.module.js";
 
 import { OrbitControls, EffectComposer, RenderPass, UnrealBloomPass, GlitchPass, GLTFLoader, GUI } from "/exports.js";
-import { createCube, generateCorridor, generateJunction, Corridor, Junction, degToRad, Enemy, Character, Map } from "/exports.js";
+import { createCube, generateCorridor, generateJunction, RoomScene, Corridor, Junction, degToRad, Enemy, Character, Map } from "/exports.js";
 import { THREEx } from "./exports.js";
 
 // consts:
@@ -112,13 +112,33 @@ const j3 = generateJunction([10, 1, 10], 0xffffff, [0, 0, 20]);
 
 const j4 = generateJunction([10, 1, 10], 0xffffff, [30, 0, 0]);
 
-let MAP = new Map([], [], [spawnJunction, c1, c2, c3, c4, c5, c6, j1, j2, j3, j4], []);
-console.log(MAP.rooms.length);
+let MAP = new Map([], [], [spawnJunction, c1, c2, c3, c4, c5, c6, j1, j2, j3, j4], [], []);
 MAP.createScene(scene);
 MAP.createMap(MapView);
-console.log(MAP.map);
 
-console.log(MapView);
+for (let i = 0; i < MAP.rooms.length; i++) {
+    let roomScene = new RoomScene(`${MAP.rooms[i].constructor.name}${i}`, new THREE.Scene, MAP.rooms[i]);
+    MAP.scenes.push(roomScene);
+
+}
+
+console.log(MAP.scenes);
+
+for (let i = 0; i < MAP.scenes.length; i++) {
+    let room;
+    
+    if (MAP.scenes[i].room.constructor.name === "Corridor") {
+        room = generateCorridor(MAP.scenes[i].room.size, 0xff11ff, [0,0,0], MAP.scenes[i].room.rotation);
+
+    }
+    if (MAP.scenes[i].room.constructor.name === "Junction") {
+        room = generateJunction(MAP.scenes[i].room.size, 0xffffff, [0,0,0]);
+
+    }
+    
+    room.add(MAP.scenes[i].scene);
+
+}
 
 domEvent.addEventListener(spawnJunction.components[0], "click", (e) => {
 

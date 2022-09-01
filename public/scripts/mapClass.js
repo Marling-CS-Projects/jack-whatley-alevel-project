@@ -4,11 +4,12 @@ import { createCube } from "/scripts/createCube.js";
 import { degToRad } from "./degToRad.js";
 
 class Map {
-    constructor(characters, enemy, rooms, map) {
+    constructor(characters, enemy, rooms, map, scenes) {
         this.characters = characters;
         this.enemy = enemy;
         this.rooms = rooms;
         this.map = map;
+        this.scenes = scenes;
 
     }
 
@@ -72,4 +73,14 @@ class MapRoom {
 
 }
 
-export { Map }
+class RoomScene {
+    constructor(name, scene, room) {
+        this.name = name;
+        this.scene = scene;
+        this.room = room;
+
+    }
+
+}
+
+export { Map, RoomScene }
