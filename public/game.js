@@ -122,23 +122,33 @@ for (let i = 0; i < MAP.rooms.length; i++) {
 
 }
 
-console.log(MAP.scenes);
-
 for (let i = 0; i < MAP.scenes.length; i++) {
     let room;
+    let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 100 );
+    let roomlight = new THREE.SpotLight( 0x87ceeb, 10 );
+    roomlight.target.position.set(-10, 0, 10);
+    roomlight.position.set(-10, 50, 10);
     
     if (MAP.scenes[i].room.constructor.name === "Corridor") {
         room = generateCorridor(MAP.scenes[i].room.size, 0xff11ff, [0,0,0], MAP.scenes[i].room.rotation);
+        camera.position.set(-5,10,0);
+        camera.lookAt(0,1,0);
 
     }
     if (MAP.scenes[i].room.constructor.name === "Junction") {
         room = generateJunction(MAP.scenes[i].room.size, 0xffffff, [0,0,0]);
+        camera.position.set(-5,15,0);
+        camera.lookAt(0,1,0);
 
     }
     
     room.add(MAP.scenes[i].scene);
+    MAP.scenes[i].scene.add(camera);
+    MAP.scenes[i].scene.add(roomlight);
 
 }
+
+console.log(MAP.scenes);
 
 domEvent.addEventListener(spawnJunction.components[0], "click", (e) => {
 
@@ -290,7 +300,14 @@ function createPanel() {
             SCENE = scene;
             CAMERA = camera;
 
+        },
+        "Switch Scene Test": function() {
+
+            SCENE = MAP.scenes[0].scene;
+            CAMERA = camera;
+
         }
+
 
     }
 
@@ -300,6 +317,7 @@ function createPanel() {
     settingFolder.add( settings, "Free Camera" );
     settingFolder.add( settings, "Map Scene" );
     settingFolder.add( settings, "Test Scene" );
+    settingFolder.add( settings, "Switch Scene Test" );
 
     helpFolder.open();
     settingFolder.open();
