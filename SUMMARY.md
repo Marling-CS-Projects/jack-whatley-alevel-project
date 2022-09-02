@@ -24,6 +24,7 @@
 * [CYCLE 5 Room Generation v3](design-and-development/cycle-5-room-generation-v3.md)
 * [CYCLE 6 Character Handler v1](design-and-development/cycle-6-character-handler-v1.md)
 * [CYCLE 7 Separate Screens](design-and-development/cycle-7-separate-screens.md)
+* [CYCLE 8 Game Logic](design-and-development/cycle-8-game-logic.md)
 
 ## Testing
 
