@@ -127,3 +127,100 @@ For this part of development I wanted to take what I had learnt in Dev Part 1 an
 
 ![A simple plan that will allow me to add the first iteration of game logic.](../.gitbook/assets/comp-logic-plan.png)
 
+To begin with I started by working on interpreting the data and then adding them to the Map Scene that I had created in development part one. This involved updating the Map class with a two new variables titled map (for the map scene) and scenes (to hold all the individual scenes). This ticks of a number of things set out above.
+
+```javascript
+// the updated map class
+class Map {
+    constructor(characters, enemy, rooms, map, scenes) {
+        this.characters = characters;
+        this.enemy = enemy;
+        this.rooms = rooms;
+        this.map = map;
+        this.scenes = scenes;
+
+    }
+
+    createScene(scene) { // this puts all elements in the map creation screen
+        this.rooms.forEach(element => {
+            element.add(scene);
+
+        });
+
+    }
+
+    createMapScreen() { // this creates the map scene
+        for (let i = 0; i < this.rooms.length; i++) {
+            let material = new THREE.MeshStandardMaterial({color: 0x000000});
+            let outlineMaterial = new THREE.MeshBasicMaterial({color: 0xffffff, side: THREE.BackSide});
+
+            let component = createCube([this.rooms[i].size[0] - 1.5, 1, this.rooms[i].size[2] - 1.5], material);
+            let outline = createCube([this.rooms[i].size[0] - 1.5, 1, this.rooms[i].size[2] - 1.5], outlineMaterial);
+
+            component.position.set(this.rooms[i].position[0], 1, this.rooms[i].position[2]);
+            outline.position.set(this.rooms[i].position[0], 1, this.rooms[i].position[2]);
+
+            outline.scale.set(1.05,1.05,1.05);
+            
+            if (this.rooms[i].constructor.name === "Corridor") {
+                if (this.rooms[i].orientation === "z") {
+                    component.rotation.y = degToRad(90);
+                    outline.rotation.y = degToRad(90);
+
+                }
+
+            }
+
+            let mapRoom = new MapRoom([component, outline], this.rooms[i]);
+            this.map.push(mapRoom);
+
+        }
+
+    }
+
+    createMap(scene) { // this add all elements to the map scene
+        this.createMapScreen();
+        this.map.forEach(element => {
+            element.components.forEach(component => {
+                scene.add(component);
+
+            })
+
+        })
+
+    }
+
+}
+```
+
+I also needed to create two more classes in the mapClass.js file so as to be able to store the scene data in a way that was intuitive and uses object orientated programming.
+
+```javascript
+class MapRoom {
+    constructor(components, link) {
+        this.components = components;
+        this.link = link;
+
+    }
+
+}
+
+class RoomScene {
+    constructor(name, scene, room) {
+        this.name = name;
+        this.scene = scene;
+        this.room = room;
+
+    }
+
+}
+
+export { Map, RoomScene }
+```
+
+The reason that the create map scene function is so complicated is because I wanted the map items to have a white outline; this means for each room I had to create two cubes and then make one of them have a THREE.Backside texture. This means that because it is slightly larger than the other cube it appears as on outline.
+
+<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>The outline effect of the map screen.</p></figcaption></figure>
+
+**Development Part 3:** Map Links
+
