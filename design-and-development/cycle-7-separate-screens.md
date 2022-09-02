@@ -9,10 +9,10 @@ In Cycle 7 I wanted to start making the game less of a testing ground and more l
 I also wanted the game to be able to handle new features in the future like procedural generation with less work needed. Therefore I also wanted to create a system that would do all the generation for me when provided with an array of rooms.
 
 * [x] Create a method for switch between scenes.
-* [ ] Create a class for the map; that stores rooms and functions.
-* [ ] Create a function that generates the map scene.
-* [ ] Create a function that generates all the individual room scenes.
-* [ ] Make the map screen simple looking.
+* [x] Create a class for the map; that stores rooms and functions.
+* [x] Create a function that generates the map scene.
+* [x] Create a function that generates all the individual room scenes.
+* [x] Make the map screen simple looking.
 
 ### Key Variables
 
@@ -35,8 +35,8 @@ As in Cycle 6 I will be breaking down this development into multiple parts; this
 
 To allow me to have a map screen and also a room screen; I needed to create a method for switching scenes. To do this I created variables for storing which scene and camera is currently active. These can then be changed whilst the game is running and are updated in the animate function.
 
+{% code title="game.js" overflow="wrap" %}
 ```javascript
-// part of game.js
 const scene = new THREE.Scene();
 const MapView = new THREE.Scene();
 
@@ -47,9 +47,11 @@ const MapCamera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.in
 
 let CAMERA = camera; // sets to default camera (test map camera)
 ```
+{% endcode %}
 
 To actually test this out, I had to implement a way to switch scenes while the game was running. This was easy to do thanks to the GUI I had added previously as all I had to do was add two buttons that would switch the scenes and cameras. Then all I had to do was update the render function with the two variables `SCENE` and `CAMERA`.
 
+{% code title="game.js" overflow="wrap" %}
 ```javascript
 function createPanel() {
 
@@ -120,6 +122,7 @@ function animate() { // not the full animate function
 animate();
 createPanel();
 ```
+{% endcode %}
 
 **Development Part 2:** Map Generation
 
@@ -129,6 +132,7 @@ For this part of development I wanted to take what I had learnt in Dev Part 1 an
 
 To begin with I started by working on interpreting the data and then adding them to the Map Scene that I had created in development part one. This involved updating the Map class with a two new variables titled map (for the map scene) and scenes (to hold all the individual scenes). This ticks of a number of things set out above.
 
+{% code title="" overflow="wrap" %}
 ```javascript
 // the updated map class
 class Map {
@@ -192,9 +196,11 @@ class Map {
 
 }
 ```
+{% endcode %}
 
-I also needed to create two more classes in the mapClass.js file so as to be able to store the scene data in a way that was intuitive and uses object orientated programming.
+I also needed to create two more classes so as to be able to store the scene data in a way that was intuitive and uses object orientated programming.
 
+{% code title="mapClass.js" %}
 ```javascript
 class MapRoom {
     constructor(components, link) {
@@ -217,10 +223,25 @@ class RoomScene {
 
 export { Map, RoomScene }
 ```
+{% endcode %}
 
 The reason that the create map scene function is so complicated is because I wanted the map items to have a white outline; this means for each room I had to create two cubes and then make one of them have a THREE.Backside texture. This means that because it is slightly larger than the other cube it appears as on outline.
 
 <figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>The outline effect of the map screen.</p></figcaption></figure>
 
-**Development Part 3:** Map Links
+**Development Part 3:** Map Links Test
 
+To begin with I had to complete the final part of the diagram above; meaning that from the map screen I had to generate individual scenes from the map data. Then I had to put a new camera and also a new Corridor or Junction in each scene.
+
+<pre class="language-javascript" data-title="game.js" data-overflow="wrap"><code class="lang-javascript"><strong>// this part takes all the data from the map creation scene
+</strong><strong>let MAP = new Map([], [], [spawnJunction, c1, c2, c3, c4, c5, c6, j1, j2, j3, j4], [], []);
+</strong>MAP.createScene(scene);
+MAP.createMap(MapView); // creating the map screen
+
+for (let i = 0; i &#x3C; MAP.rooms.length; i++) {
+    let roomScene = new RoomScene(`${MAP.rooms[i].constructor.name}${i}`, new THREE.Scene, MAP.rooms[i]);
+    MAP.scenes.push(roomScene);
+
+}</code></pre>
+
+I then also created a loop to generate&#x20;
