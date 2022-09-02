@@ -397,3 +397,60 @@ function createPanel() {
 
 **Development Part 4:** Linking Everything
 
+To link everything it was surprisingly simple as all I had to do was add another for loop that would create DomEvents for every part of the map room. This would then be set to switch the SCENE and CAMERA variables to the relevant ones for the room clicked on.
+
+{% code title="game.js domevent loop" overflow="wrap" %}
+```javascript
+for (let i = 0; i < MAP.scenes.length; i++) {
+    domEvent.addEventListener(MAP.map[i].components[0], "click", (e) => {
+        SCENE = MAP.scenes[i].scene;
+        CAMERA = MAP.scenes[i].camera[0];
+
+    });
+}
+```
+{% endcode %}
+
+{% embed url="https://youtu.be/zZaxlxfCdVI" %}
+Video demonstrating the new working Map Screen.
+{% endembed %}
+
+### Challenges
+
+The main problem I had was when I initially implemented the switching of the scenes it would sometimes switch to a corridor when I clicked on one; but other times it would be a junction. This was because the DomEvents variable was using the camera from the test scene. This meant the rays it was sending were from the wrong camera causing this issue.
+
+{% code title="DomEvents before." %}
+```javascript
+let domEvent = new THREEx.DomEvents( camera, renderer.domElement );
+```
+{% endcode %}
+
+{% code title="DomEvents after." %}
+```javascript
+let domEvent = new THREEx.DomEvents( MapCamera, renderer.domElement );
+```
+{% endcode %}
+
+## Testing
+
+In Cycle 7 I needed to make sure that the scene switching was working correctly, that the map was working correctly and that the DomEvents are triggering in the map screen.
+
+### Tests
+
+**Test 1:** Scene Switching
+
+I needed to make sure that the scene switching was working correctly as the basis for all the other progress that I had made in this development cycle.
+
+| What I expect                                   | What happened                                                        | Pass/Fail |
+| ----------------------------------------------- | -------------------------------------------------------------------- | --------- |
+| The scene and camera will change without error. | The scene and camera correctly change without error.                 | Pass      |
+| Actions in one scene won't affect another.      | The characters in other scenes don't move when I click on the rooms. | Pass      |
+
+**Test 2:** Map Screen Dom Events
+
+It is also important to make sure the map screen works correctly as this will be the basis for the rest of the game.
+
+| What I expect                                                      | What happened                      | Pass/Fail |
+| ------------------------------------------------------------------ | ---------------------------------- | --------- |
+| Clicking on a junction will take me to the correct junction scene. | The correct junction is displayed. | Pass      |
+| Clicking on a corridor will take me to the correct corridor scene. | The correct corridor is displayed. | Pass      |
