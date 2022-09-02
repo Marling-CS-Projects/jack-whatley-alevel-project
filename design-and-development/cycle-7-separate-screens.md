@@ -229,19 +229,171 @@ The reason that the create map scene function is so complicated is because I wan
 
 <figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>The outline effect of the map screen.</p></figcaption></figure>
 
-**Development Part 3:** Map Links Test
+**Development Part 3:** Individual Scenes
 
 To begin with I had to complete the final part of the diagram above; meaning that from the map screen I had to generate individual scenes from the map data. Then I had to put a new camera and also a new Corridor or Junction in each scene.
 
-<pre class="language-javascript" data-title="game.js" data-overflow="wrap"><code class="lang-javascript"><strong>// this part takes all the data from the map creation scene
-</strong><strong>let MAP = new Map([], [], [spawnJunction, c1, c2, c3, c4, c5, c6, j1, j2, j3, j4], [], []);
-</strong>MAP.createScene(scene);
+{% code title="game.jsj" overflow="wrap" %}
+```javascript
+// this part takes all the data from the map creation scene
+let MAP = new Map([], [], [spawnJunction, c1, c2, c3, c4, c5, c6, j1, j2, j3, j4], [], []);
+MAP.createScene(scene);
 MAP.createMap(MapView); // creating the map screen
 
-for (let i = 0; i &#x3C; MAP.rooms.length; i++) {
+for (let i = 0; i < MAP.rooms.length; i++) {
     let roomScene = new RoomScene(`${MAP.rooms[i].constructor.name}${i}`, new THREE.Scene, MAP.rooms[i]);
     MAP.scenes.push(roomScene);
 
-}</code></pre>
+}
+```
+{% endcode %}
 
-I then also created a loop to generate&#x20;
+I then also created a loop that would create all the individual scenes and push them to the scenes array that is part of the MAP class. This is somewhat complicated as I had to make sure that all rooms stored which type they are and also knew which orientation the corridors were. Scenes also need a light and camera so I had to ensure those were added; but for the moment as a method to test out this loop I just added a function to the UI to switch to room scene one.
+
+{% tabs %}
+{% tab title="Scene Creation Loop" %}
+{% code title="game.js scene loop" overflow="wrap" %}
+```javascript
+for (let i = 0; i < MAP.scenes.length; i++) {
+    let room;
+    let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 100 );
+    let roomlight = new THREE.SpotLight( 0x87ceeb, 10 );
+    roomlight.target.position.set(-10, 0, 10);
+    roomlight.position.set(-10, 50, 10);
+    
+    if (MAP.scenes[i].room.constructor.name === "Corridor") {
+        room = generateCorridor(MAP.scenes[i].room.size, 0xff11ff, [0,0,0], MAP.scenes[i].room.rotation);
+        camera.position.set(-5,10,0);
+        camera.lookAt(0,1,0);
+
+    }
+    if (MAP.scenes[i].room.constructor.name === "Junction") {
+        room = generateJunction(MAP.scenes[i].room.size, 0xffffff, [0,0,0]);
+        camera.position.set(-5,15,0);
+        camera.lookAt(0,1,0);
+
+    }
+    
+    room.add(MAP.scenes[i].scene);
+    MAP.scenes[i].scene.add(camera);
+    MAP.scenes[i].scene.add(roomlight);
+
+}
+```
+{% endcode %}
+{% endtab %}
+
+{% tab title="Updated Classes" %}
+{% code title="mapClass.js" overflow="wrap" %}
+```javascript
+class RoomScene {
+    constructor(name, scene, room) {
+        this.name = name;
+        this.scene = scene;
+        this.room = room;
+
+    }
+
+}
+```
+{% endcode %}
+
+{% code title="roomClass.js" overflow="wrap" %}
+```javascript
+class Corridor {
+    constructor(size, components, position, orientation) {
+        this.size = size;
+        this.components = components;
+        this.position = position;
+        this.orientation = orientation;
+
+    }
+
+    add(scene) {
+        for (let i = 0; i < this.components.length; i++) {
+            scene.add(this.components[i]);
+
+        }
+
+    }
+
+}
+```
+{% endcode %}
+{% endtab %}
+
+{% tab title="UI Test" %}
+{% code title="game.js ui code" overflow="wrap" %}
+```javascript
+function createPanel() {
+
+    const panel = new GUI( { width: 300 } );
+
+    const helpFolder = panel.addFolder( "Help" );
+    const settingFolder = panel.addFolder( "Settings" );
+
+    let settings = {
+
+        "Use the show stats button to see stats.": "0",
+        "Show Stats": function() {
+
+            document.body.appendChild( stats.dom );
+
+        },
+        "Lock Camera": function() {
+
+            camera.position.set(-10, 40, 10);
+            camera.lookAt(-10, 0, 10);
+            freecam = false;
+
+        },
+        "Free Camera": function() {
+
+            camera.position.set(moveableCube.position.x - 5, moveableCube.position.y + 5, moveableCube.position.z);
+            camera.lookAt(moveableCube.position);
+            freecam = true;
+
+        },
+        "Map Scene": function() {
+
+            SCENE = MapView;
+            CAMERA = MapCamera;
+
+        },
+        "Test Scene": function() {
+
+            SCENE = scene;
+            CAMERA = camera;
+
+        },
+        "Switch Scene Test": function() {
+
+            SCENE = MAP.scenes[0].scene;
+            CAMERA = camera;
+
+        }
+
+
+    }
+
+    helpFolder.add( settings, "Use the show stats button to see stats." );
+    settingFolder.add( settings, "Show Stats" );
+    settingFolder.add( settings, "Lock Camera" );
+    settingFolder.add( settings, "Free Camera" );
+    settingFolder.add( settings, "Map Scene" );
+    settingFolder.add( settings, "Test Scene" );
+    settingFolder.add( settings, "Switch Scene Test" );
+
+    helpFolder.open();
+    settingFolder.open();
+
+}
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
+
+<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption><p>Room Scene One.</p></figcaption></figure>
+
+**Development Part 4:** Linking Everything
+

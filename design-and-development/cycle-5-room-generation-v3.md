@@ -256,7 +256,7 @@ The left image below is from the z value being half the x; whereas the right ima
 
 `generateJunction([10, 1, 5], 0x11ff11, [15, 0, 0]);`
 
-``<img src="../.gitbook/assets/image (3).png" alt="" data-size="original">``![](<../.gitbook/assets/image (2) (1).png>)``
+``<img src="../.gitbook/assets/image (3) (2).png" alt="" data-size="original">``![](<../.gitbook/assets/image (2) (1).png>)``
 {% endhint %}
 
 **Test 3:** Postprocessing & Spectator Tool
