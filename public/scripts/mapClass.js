@@ -74,10 +74,11 @@ class MapRoom {
 }
 
 class RoomScene {
-    constructor(name, scene, room) {
+    constructor(name, scene, room, camera) {
         this.name = name;
         this.scene = scene;
         this.room = room;
+        this.camera = camera;
 
     }
 

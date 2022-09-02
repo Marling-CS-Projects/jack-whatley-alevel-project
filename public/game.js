@@ -10,12 +10,12 @@ import { THREEx } from "./exports.js";
 const scene = new THREE.Scene();
 const MapView = new THREE.Scene();
 
-let SCENE = scene;
+let SCENE = MapView;
 
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 100 );
 const MapCamera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 100 );
 
-let CAMERA = camera;
+let CAMERA = MapCamera;
 
 const renderer = new THREE.WebGLRenderer( { antialias: true } );
 //const composer = new EffectComposer( renderer );
@@ -24,7 +24,7 @@ const stats = new Stats();
 let sun = new THREE.SpotLight( 0x87ceeb, 10 );
 let sun2 = new THREE.SpotLight( 0x87ceeb, 10 );
 const controls = new OrbitControls( camera, renderer.domElement );
-let domEvent = new THREEx.DomEvents( camera, renderer.domElement );
+let domEvent = new THREEx.DomEvents( MapCamera, renderer.domElement );
 
 // variables:
 let showStats = false;
@@ -113,11 +113,11 @@ const j3 = generateJunction([10, 1, 10], 0xffffff, [0, 0, 20]);
 const j4 = generateJunction([10, 1, 10], 0xffffff, [30, 0, 0]);
 
 let MAP = new Map([], [], [spawnJunction, c1, c2, c3, c4, c5, c6, j1, j2, j3, j4], [], []);
-MAP.createScene(scene);
+//MAP.createScene(scene);
 MAP.createMap(MapView);
 
 for (let i = 0; i < MAP.rooms.length; i++) {
-    let roomScene = new RoomScene(`${MAP.rooms[i].constructor.name}${i}`, new THREE.Scene, MAP.rooms[i]);
+    let roomScene = new RoomScene(`${MAP.rooms[i].constructor.name}${i}`, new THREE.Scene, MAP.rooms[i], []);
     MAP.scenes.push(roomScene);
 
 }
@@ -129,13 +129,13 @@ for (let i = 0; i < MAP.scenes.length; i++) {
     roomlight.target.position.set(-10, 0, 10);
     roomlight.position.set(-10, 50, 10);
     
-    if (MAP.scenes[i].room.constructor.name === "Corridor") {
+    if (MAP.scenes[i].room instanceof Corridor) {
         room = generateCorridor(MAP.scenes[i].room.size, 0xff11ff, [0,0,0], MAP.scenes[i].room.rotation);
         camera.position.set(-5,10,0);
         camera.lookAt(0,1,0);
 
     }
-    if (MAP.scenes[i].room.constructor.name === "Junction") {
+    if (MAP.scenes[i].room instanceof Junction) {
         room = generateJunction(MAP.scenes[i].room.size, 0xffffff, [0,0,0]);
         camera.position.set(-5,15,0);
         camera.lookAt(0,1,0);
@@ -144,35 +144,21 @@ for (let i = 0; i < MAP.scenes.length; i++) {
     
     room.add(MAP.scenes[i].scene);
     MAP.scenes[i].scene.add(camera);
+    MAP.scenes[i].camera.push(camera);
     MAP.scenes[i].scene.add(roomlight);
 
 }
 
+for (let i = 0; i < MAP.scenes.length; i++) {
+    domEvent.addEventListener(MAP.map[i].components[0], "click", (e) => {
+        SCENE = MAP.scenes[i].scene;
+        CAMERA = MAP.scenes[i].camera[0];
+
+    });
+
+}
+
 console.log(MAP.scenes);
-
-domEvent.addEventListener(spawnJunction.components[0], "click", (e) => {
-
-    enemy.changeRoom(spawnJunction, scene);
-
-});
-
-domEvent.addEventListener(j1.components[0], "click", (e) => {
-
-    enemy.changeRoom(j1, scene);
-
-});
-
-domEvent.addEventListener(j2.components[0], "click", (e) => {
-
-    enemy.changeRoom(j2, scene);
-
-});
-
-domEvent.addEventListener(j3.components[0], "click", (e) => {
-
-    enemy.changeRoom(j3, scene);
-
-});
 
 let material2 = new THREE.MeshStandardMaterial({color: 0xffff11});
 
@@ -189,13 +175,13 @@ character.setPos(scene);
 camera.position.x = -5;
 camera.position.y = 5;
 
-MapCamera.position.x = 5;
-MapCamera.position.y = 50;
+MapCamera.position.x = 3;
+MapCamera.position.y = 45;
 MapCamera.position.z = 8;
 
 camera.lookAt(0,1,0);
 
-MapCamera.lookAt(5,1,8);
+MapCamera.lookAt(3,1,8);
 
 scene.add( new THREE.AxesHelper(1000) );
 
@@ -294,30 +280,12 @@ function createPanel() {
             SCENE = MapView;
             CAMERA = MapCamera;
 
-        },
-        "Test Scene": function() {
-
-            SCENE = scene;
-            CAMERA = camera;
-
-        },
-        "Switch Scene Test": function() {
-
-            SCENE = MAP.scenes[0].scene;
-            CAMERA = camera;
-
         }
-
-
     }
 
     helpFolder.add( settings, "Use the show stats button to see stats." );
     settingFolder.add( settings, "Show Stats" );
-    settingFolder.add( settings, "Lock Camera" );
-    settingFolder.add( settings, "Free Camera" );
     settingFolder.add( settings, "Map Scene" );
-    settingFolder.add( settings, "Test Scene" );
-    settingFolder.add( settings, "Switch Scene Test" );
 
     helpFolder.open();
     settingFolder.open();
