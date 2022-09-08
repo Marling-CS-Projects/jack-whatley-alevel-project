@@ -22,7 +22,7 @@ const renderer = new THREE.WebGLRenderer( { antialias: true } );
 //let renderPass = new RenderPass( SCENE, camera );
 const stats = new Stats();
 let sun = new THREE.SpotLight( 0x87ceeb, 10 );
-let sun2 = new THREE.SpotLight( 0x87ceeb, 10 );
+let sun2 = new THREE.SpotLight( 0x87ceeb, 100 );
 const controls = new OrbitControls( camera, renderer.domElement );
 let domEvent = new THREEx.DomEvents( MapCamera, renderer.domElement );
 
@@ -59,7 +59,6 @@ sun.castShadow = true;
 
 sun2.target.position.set(-10, 0, 10);
 sun2.position.set(-10, 50, 10);
-sun2.castShadow = true;
 
 sun.shadow.bias = -0.00000000000000000001;
 sun.shadow.mapSize.width = 2048 * 8;
@@ -70,8 +69,7 @@ sun2.shadow.mapSize.width = 2048 * 8;
 sun2.shadow.mapSize.height = 2048 * 8;
 
 scene.add( sun );
-MapView.add( sun2 );
-scene.add( new THREE.SpotLightHelper( sun ) );
+//MapView.add( sun2 );
 
 // objects
 
@@ -90,31 +88,46 @@ MapView.add( light );
 //scene.add(basicCube);
 scene.add(moveableCube);
 
-const spawnJunction = generateJunction([10, 1, 10], 0xffffff, [0, 0, 0]);
+let spawnJunction = generateJunction([10, 1, 10], 0xffffff, [0, 0, 0]);
 
-const c1 = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [10, 0, 0]);
+let middleUpperCorridor = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [-10, 0, 0]);
 
-const c2 = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [-10, 0, 0]);
+let topLeftJunction = generateJunction([10, 1, 10], 0xffffff, [-20, 0, 0]);
 
-const j1 = generateJunction([10, 1, 10], 0xffffff, [-20, 0, 0]);
+let middleLeftCorridor = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [-20, 0, 10], "z");
 
-const c3 = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [20, 0, 0]);
+let lowerLeftJunction = generateJunction([10, 1, 10], 0xffffff, [-20, 0, 20]);
 
-const c4 = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [0, 0, 10], "z");
+let middleLowerCorridor = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [-10, 0, 20]);
 
-const c5 = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [-20, 0, 10], "z");
+let lowerMiddleJunction = generateJunction([10, 1, 10], 0xffffff, [0, 0, 20]);
 
-const j2 = generateJunction([10, 1, 10], 0xffffff, [-20, 0, 20]);
+let middleCorridor = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [0, 0, 10], "z");
 
-const c6 = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [-10, 0, 20]);
+let longCorridorLeft = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [10, 0, 0]);
 
-const j3 = generateJunction([10, 1, 10], 0xffffff, [0, 0, 20]);
+let longCorridorRight = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [20, 0, 0]);
 
-const j4 = generateJunction([10, 1, 10], 0xffffff, [30, 0, 0]);
+let rightJunction = generateJunction([10, 1, 10], 0xffffff, [30, 0, 0]);
 
-let MAP = new Map([], [], [spawnJunction, c1, c2, c3, c4, c5, c6, j1, j2, j3, j4], [], []);
+// connecting rooms
+spawnJunction.connected.push(middleUpperCorridor, middleCorridor, longCorridorLeft);
+middleUpperCorridor.connected.push(spawnJunction, topLeftJunction);
+topLeftJunction.connected.push(middleUpperCorridor, middleLeftCorridor);
+middleLeftCorridor.connected.push(topLeftJunction, lowerLeftJunction);
+lowerLeftJunction.connected.push(middleLeftCorridor, middleLowerCorridor);
+middleLowerCorridor.connected.push(lowerLeftJunction, lowerMiddleJunction);
+lowerMiddleJunction.connected.push(middleLowerCorridor, middleCorridor);
+middleCorridor.connected.push(lowerMiddleJunction, spawnJunction);
+longCorridorLeft.connected.push(spawnJunction, longCorridorRight);
+longCorridorRight.connected.push(longCorridorLeft, rightJunction);
+rightJunction.connected.push(longCorridorRight);
+
+let MAP = new Map([], [], [spawnJunction, middleUpperCorridor, topLeftJunction, middleLeftCorridor, lowerLeftJunction, middleLowerCorridor, lowerMiddleJunction, middleCorridor, longCorridorLeft, longCorridorRight, rightJunction], [], []);
 //MAP.createScene(scene);
 MAP.createMap(MapView);
+
+console.log(MapView);
 
 for (let i = 0; i < MAP.rooms.length; i++) {
     let roomScene = new RoomScene(`${MAP.rooms[i].constructor.name}${i}`, new THREE.Scene, MAP.rooms[i], []);
@@ -162,13 +175,13 @@ console.log(MAP.scenes);
 
 let material2 = new THREE.MeshStandardMaterial({color: 0xffff11});
 
-const enemy = new Enemy(j4, createCube([1, 5, 1], material2));
-enemy.setPos(scene);
+//const enemy = new Enemy(j4, createCube([1, 5, 1], material2));
+//enemy.setPos(scene);
 
 let material3 = new THREE.MeshStandardMaterial({color: 0xff1111});
 
-const character = new Character(spawnJunction, createCube([1, 5, 1], material3));
-character.setPos(scene);
+//const character = new Character(spawnJunction, createCube([1, 5, 1], material3));
+//character.setPos(scene);
 
 // other
 
