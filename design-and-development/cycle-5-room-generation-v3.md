@@ -280,7 +280,7 @@ This was the most important thing to fix; to do this I just had to add a plus an
 
 The Bloom Pass wasn't actually applying when I was using it; and when it did it would either result in a white screen (error) or it would make the game look horrible. Therefore, for the moment, I have decided to cut the Bloom Pass out as it is not really necessary as the lighting already looks passable without it.
 
-![The Bloom Pass made the game look way worse; and was incompatible with the blue background.](<../.gitbook/assets/image (1).png>)
+![The Bloom Pass made the game look way worse; and was incompatible with the blue background.](<../.gitbook/assets/image (1) (2).png>)
 
 **Code Changed**
 
