@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
 
 body {
 
@@ -104,5 +105,28 @@ body {
 .lil-gui.autoPlace { /* gui touching border */
 
     right: 0px !important;
+
+}
+
+.text-box {
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    color: white;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 10em;
+    margin: 0px;
+    width: max-content;
+
+    user-select: none;
+
+}
+
+.hidden {
+
+    display: none !important;
 
 }

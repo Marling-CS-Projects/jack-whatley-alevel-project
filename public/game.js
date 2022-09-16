@@ -3,12 +3,15 @@ import * as THREE from "three";
 import Stats from "./examples/jsm/libs/stats.module.js";
 
 import { OrbitControls, EffectComposer, RenderPass, UnrealBloomPass, GlitchPass, GLTFLoader, GUI } from "/exports.js";
-import { createCube, generateCorridor, generateJunction, RoomScene, Corridor, Junction, degToRad, Enemy, Character, Map } from "/exports.js";
+import { createCube, generateCorridor, generateJunction, RoomScene, Corridor, Junction, degToRad, Enemy, Character, Map, ViewTurn } from "/exports.js";
 import { THREEx } from "./exports.js";
 
 // consts:
 const scene = new THREE.Scene();
 const MapView = new THREE.Scene();
+
+const ViewText = document.getElementById("view-output");
+const MoveText = document.getElementById("move-output");
 
 let SCENE = MapView;
 
@@ -22,7 +25,7 @@ const renderer = new THREE.WebGLRenderer( { antialias: true } );
 //let renderPass = new RenderPass( SCENE, camera );
 const stats = new Stats();
 let sun = new THREE.SpotLight( 0x87ceeb, 10 );
-let sun2 = new THREE.SpotLight( 0x87ceeb, 100 );
+let sun2 = new THREE.SpotLight( 0x87ceeb, 5 );
 const controls = new OrbitControls( camera, renderer.domElement );
 let domEvent = new THREEx.DomEvents( MapCamera, renderer.domElement );
 
@@ -69,7 +72,7 @@ sun2.shadow.mapSize.width = 2048 * 8;
 sun2.shadow.mapSize.height = 2048 * 8;
 
 scene.add( sun );
-//MapView.add( sun2 );
+MapView.add( sun2 );
 
 // objects
 
@@ -86,7 +89,7 @@ scene.add( light );
 MapView.add( light );
 
 //scene.add(basicCube);
-scene.add(moveableCube);
+//scene.add(moveableCube);
 
 let spawnJunction = generateJunction([10, 1, 10], 0xffffff, [0, 0, 0]);
 
@@ -110,6 +113,10 @@ let longCorridorRight = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [20, 0, 
 
 let rightJunction = generateJunction([10, 1, 10], 0xffffff, [30, 0, 0]);
 
+let material2 = new THREE.MeshStandardMaterial({color: 0xff0000});
+
+const character = new Character(spawnJunction, createCube([1, 5, 1], material2));
+
 // connecting rooms
 spawnJunction.connected.push(middleUpperCorridor, middleCorridor, longCorridorLeft);
 middleUpperCorridor.connected.push(spawnJunction, topLeftJunction);
@@ -124,10 +131,9 @@ longCorridorRight.connected.push(longCorridorLeft, rightJunction);
 rightJunction.connected.push(longCorridorRight);
 
 let MAP = new Map([], [], [spawnJunction, middleUpperCorridor, topLeftJunction, middleLeftCorridor, lowerLeftJunction, middleLowerCorridor, lowerMiddleJunction, middleCorridor, longCorridorLeft, longCorridorRight, rightJunction], [], []);
-//MAP.createScene(scene);
+let viewTurn = new ViewTurn(true);
+viewTurn.initialise();
 MAP.createMap(MapView);
-
-console.log(MapView);
 
 for (let i = 0; i < MAP.rooms.length; i++) {
     let roomScene = new RoomScene(`${MAP.rooms[i].constructor.name}${i}`, new THREE.Scene, MAP.rooms[i], []);
@@ -162,10 +168,22 @@ for (let i = 0; i < MAP.scenes.length; i++) {
 
 }
 
+character.setPos(MAP.scenes[0].scene);
+
+console.log(MAP.scenes[0].room.connected);
+
 for (let i = 0; i < MAP.scenes.length; i++) {
     domEvent.addEventListener(MAP.map[i].components[0], "click", (e) => {
-        SCENE = MAP.scenes[i].scene;
-        CAMERA = MAP.scenes[i].camera[0];
+        if (viewTurn.turn === false) {
+            character.changeRoomMap(MAP.map[i], MapView);
+            character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
+            viewTurn.turn = true;
+
+        } else if (viewTurn.turn === true) {
+            SCENE = MAP.scenes[i].scene;
+            CAMERA = MAP.scenes[i].camera[0];
+
+        } 
 
     });
 
@@ -173,28 +191,18 @@ for (let i = 0; i < MAP.scenes.length; i++) {
 
 console.log(MAP.scenes);
 
-let material2 = new THREE.MeshStandardMaterial({color: 0xffff11});
-
-//const enemy = new Enemy(j4, createCube([1, 5, 1], material2));
-//enemy.setPos(scene);
-
-let material3 = new THREE.MeshStandardMaterial({color: 0xff1111});
-
-//const character = new Character(spawnJunction, createCube([1, 5, 1], material3));
-//character.setPos(scene);
-
 // other
 
 camera.position.x = -5;
 camera.position.y = 5;
 
-MapCamera.position.x = 3;
-MapCamera.position.y = 45;
-MapCamera.position.z = 8;
+MapCamera.position.x = 5;
+MapCamera.position.y = 30;
+MapCamera.position.z = 10;
 
 camera.lookAt(0,1,0);
 
-MapCamera.lookAt(3,1,8);
+MapCamera.lookAt(5,1,10);
 
 scene.add( new THREE.AxesHelper(1000) );
 
@@ -268,7 +276,7 @@ function createPanel() {
 
     let settings = {
 
-        "Use the show stats button to see stats.": "0",
+        "Use the show stats button to see stats.": `${viewTurn.turn}`,
         "Show Stats": function() {
 
             document.body.appendChild( stats.dom );
@@ -293,12 +301,18 @@ function createPanel() {
             SCENE = MapView;
             CAMERA = MapCamera;
 
+        },
+        "End View Turn": function() {
+
+            viewTurn.turn = false;
+
         }
     }
 
     helpFolder.add( settings, "Use the show stats button to see stats." );
     settingFolder.add( settings, "Show Stats" );
     settingFolder.add( settings, "Map Scene" );
+    settingFolder.add( settings, "End View Turn" );
 
     helpFolder.open();
     settingFolder.open();

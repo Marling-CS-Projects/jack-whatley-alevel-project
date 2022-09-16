@@ -1,9 +1,3 @@
-const random = (max) => {
-
-    return Math.round((Math.random() * max - 1) + 1);
-
-}
-
 class Enemy {
 
     constructor(room, mesh) {
@@ -20,13 +14,6 @@ class Enemy {
 
     }
 
-    changeRoom(room, scene) {
-
-        this.room = room;
-        this.setPos(scene);
-
-    }
-
 }
 
 class Character {
@@ -39,10 +26,29 @@ class Character {
 
     }
 
-    setPos(scene) {
+    setPos(scene, pos) {
 
         scene.add(this.mesh);
-        this.mesh.position.set(this.room.components[0].position.x + random(4), this.room.components[0].position.y /*+ (this.mesh.height / 2)*/, this.room.components[0].position.z + random(4));
+        
+        if (pos) {
+
+            this.mesh.position.set(pos[0], pos[1], pos[2])
+
+        }
+
+    }
+
+    changeRoom(room, scene) {
+
+        this.room = room;
+        this.setPos(scene);
+
+    }
+
+    changeRoomMap(room, scene) {
+
+        let pos = [room.components[0].position.x, 0, room.components[0].position.z];
+        this.setPos(scene, pos);
 
     }
 
