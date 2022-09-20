@@ -69,3 +69,51 @@ class Character {
 
 One of the problems I have is that currently both switching scene views and moving the characters is tied to clicking. Meaning that to begin to implement turns I need to implement different turns for viewing and moving. This will make testing easier and also make much more sense for the game.
 
+To do this I created an object that handles which turn it is and what can be done during the turn.
+
+{% code title="turn.js" overflow="wrap" %}
+```javascript
+class ViewTurn {
+    constructor(turn) {
+        this.turn = turn;
+
+    }
+    // true = viewing; false = moving
+    initialise() {
+        this.turn = true;
+
+    }
+}
+
+export { ViewTurn };
+```
+{% endcode %}
+
+This is then processed when I create the DomEvents for each separate cube on the Map screen.
+
+{% code title="game.js" overflow="wrap" %}
+```javascript
+for (let i = 0; i < MAP.scenes.length; i++) {
+    domEvent.addEventListener(MAP.map[i].components[0], "click", (e) => {
+        if (viewTurn.turn === false) {
+            character.changeRoomMap(MAP.map[i], MapView);
+            character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
+            viewTurn.turn = true;
+
+        } else if (viewTurn.turn === true) {
+            SCENE = MAP.scenes[i].scene;
+            CAMERA = MAP.scenes[i].camera[0];
+            // view turn is ended via ui
+
+        } 
+    });
+}
+```
+{% endcode %}
+
+This now means that the game starts in the movement turn (this is because the character technically isn't in the scene yet). Which means wherever the player clicks the character moves and the turn switches to view. This turn allows the player to move freely between rooms and can be ended via a button on the UI.
+
+**Development Part 3:** Making Rooms Connected
+
+For the actual game the player will only be able to move into connected rooms; however, at the moment, they can just click on any room and move to it. This means I need to make rooms store which are connected and run that information through the DomEvents function.
+
