@@ -47,7 +47,8 @@ class Character {
 
     changeRoomMap(room, scene) {
 
-        let pos = [room.components[0].position.x, 0, room.components[0].position.z];
+        let pos = [room.link.components[0].position.x, 0, room.link.components[0].position.z];
+        this.room = room;
         this.setPos(scene, pos);
 
     }

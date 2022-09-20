@@ -91,49 +91,48 @@ MapView.add( light );
 //scene.add(basicCube);
 //scene.add(moveableCube);
 
-let spawnJunction = generateJunction([10, 1, 10], 0xffffff, [0, 0, 0]);
+let spawnJunction = generateJunction("spawnJunction", [10, 1, 10], 0xffffff, [0, 0, 0]);
 
-let middleUpperCorridor = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [-10, 0, 0]);
+let middleUpperCorridor = generateCorridor("middleUpperCorridor", [10, 1, 10 / 3 + 2], 0xff11ff, [-10, 0, 0]);
 
-let topLeftJunction = generateJunction([10, 1, 10], 0xffffff, [-20, 0, 0]);
+let topLeftJunction = generateJunction("topLeftJunction", [10, 1, 10], 0xffffff, [-20, 0, 0]);
 
-let middleLeftCorridor = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [-20, 0, 10], "z");
+let middleLeftCorridor = generateCorridor("middleLeftCorridor", [10, 1, 10 / 3 + 2], 0xff11ff, [-20, 0, 10], "z");
 
-let lowerLeftJunction = generateJunction([10, 1, 10], 0xffffff, [-20, 0, 20]);
+let lowerLeftJunction = generateJunction("lowerLeftJunction", [10, 1, 10], 0xffffff, [-20, 0, 20]);
 
-let middleLowerCorridor = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [-10, 0, 20]);
+let middleLowerCorridor = generateCorridor("middleLowerCorridor", [10, 1, 10 / 3 + 2], 0xff11ff, [-10, 0, 20]);
 
-let lowerMiddleJunction = generateJunction([10, 1, 10], 0xffffff, [0, 0, 20]);
+let lowerMiddleJunction = generateJunction("lowerMiddleJunction", [10, 1, 10], 0xffffff, [0, 0, 20]);
 
-let middleCorridor = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [0, 0, 10], "z");
+let middleCorridor = generateCorridor("middleCorridor", [10, 1, 10 / 3 + 2], 0xff11ff, [0, 0, 10], "z");
 
-let longCorridorLeft = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [10, 0, 0]);
+let longCorridorLeft = generateCorridor("longCorridorLeft", [10, 1, 10 / 3 + 2], 0xff11ff, [10, 0, 0]);
 
-let longCorridorRight = generateCorridor([10, 1, 10 / 3 + 2], 0xff11ff, [20, 0, 0]);
+let longCorridorRight = generateCorridor("longCorridorRight", [10, 1, 10 / 3 + 2], 0xff11ff, [20, 0, 0]);
 
-let rightJunction = generateJunction([10, 1, 10], 0xffffff, [30, 0, 0]);
+let rightJunction = generateJunction("rightJunction", [10, 1, 10], 0xffffff, [30, 0, 0]);
 
 let material2 = new THREE.MeshStandardMaterial({color: 0xff0000});
 
-const character = new Character(spawnJunction, createCube([1, 5, 1], material2));
-
 // connecting rooms
-spawnJunction.connected.push(middleUpperCorridor, middleCorridor, longCorridorLeft);
-middleUpperCorridor.connected.push(spawnJunction, topLeftJunction);
-topLeftJunction.connected.push(middleUpperCorridor, middleLeftCorridor);
-middleLeftCorridor.connected.push(topLeftJunction, lowerLeftJunction);
-lowerLeftJunction.connected.push(middleLeftCorridor, middleLowerCorridor);
-middleLowerCorridor.connected.push(lowerLeftJunction, lowerMiddleJunction);
-lowerMiddleJunction.connected.push(middleLowerCorridor, middleCorridor);
-middleCorridor.connected.push(lowerMiddleJunction, spawnJunction);
-longCorridorLeft.connected.push(spawnJunction, longCorridorRight);
-longCorridorRight.connected.push(longCorridorLeft, rightJunction);
-rightJunction.connected.push(longCorridorRight);
+spawnJunction.connected.push(middleUpperCorridor.name, middleCorridor.name, longCorridorLeft.name);
+middleUpperCorridor.connected.push(spawnJunction.name, topLeftJunction.name);
+topLeftJunction.connected.push(middleUpperCorridor.name, middleLeftCorridor.name);
+middleLeftCorridor.connected.push(topLeftJunction.name, lowerLeftJunction.name);
+lowerLeftJunction.connected.push(middleLeftCorridor.name, middleLowerCorridor.name);
+middleLowerCorridor.connected.push(lowerLeftJunction.name, lowerMiddleJunction.name);
+lowerMiddleJunction.connected.push(middleLowerCorridor.name, middleCorridor.name);
+middleCorridor.connected.push(lowerMiddleJunction.name, spawnJunction.name);
+longCorridorLeft.connected.push(spawnJunction.name, longCorridorRight.name);
+longCorridorRight.connected.push(longCorridorLeft.name, rightJunction.name);
+rightJunction.connected.push(longCorridorRight.name);
 
 let MAP = new Map([], [], [spawnJunction, middleUpperCorridor, topLeftJunction, middleLeftCorridor, lowerLeftJunction, middleLowerCorridor, lowerMiddleJunction, middleCorridor, longCorridorLeft, longCorridorRight, rightJunction], [], []);
 let viewTurn = new ViewTurn(true);
 viewTurn.initialise();
 MAP.createMap(MapView);
+const character = new Character(MAP.map[0], createCube([1, 5, 1], material2));
 
 for (let i = 0; i < MAP.rooms.length; i++) {
     let roomScene = new RoomScene(`${MAP.rooms[i].constructor.name}${i}`, new THREE.Scene, MAP.rooms[i], []);
@@ -149,13 +148,13 @@ for (let i = 0; i < MAP.scenes.length; i++) {
     roomlight.position.set(-10, 50, 10);
     
     if (MAP.scenes[i].room instanceof Corridor) {
-        room = generateCorridor(MAP.scenes[i].room.size, 0xff11ff, [0,0,0], MAP.scenes[i].room.rotation);
+        room = generateCorridor(MAP.scenes[i].room.name, MAP.scenes[i].room.size, 0xff11ff, [0,0,0], MAP.scenes[i].room.rotation);
         camera.position.set(-5,10,0);
         camera.lookAt(0,1,0);
 
     }
     if (MAP.scenes[i].room instanceof Junction) {
-        room = generateJunction(MAP.scenes[i].room.size, 0xffffff, [0,0,0]);
+        room = generateJunction(MAP.scenes[i].room.name, MAP.scenes[i].room.size, 0xffffff, [0,0,0]);
         camera.position.set(-5,15,0);
         camera.lookAt(0,1,0);
 
@@ -175,9 +174,21 @@ console.log(MAP.scenes[0].room.connected);
 for (let i = 0; i < MAP.scenes.length; i++) {
     domEvent.addEventListener(MAP.map[i].components[0], "click", (e) => {
         if (viewTurn.turn === false) {
-            character.changeRoomMap(MAP.map[i], MapView);
-            character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
-            viewTurn.turn = true;
+            if (character.room.link.connected[0] === MAP.map[i].link.name) {
+                character.changeRoomMap(MAP.map[i], MapView);
+
+            } else if (character.room.link.connected[1] === MAP.map[i].link.name) {
+                character.changeRoomMap(MAP.map[i], MapView);
+
+            } else if (character.room.link.connected[2] === MAP.map[i].link.name) {
+                character.changeRoomMap(MAP.map[i], MapView);
+
+            } else {
+                console.log("no match");
+
+            }
+            //character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
+            //viewTurn.turn = true;
 
         } else if (viewTurn.turn === true) {
             SCENE = MAP.scenes[i].scene;

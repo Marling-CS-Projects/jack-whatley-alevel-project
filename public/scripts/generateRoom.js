@@ -5,7 +5,7 @@ import { degToRad } from "./degToRad.js";
 
 const wallHeight = 5;
 
-function generateCorridor(size, colour, position, rotation) { // size [1, 10, 1]
+function generateCorridor(name, size, colour, position, rotation) { // size [1, 10, 1]
 
     let material = new THREE.MeshStandardMaterial({color: colour});
     
@@ -36,13 +36,13 @@ function generateCorridor(size, colour, position, rotation) { // size [1, 10, 1]
 
     let components = [floor, wall1, wall2];
 
-    let room = new Corridor(size, components, position, rotation, []);
+    let room = new Corridor(name, size, components, position, rotation, []);
 
     return room;
 
 }
 
-function generateJunction(size, colour, position) {
+function generateJunction(name, size, colour, position) {
 
     let components = [];
 
@@ -92,7 +92,7 @@ function generateJunction(size, colour, position) {
 
     }*/
 
-    let room = new Junction(size, components, position, []);
+    let room = new Junction(name, size, components, position, []);
 
     return room;
 
