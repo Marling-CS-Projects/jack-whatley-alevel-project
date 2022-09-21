@@ -6,9 +6,9 @@
 
 In Cycle 8 I want to make sure the key game logic is in place; this means implementing the "sought of" turn based system. This means that once the player has given the characters a move, after they have performed it, the game switches to the enemy's turn. This will allow the enemy character to move without causing any issues with the player. This means that later on events like the enemy attacking will be handled in this turn.
 
-* [ ] Implement a turn managing system (object).
+* [x] Implement a turn managing system (object).
 * [ ] Add a dev option to force switch turns.
-* [ ] Make rooms store data about which room is connected.
+* [x] Make rooms store data about which room is connected.
 * [ ] Add simple movement to enemy.
 
 ### Key Variables
@@ -117,3 +117,61 @@ This now means that the game starts in the movement turn (this is because the ch
 
 For the actual game the player will only be able to move into connected rooms; however, at the moment, they can just click on any room and move to it. This means I need to make rooms store which are connected and run that information through the DomEvents function.
 
+Due to how much time it would take to make a proper solution to sort out how rooms are connected. I decided to make the room connections be handle manually i.e. I would just hard code which rooms are connected; then use the DomEvents to verify.
+
+{% tabs %}
+{% tab title="domevents" %}
+{% code title="game.js" overflow="wrap" %}
+```javascript
+for (let i = 0; i < MAP.scenes.length; i++) {
+    domEvent.addEventListener(MAP.map[i].components[0], "click", (e) => {
+        if (viewTurn.turn === false) {
+            if (character.room.link.connected[0] === MAP.map[i].link.name) {
+                character.changeRoomMap(MAP.map[i], MapView);
+
+            } else if (character.room.link.connected[1] === MAP.map[i].link.name) {
+                character.changeRoomMap(MAP.map[i], MapView);
+
+            } else if (character.room.link.connected[2] === MAP.map[i].link.name) {
+                character.changeRoomMap(MAP.map[i], MapView);
+
+            } else {
+                console.log("no match");
+
+            }
+            //character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
+            //viewTurn.turn = true;
+
+        } else if (viewTurn.turn === true) {
+            SCENE = MAP.scenes[i].scene;
+            CAMERA = MAP.scenes[i].camera[0];
+
+        } 
+    });
+}
+```
+{% endcode %}
+{% endtab %}
+
+{% tab title="Second Tab" %}
+{% code title="game.js" %}
+```javascript
+spawnJunction.connected.push(middleUpperCorridor.name, middleCorridor.name, longCorridorLeft.name);
+middleUpperCorridor.connected.push(spawnJunction.name, topLeftJunction.name);
+topLeftJunction.connected.push(middleUpperCorridor.name, middleLeftCorridor.name);
+middleLeftCorridor.connected.push(topLeftJunction.name, lowerLeftJunction.name);
+lowerLeftJunction.connected.push(middleLeftCorridor.name, middleLowerCorridor.name);
+middleLowerCorridor.connected.push(lowerLeftJunction.name, lowerMiddleJunction.name);
+lowerMiddleJunction.connected.push(middleLowerCorridor.name, middleCorridor.name);
+middleCorridor.connected.push(lowerMiddleJunction.name, spawnJunction.name);
+longCorridorLeft.connected.push(spawnJunction.name, longCorridorRight.name);
+longCorridorRight.connected.push(longCorridorLeft.name, rightJunction.name);
+rightJunction.connected.push(longCorridorRight.name);
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
+
+**Development Part 4:** Making the Enemy
+
+To end this cycle, I wanted to add a basic enemy with enough functionality to chase the player character around whenever it is their turn.
