@@ -4,7 +4,7 @@
 
 ### Objectives
 
-In Cycle 8 I want to make sure the key game logic is in place; this means implementing the "sought of" turn based system. This means that once the player has given the characters a move, after they have performed it, the game switches to the enemy's turn. This will allow the enemy character to move without causing any issues with the player. This means that later on events like the enemy attacking will be handled in this turn.
+In Cycle 8 I want to make sure the key game logic is in place; this means implementing the "sort of" turn based system. This means that once the player has given the characters a move, after they have performed it, the game switches to the enemy's turn. This will allow the enemy character to move without causing any issues with the player. This means that later on events like the enemy attacking will be handled in this turn.
 
 * [x] Implement a turn managing system (object).
 * [x] Add a dev option to force switch turns.
@@ -13,16 +13,10 @@ In Cycle 8 I want to make sure the key game logic is in place; this means implem
 
 ### Key Variables
 
-| Variable Name | Usage |
-| ------------- | ----- |
-|               |       |
-|               |       |
-|               |       |
-
-### Pseudocode
-
-```
-```
+| Variable Name    | Usage                                                                            |
+| ---------------- | -------------------------------------------------------------------------------- |
+| character, enemy | These store the character and enemy objects and contain all their functionality. |
+| MAP              | The map object stores a large amount of data about the rooms.                    |
 
 ## Development
 
