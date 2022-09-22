@@ -7,9 +7,9 @@
 In Cycle 8 I want to make sure the key game logic is in place; this means implementing the "sought of" turn based system. This means that once the player has given the characters a move, after they have performed it, the game switches to the enemy's turn. This will allow the enemy character to move without causing any issues with the player. This means that later on events like the enemy attacking will be handled in this turn.
 
 * [x] Implement a turn managing system (object).
-* [ ] Add a dev option to force switch turns.
+* [x] Add a dev option to force switch turns.
 * [x] Make rooms store data about which room is connected.
-* [ ] Add simple movement to enemy.
+* [x] Add simple movement to enemy.
 
 ### Key Variables
 
@@ -236,4 +236,26 @@ Below I have attached a video demonstrating the final version of this cycle. Thi
 {% embed url="https://youtu.be/LXxKtsDgTg8" %}
 Here is the demonstration of the majority of features added.
 {% endembed %}
+
+### Challenges
+
+Due to the character and enemy using one mesh and then that being moved between scenes and also the map. This caused a number of issues when moving it around as both functions tried to move the same mesh, causing it to not move at all.
+
+This means for the moment only the map screen is functional; however, it will be an easy fix next cycle to create a new mesh for the character and enemy and make the functions manipulate their different meshes.
+
+{% code title="Current Map Function" %}
+```javascript
+character.changeRoomMap(MAP.map[i], MapView);
+```
+{% endcode %}
+
+{% code title="Current Scene Function" %}
+```javascript
+character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
+```
+{% endcode %}
+
+As is visible here they both move the same mesh which causes a lot of issues, but I will be able to fix easily next cycle.
+
+## Testing
 
