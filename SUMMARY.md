@@ -25,6 +25,7 @@
 * [CYCLE 6 Character Handler v1](design-and-development/cycle-6-character-handler-v1.md)
 * [CYCLE 7 Separate Screens](design-and-development/cycle-7-separate-screens.md)
 * [CYCLE 8 Game Logic](design-and-development/cycle-8-game-logic.md)
+* [CYCLE 9 Final Patch](design-and-development/cycle-9-final-patch.md)
 
 ## Testing
 
