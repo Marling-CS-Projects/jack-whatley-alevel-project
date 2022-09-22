@@ -13,4 +13,19 @@ class ViewTurn {
 
 }
 
-export { ViewTurn };
+class EnemyTurn {
+    constructor(turn) {
+        this.turn = turn;
+
+    }
+
+    // true = move; false = not moving
+
+    initialise() {
+        this.turn = false;
+
+    }
+
+}
+
+export { ViewTurn, EnemyTurn };

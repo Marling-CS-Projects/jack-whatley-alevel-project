@@ -3,7 +3,7 @@ import * as THREE from "three";
 import Stats from "./examples/jsm/libs/stats.module.js";
 
 import { OrbitControls, EffectComposer, RenderPass, UnrealBloomPass, GlitchPass, GLTFLoader, GUI } from "/exports.js";
-import { createCube, generateCorridor, generateJunction, RoomScene, Corridor, Junction, degToRad, Enemy, Character, Map, ViewTurn } from "/exports.js";
+import { createCube, generateCorridor, generateJunction, RoomScene, Corridor, Junction, degToRad, Enemy, Character, Map, ViewTurn, EnemyTurn } from "/exports.js";
 import { THREEx } from "./exports.js";
 
 // consts:
@@ -76,7 +76,7 @@ MapView.add( sun2 );
 
 // objects
 
-let material1 = new THREE.MeshStandardMaterial({color: 0xddff00});
+let material1 = new THREE.MeshStandardMaterial({color: 0xff0000});
 
 const moveableCube = createCube([1, 1, 1], material1);
 
@@ -113,7 +113,7 @@ let longCorridorRight = generateCorridor("longCorridorRight", [10, 1, 10 / 3 + 2
 
 let rightJunction = generateJunction("rightJunction", [10, 1, 10], 0xffffff, [30, 0, 0]);
 
-let material2 = new THREE.MeshStandardMaterial({color: 0xff0000});
+let material2 = new THREE.MeshStandardMaterial({color: 0xffff00});
 
 // connecting rooms
 spawnJunction.connected.push(middleUpperCorridor.name, middleCorridor.name, longCorridorLeft.name);
@@ -130,9 +130,15 @@ rightJunction.connected.push(longCorridorRight.name);
 
 let MAP = new Map([], [], [spawnJunction, middleUpperCorridor, topLeftJunction, middleLeftCorridor, lowerLeftJunction, middleLowerCorridor, lowerMiddleJunction, middleCorridor, longCorridorLeft, longCorridorRight, rightJunction], [], []);
 let viewTurn = new ViewTurn(true);
+let enemyTurn = new EnemyTurn(false);
+enemyTurn.initialise();
 viewTurn.initialise();
 MAP.createMap(MapView);
 const character = new Character(MAP.map[0], createCube([1, 5, 1], material2));
+character.changeRoomMap(MAP.map[0], MapView);
+
+const enemy = new Enemy(MAP.map[0], createCube([1, 5, 1], material1));
+enemy.changeRoomMap(MAP.map[5], MapView);
 
 for (let i = 0; i < MAP.rooms.length; i++) {
     let roomScene = new RoomScene(`${MAP.rooms[i].constructor.name}${i}`, new THREE.Scene, MAP.rooms[i], []);
@@ -167,8 +173,6 @@ for (let i = 0; i < MAP.scenes.length; i++) {
 
 }
 
-character.setPos(MAP.scenes[0].scene);
-
 console.log(MAP.scenes[0].room.connected);
 
 for (let i = 0; i < MAP.scenes.length; i++) {
@@ -176,31 +180,36 @@ for (let i = 0; i < MAP.scenes.length; i++) {
         if (viewTurn.turn === false) {
             if (character.room.link.connected[0] === MAP.map[i].link.name) {
                 character.changeRoomMap(MAP.map[i], MapView);
+                //character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
 
             } else if (character.room.link.connected[1] === MAP.map[i].link.name) {
                 character.changeRoomMap(MAP.map[i], MapView);
+                //character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
 
             } else if (character.room.link.connected[2] === MAP.map[i].link.name) {
                 character.changeRoomMap(MAP.map[i], MapView);
+                //character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
 
             } else {
                 console.log("no match");
 
             }
-            //character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
-            //viewTurn.turn = true;
+            viewTurn.turn = true;
+            enemyTurn.turn = true;
 
         } else if (viewTurn.turn === true) {
             SCENE = MAP.scenes[i].scene;
             CAMERA = MAP.scenes[i].camera[0];
 
-        } 
+        }
 
     });
 
 }
 
-console.log(MAP.scenes);
+console.log(enemy.room.link.connected);
+
+
 
 // other
 
@@ -233,7 +242,6 @@ controls.target = moveableCube.position;
 controls.enablePan = false;
 
 window.addEventListener("keydown", (e) => {
-
     switch(e.keyCode) {
         case (87):
             wKey = true;
@@ -252,11 +260,9 @@ window.addEventListener("keydown", (e) => {
             break;
 
     }
-
 });
 
 window.addEventListener("keyup", (e) => {
-
     switch(e.keyCode) {
         case (87):
             wKey = false;
@@ -275,7 +281,6 @@ window.addEventListener("keyup", (e) => {
             break;
 
     }
-
 });
 
 function createPanel() {
@@ -316,6 +321,7 @@ function createPanel() {
         "End View Turn": function() {
 
             viewTurn.turn = false;
+            enemyTurn.turn = false;
 
         }
     }
@@ -345,6 +351,25 @@ function onWindowResize() {
 function animate() {
     
     requestAnimationFrame( animate );
+
+    if (enemyTurn.turn == true) {
+        let chance = Math.floor(Math.random() * 10);
+        let random = Math.floor(Math.random() * 2);
+
+        if (chance > 6) {
+            let room = MAP.map.findIndex((MapRoom) => MapRoom.link.name === enemy.room.link.connected[random])
+            enemy.changeRoomMap(MAP.map[room], MapView);
+
+        }
+        
+        enemyTurn.turn = false;
+    
+    }
+
+    if (enemy.room.link.name === character.room.link.name) {
+        document.getElementById("view-output").classList.remove("hidden");
+
+    }
     
     if (wKey === true && freecam === true) {
 

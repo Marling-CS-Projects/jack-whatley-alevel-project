@@ -16,6 +16,6 @@ export { Character } from "/scripts/characterClasses.js";
 export { multipleOf } from "/scripts/multipleOf.js";
 export { Map } from "/scripts/mapClass.js";
 export { RoomScene } from "/scripts/mapClass.js";
-export { ViewTurn } from "/scripts/turn.js";
+export { ViewTurn, EnemyTurn } from "/scripts/turn.js";
 
 export { THREEx } from "/threex-domevents/threex.domevents.js";

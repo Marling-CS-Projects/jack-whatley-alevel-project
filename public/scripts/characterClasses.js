@@ -7,10 +7,30 @@ class Enemy {
 
     }
 
-    setPos(scene) {
+    setPos(scene, pos) {
 
         scene.add(this.mesh);
-        this.mesh.position.set(this.room.components[0].position.x, this.room.components[0].position.y /*+ (this.mesh.height / 2)*/, this.room.components[0].position.z);
+        
+        if (pos) {
+
+            this.mesh.position.set(pos[0], pos[1], pos[2])
+
+        }
+
+    }
+
+    changeRoom(room, scene) {
+
+        this.room = room;
+        this.setPos(scene);
+
+    }
+
+    changeRoomMap(room, scene) {
+
+        let pos = [room.link.components[0].position.x, 0, room.link.components[0].position.z];
+        this.room = room;
+        this.setPos(scene, pos);
 
     }
 
