@@ -259,3 +259,36 @@ As is visible here they both move the same mesh which causes a lot of issues, bu
 
 ## Testing
 
+In Cycle 8 it was important to make sure all these key features are working so I can make sure the game is set up for more gameplay in the next cycle.
+
+### Tests
+
+**Test 1:** Character Movement + View Turns
+
+The new function for moving in the map scene needs to be tested as it is the basis for everything else in this cycle. As does switching between a viewing and moving turn.
+
+| What I expect                                                               | What happened                                                             | Pass/Fail |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------------- | --------- |
+| Whenever I click on a room the Character will move                          | When I click on a room the character moves.                               | Pass      |
+| When I click on a room in the view turn the camera will switch to the room. | When I click on a room in the view turn it switches to a view of the room | Pass      |
+
+**Test 2:** Room Connections
+
+Making rooms connected is important because it is the basis for the enemies "AI" and also for making the character only be able to move into connected rooms.
+
+| What I expect                                                      | What happened                                                    | Pass/Fail |
+| ------------------------------------------------------------------ | ---------------------------------------------------------------- | --------- |
+| The character will not be able to move to and unconnected room     | When clicking on an unconnected room the character doesn't move  | Pass      |
+| Clicking on an unconnected room will not cause the turn to change. | Clicking on a room that is not connected doesn't switch turns    | Pass      |
+
+**Test 3:** Enemy Movement
+
+The enemy needs to move around after the player has (40% chance of this) and also needs to be limited to certain rooms; creating a fake sense of a patrol pattern.
+
+| What I expect                                                             | What happened                                                 | Pass/Fail |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------- | --------- |
+| The enemy will move randomly after the player moves                       | The enemy moves after the player does                         | Pass      |
+| The enemy will stick to the square of rooms rather than the long corridor | The enemy seems to patrol only the square shape of rooms      | Pass      |
+| When the player and enemy are in the same room the game ends              | The game over screen activates and the game is not playable\* | Pass      |
+
+\* Meaning that the player can't continue playing with the text on screen; not that the game is completely broken.
