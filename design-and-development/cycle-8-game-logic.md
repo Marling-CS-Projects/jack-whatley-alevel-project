@@ -174,4 +174,66 @@ rightJunction.connected.push(longCorridorRight.name);
 
 **Development Part 4:** Making the Enemy
 
-To end this cycle, I wanted to add a basic enemy with enough functionality to chase the player character around whenever it is their turn.
+To end this cycle, I wanted to add a basic enemy with enough functionality to chase the player character around whenever it is their turn. I say "chase" here because THREE lacks a lot of functionality that would allow me to implement this quickly so I just decided to have it move randomly on some turns.
+
+To do this I made an object for handling whether it was the enemies turn to move or not. Then into the update function at the end I added the code that would move the enemy whenever it was their turn; and also, when they rolled the right number on a random function. I also added another if statement to check whether the name of the room the enemy and character currently in match. In which case it ends the game.
+
+{% tabs %}
+{% tab title="game.js" %}
+```javascript
+if (enemyTurn.turn == true) {
+        let chance = Math.floor(Math.random() * 10);
+        let random = Math.floor(Math.random() * 2);
+
+        if (chance > 6) {
+            let room = MAP.map.findIndex((MapRoom) => MapRoom.link.name === enemy.room.link.connected[random])
+            enemy.changeRoomMap(MAP.map[room], MapView);
+
+        }
+        enemyTurn.turn = false;
+    }
+
+if (enemy.room.link.name === character.room.link.name) {
+    document.getElementById("view-output").classList.remove("hidden");
+
+}
+```
+{% endtab %}
+
+{% tab title="game.html" %}
+```html
+<body>
+
+    <div class="text-box hidden" id="view-output">
+            
+        <h1 class="text">Game Over</h1>
+        
+    </div>
+
+    <script type="importmap">
+            
+        {
+                
+            "imports": {
+                
+                "three": "../build/three.module.js"
+                
+            }
+            
+        }
+        
+    </script>
+
+    <script type="module" src="./game.js"></script>
+
+</body>
+```
+{% endtab %}
+{% endtabs %}
+
+Below I have attached a video demonstrating the final version of this cycle. This includes the characters moving and the rooms being connected; as well as the enemy "chasing" the player.
+
+{% embed url="https://youtu.be/LXxKtsDgTg8" %}
+Here is the demonstration of the majority of features added.
+{% endembed %}
+
