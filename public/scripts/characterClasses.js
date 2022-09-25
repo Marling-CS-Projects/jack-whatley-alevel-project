@@ -7,22 +7,21 @@ class Enemy {
 
     }
 
-    setPos(scene, pos) {
+    setPos(scene, pos, mesh) {
 
-        scene.add(this.mesh);
+        scene.add(this.mesh[mesh]);
         
         if (pos) {
 
-            this.mesh.position.set(pos[0], pos[1], pos[2])
+            this.mesh[mesh].position.set(pos[0], pos[1], pos[2])
 
         }
 
     }
 
     changeRoom(room, scene) {
-
-        this.room = room;
-        this.setPos(scene);
+        
+        this.setPos(scene, [0,0,0], 1);
 
     }
 
@@ -30,7 +29,7 @@ class Enemy {
 
         let pos = [room.link.components[0].position.x, 0, room.link.components[0].position.z];
         this.room = room;
-        this.setPos(scene, pos);
+        this.setPos(scene, pos, 0);
 
     }
 
@@ -46,13 +45,13 @@ class Character {
 
     }
 
-    setPos(scene, pos) {
+    setPos(scene, pos, mesh) {
 
-        scene.add(this.mesh);
+        scene.add(this.mesh[mesh]);
         
         if (pos) {
 
-            this.mesh.position.set(pos[0], pos[1], pos[2])
+            this.mesh[mesh].position.set(pos[0], pos[1], pos[2])
 
         }
 
@@ -60,8 +59,7 @@ class Character {
 
     changeRoom(room, scene) {
 
-        this.room = room;
-        this.setPos(scene);
+        this.setPos(scene, [0,0,0], 1);
 
     }
 
@@ -69,7 +67,7 @@ class Character {
 
         let pos = [room.link.components[0].position.x, 0, room.link.components[0].position.z];
         this.room = room;
-        this.setPos(scene, pos);
+        this.setPos(scene, pos, 0);
 
     }
 

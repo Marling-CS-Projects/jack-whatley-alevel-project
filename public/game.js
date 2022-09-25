@@ -134,11 +134,6 @@ let enemyTurn = new EnemyTurn(false);
 enemyTurn.initialise();
 viewTurn.initialise();
 MAP.createMap(MapView);
-const character = new Character(MAP.map[0], createCube([1, 5, 1], material2));
-character.changeRoomMap(MAP.map[0], MapView);
-
-const enemy = new Enemy(MAP.map[0], createCube([1, 5, 1], material1));
-enemy.changeRoomMap(MAP.map[5], MapView);
 
 for (let i = 0; i < MAP.rooms.length; i++) {
     let roomScene = new RoomScene(`${MAP.rooms[i].constructor.name}${i}`, new THREE.Scene, MAP.rooms[i], []);
@@ -173,22 +168,34 @@ for (let i = 0; i < MAP.scenes.length; i++) {
 
 }
 
-console.log(MAP.scenes[0].room.connected);
+const character = new Character(MAP.map[0], [createCube([1, 5, 1], material2), createCube([1, 5, 1], material2)]);
+character.changeRoomMap(MAP.map[0], MapView);
+character.changeRoom(MAP.scenes[0].room, MAP.scenes[0].scene);
+
+const enemy = new Enemy(MAP.map[4], [createCube([1, 5, 1], material1), createCube([1, 5, 1], material1)]);
+enemy.changeRoomMap(MAP.map[4], MapView);
+enemy.changeRoom(MAP.scenes[4].room, MAP.scenes[4].scene);
 
 for (let i = 0; i < MAP.scenes.length; i++) {
     domEvent.addEventListener(MAP.map[i].components[0], "click", (e) => {
         if (viewTurn.turn === false) {
             if (character.room.link.connected[0] === MAP.map[i].link.name) {
                 character.changeRoomMap(MAP.map[i], MapView);
-                //character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
+                character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
+
+                console.log(MAP.scenes[i]);
 
             } else if (character.room.link.connected[1] === MAP.map[i].link.name) {
                 character.changeRoomMap(MAP.map[i], MapView);
-                //character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
+                character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
+
+                console.log(MAP.scenes[i]);
 
             } else if (character.room.link.connected[2] === MAP.map[i].link.name) {
                 character.changeRoomMap(MAP.map[i], MapView);
-                //character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
+                character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
+
+                console.log(MAP.scenes[i]);
 
             } else {
                 console.log("no match");
@@ -298,18 +305,9 @@ function createPanel() {
             document.body.appendChild( stats.dom );
 
         },
-        "Lock Camera": function() {
-
-            camera.position.set(-10, 40, 10);
-            camera.lookAt(-10, 0, 10);
-            freecam = false;
-
-        },
         "Free Camera": function() {
 
-            camera.position.set(moveableCube.position.x - 5, moveableCube.position.y + 5, moveableCube.position.z);
-            camera.lookAt(moveableCube.position);
-            freecam = true;
+            CAMERA = camera;
 
         },
         "Map Scene": function() {
@@ -328,10 +326,11 @@ function createPanel() {
 
     helpFolder.add( settings, "Use the show stats button to see stats." );
     settingFolder.add( settings, "Show Stats" );
+    settingFolder.add( settings, "Free Camera" );
     settingFolder.add( settings, "Map Scene" );
     settingFolder.add( settings, "End View Turn" );
 
-    helpFolder.open();
+    //helpFolder.open();
     settingFolder.open();
 
 }
@@ -359,6 +358,7 @@ function animate() {
         if (chance > 6) {
             let room = MAP.map.findIndex((MapRoom) => MapRoom.link.name === enemy.room.link.connected[random])
             enemy.changeRoomMap(MAP.map[room], MapView);
+            enemy.changeRoom(MAP.scenes[room].room, MAP.scenes[room].scene);
 
         }
         
