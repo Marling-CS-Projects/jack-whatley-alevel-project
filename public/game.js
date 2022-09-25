@@ -214,10 +214,6 @@ for (let i = 0; i < MAP.scenes.length; i++) {
 
 }
 
-console.log(enemy.room.link.connected);
-
-
-
 // other
 
 camera.position.x = -5;
