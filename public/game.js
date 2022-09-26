@@ -36,7 +36,7 @@ let wKey, aKey, sKey, dKey, shKey;
 let freecam = true;
 
 // body appends:
-document.body.appendChild( stats.dom );
+//document.body.appendChild( stats.dom );
 document.body.appendChild( renderer.domElement );
 
 //scene.background = new THREE.Color(0x87ceeb);
@@ -289,16 +289,14 @@ window.addEventListener("keyup", (e) => {
 function createPanel() {
 
     const panel = new GUI( { width: 300 } );
-
-    const helpFolder = panel.addFolder( "Help" );
     const settingFolder = panel.addFolder( "Settings" );
 
     let settings = {
 
-        "Use the show stats button to see stats.": `${viewTurn.turn}`,
-        "Show Stats": function() {
+        "Show FPS": function() {
 
             document.body.appendChild( stats.dom );
+            showStats = true;
 
         },
         "Free Camera": function() {
@@ -320,13 +318,11 @@ function createPanel() {
         }
     }
 
-    helpFolder.add( settings, "Use the show stats button to see stats." );
-    settingFolder.add( settings, "Show Stats" );
+    settingFolder.add( settings, "Show FPS" );
     settingFolder.add( settings, "Free Camera" );
     settingFolder.add( settings, "Map Scene" );
     settingFolder.add( settings, "End View Turn" );
 
-    //helpFolder.open();
     settingFolder.open();
 
 }
@@ -411,7 +407,10 @@ function animate() {
 
     }
 
-    stats.update();
+    if (showStats === true) {
+        stats.update();
+
+    }
 
     renderer.render( SCENE, CAMERA );
 
