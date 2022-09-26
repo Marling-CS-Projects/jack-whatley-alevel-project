@@ -14,8 +14,7 @@ In Cycle 9, the final patch, I wanted to polish the game to the point where all 
 | Variable Name    | Usage                                                                                     |
 | ---------------- | ----------------------------------------------------------------------------------------- |
 | showStats, stats | Controls whether the FPS counter is displayed. True or False. Stats contains DOM element. |
-|                  |                                                                                           |
-|                  |                                                                                           |
+| character, enemy | The variables containing the enemy and character objects.                                 |
 
 ## Development
 
@@ -179,4 +178,33 @@ if (showStats === true) {
 ```
 {% endcode %}
 
-Development Part 3:&#x20;
+## Testing
+
+For the final Cycle I wanted to make sure the features that I had just added were functioning correctly so that I could say I got the game to a completed state.
+
+### Tests
+
+**Test 1:** Character / Enemy Meshes
+
+Now that I have finished a feature that I have been working on for a while so I need to ensure that it works perfectly.
+
+| What I expect                                               | What happened            | Pass / Fail |
+| ----------------------------------------------------------- | ------------------------ | ----------- |
+| When I click on a room the character will be visible        | The character is visible | Pass        |
+| When I click on a room the enemy will be visible            | The enemy is visible     | Pass        |
+| When I move the character or enemy their room should change | Their room changes       | Pass        |
+
+**Test 2:** FPS Counter
+
+So the player can see how well the game is performing, I need to make sure that the FPS counter works.
+
+| What I expect                                        | What happened                                                     | Pass / Fail |
+| ---------------------------------------------------- | ----------------------------------------------------------------- | ----------- |
+| The FPS counter won't start displayed on the screen. | The FPS counter is not on screen when the game starts             | Pass        |
+| The FPS counter appears when the button is pressed   | The FPS counter is visible and working when the button is pressed | Pass        |
+
+## Video Evidence
+
+{% embed url="https://youtu.be/aeEWgbreKjE" %}
+&#x20;A demonstration of everything added in Cycle 9.
+{% endembed %}
