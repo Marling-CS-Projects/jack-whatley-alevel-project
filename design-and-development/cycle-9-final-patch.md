@@ -7,14 +7,15 @@
 In Cycle 9, the final patch, I wanted to polish the game to the point where all the current features work consistently. I also wanted to add a number of small features that could be implemented in time and that would add and improve the gameplay.
 
 * [x] Fix Character / Enemy mesh issues.
+* [x] Make FPS counter optional.
 
 ### Key Variables
 
-| Variable Name | Usage |
-| ------------- | ----- |
-|               |       |
-|               |       |
-|               |       |
+| Variable Name    | Usage                                                                                     |
+| ---------------- | ----------------------------------------------------------------------------------------- |
+| showStats, stats | Controls whether the FPS counter is displayed. True or False. Stats contains DOM element. |
+|                  |                                                                                           |
+|                  |                                                                                           |
 
 ## Development
 
@@ -151,4 +152,31 @@ export { Enemy, Character }
 
 As is visible I added back the function `changeRoom()` to game.js and then ensured that it was working. However, I did have a slight issue of the character's / enemy's second mesh's position being undefined; but this was a simple fix as I just parsed the position `(0,0,0)` into the `setPos()` function.
 
-Development Part 2:&#x20;
+**Development Part 2:** Optional FPS counter.
+
+I also wanted to make the FPS counter optional, as it was earlier, as not all players will necessarily want it on the screen. This was easy as I just had to remove the comments by the `showStats` variable and the update the animate function to contain the `stats.update()` function.
+
+{% code title="game.js" overflow="wrap" %}
+```javascript
+const stats = new Stats();
+let showStats = false;
+
+/// create panel function
+
+"Show FPS": function() {
+
+    document.body.appendChild( stats.dom );
+    showStats = true;
+
+}
+
+/// animate function
+
+if (showStats === true) {
+    stats.update();
+
+}
+```
+{% endcode %}
+
+Development Part 3:&#x20;
