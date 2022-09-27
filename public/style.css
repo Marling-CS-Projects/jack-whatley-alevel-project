@@ -36,6 +36,23 @@ body {
 
     color: white;
     font-size: 5em;
+    user-select: none;
+
+}
+
+.text-options {
+
+    margin: 0px;
+
+    width: max-content;
+    height: min-content;
+
+    position: relative;
+    top: 30%;
+    left: 20%;
+
+    color: white;
+    user-select: none;
 
 }
 
@@ -58,6 +75,22 @@ body {
     height: 4em;
 
     margin-right: 1em;
+
+    border-radius: 10px;
+    border: none;
+
+    transition: all ease 0.5s;
+
+    color: #14213d;
+
+    user-select: none;
+
+}
+
+.menu-button:hover {
+
+    width: 8.5em;
+    height: 4.5em;
 
 }
 
@@ -93,6 +126,8 @@ body {
 
     width: max-content;
     height: max-content;
+
+    cursor: pointer;
 
 }
 
