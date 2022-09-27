@@ -167,7 +167,7 @@ One of the challenges I face was getting the corridor to rotate correctly, with 
 
 ![When initially just rotating, the walls would rotate inside each other.](<../.gitbook/assets/image (5) (1) (1).png>)
 
-![After some experimenting I managed to get one wall lined up.](<../.gitbook/assets/image (3) (1).png>)
+![After some experimenting I managed to get one wall lined up.](<../.gitbook/assets/image (3) (1) (2).png>)
 
 ## Testing
 

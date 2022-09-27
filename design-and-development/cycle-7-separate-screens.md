@@ -393,7 +393,7 @@ function createPanel() {
 {% endtab %}
 {% endtabs %}
 
-<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption><p>Room Scene One.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (1).png" alt=""><figcaption><p>Room Scene One.</p></figcaption></figure>
 
 **Development Part 4:** Linking Everything
 
