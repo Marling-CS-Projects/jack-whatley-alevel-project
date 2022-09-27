@@ -39,6 +39,7 @@
     * [roomClass.js](design-and-development/complete-code/scripts/roomclass.js.md)
     * [turn.js](design-and-development/complete-code/scripts/turn.js.md)
   * [exports.js](design-and-development/complete-code/exports.js.md)
+  * [server.js](design-and-development/complete-code/server.js.md)
 
 ## Testing
 
