@@ -221,7 +221,7 @@ Updated File Structure:
 
 One of my main issues was getting the walls to line up with the corridor, and on my first attempt for a function I got the wall positions wrong and they were either too far away or out of position on the X or Y axis.
 
-![An example screenshot of when I got the positioning wrong for the Y axis.](<../.gitbook/assets/image (6).png>)
+![An example screenshot of when I got the positioning wrong for the Y axis.](<../.gitbook/assets/image (6) (1).png>)
 
 ## Testing
 
@@ -238,7 +238,7 @@ In Cycle 3 I needed to make sure that corridor was generating correctly and that
 
 ### Evidence
 
-![The two basic cubes, updated to use the createCube() method.](<../.gitbook/assets/image (1) (1).png>)
+![The two basic cubes, updated to use the createCube() method.](<../.gitbook/assets/image (1) (1) (2).png>)
 
 ![Successful corridor generation, using the class and in the X axis direction.](<../.gitbook/assets/image (7) (1).png>)
 

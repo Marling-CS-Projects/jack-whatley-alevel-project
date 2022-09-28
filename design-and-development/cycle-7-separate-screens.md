@@ -227,7 +227,7 @@ export { Map, RoomScene }
 
 The reason that the create map scene function is so complicated is because I wanted the map items to have a white outline; this means for each room I had to create two cubes and then make one of them have a THREE.Backside texture. This means that because it is slightly larger than the other cube it appears as on outline.
 
-<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption><p>The outline effect of the map screen.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption><p>The outline effect of the map screen.</p></figcaption></figure>
 
 **Development Part 3:** Individual Scenes
 
@@ -393,7 +393,7 @@ function createPanel() {
 {% endtab %}
 {% endtabs %}
 
-<figure><img src="../.gitbook/assets/image (3) (1).png" alt=""><figcaption><p>Room Scene One.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (1) (3).png" alt=""><figcaption><p>Room Scene One.</p></figcaption></figure>
 
 **Development Part 4:** Linking Everything
 
