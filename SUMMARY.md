@@ -14,7 +14,7 @@
 
 ## Design and Development
 
-* [2.1 Design Frame](2-design-and-development/systems-diagram.md)
+* [Design Frame](2-design-and-development/systems-diagram.md)
 * [CYCLE 0 Server Setup](2-design-and-development/cycle-1.md)
 * [CYCLE 1 Migration to THREE](design-and-development/cycle-1-migration-to-three.md)
 * [CYCLE 2 Spectator Tool](design-and-development/cycle-2-spectator-tool.md)
