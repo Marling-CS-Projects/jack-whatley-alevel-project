@@ -347,7 +347,7 @@ function animate() {
         let chance = Math.floor(Math.random() * 10);
         let random = Math.floor(Math.random() * 2);
 
-        if (chance > 4) {
+        if (chance > 3) {
             let room = MAP.map.findIndex((MapRoom) => MapRoom.link.name === enemy.room.link.connected[random])
             enemy.changeRoomMap(MAP.map[room], MapView);
             enemy.changeRoom(MAP.scenes[room].room, MAP.scenes[room].scene);
