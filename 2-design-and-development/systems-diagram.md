@@ -1,4 +1,4 @@
-# 2.1 Design Frame
+# Design Frame
 
 ## Systems Diagram
 
@@ -12,49 +12,49 @@ My game should try to be as accessible as it can be to most people, excluding th
 
 ### Effective
 
-It is important for the player to have ideas about what they want to do in the game and achieve them, especially as this game is sort of sandbox with only one basic fixed objective, survive. It will also be imperative to have a well designed HUD as the player will not want to have to click many times to access parts of the game. Especially as whether they win or lose could depend on it.
+It is important for the player to have ideas about what they want to do in the game and achieve them, especially as this game is sort of sandbox with only one basic fixed objective, survive.&#x20;
 
 #### Aims
 
-* Have a clear goal of reaching a certain part of the map to escape (win condition).
-*
+* Clear goal on how to complete the game.
+* Clear idea of how to beat the enemy.
 
-### Efficiency
+### Efficient
 
-text here
+It will be important to have a clear and navigable menu structure to avoid user frustration and also to have a clear UI/HUD as players will rely on it to play the game and avoid negative outcomes.
 
 #### Aims
 
-* Create a menu system that is quick and easy to navigate through
-* Create a controls system that isn't too complicated but allows the player to do multiple actions
+* Easy to navigate menu and UI.
+* Controls are concise.
 
 ### Engaging
 
-text here
+It will be important to have engaging visuals especially as it is a horror game; it will also be important to have an enemy with a behaviour tree to ensure that the game has replay value and that will also drive environment interaction.
 
 #### Aims
 
-* Create a series of levels to work through
-* Create a multiplayer mode to play
-* Incorporate a style of game art the suits the game
+* Enemy Behaviour Tree.
+* Environment Interaction.
+* Game Art.
 
 ### Error Tolerant
 
-text here
+To avoid frustration for the players it is important that the game has as few bugs as possible and that when they do happen, they don't affect the user's experience.
 
 #### Aims
 
-* The game doesn't crash
-* The game does not contain any bugs that damage the user experience
+* The game doesn't crash.
+* The games bugs don't make the game unplayable.
 
 ### Easy To Learn
 
-text here
+It is important that the game be easy to learn and intuitive to play as the game is meant to cater towards both casual players and people who play more often.&#x20;
 
 #### Aims
 
-* Create a list of controls for the game
-* Create an in-level guide that helps players learn how to play the game
+* List of controls in the settings menu.
+* Buttons in game describe what they do.
 
 ## Pseudocode for the Game
 

@@ -22,11 +22,6 @@ I also wanted the game to be able to handle new features in the future like proc
 | CAMERA              | The variable that stores which camera is currently being used. |
 | MapCamera, MapScene | The constants that store the new Map scene and camera.         |
 
-### Pseudocode
-
-```
-```
-
 ## Development
 
 As in Cycle 6 I will be breaking down this development into multiple parts; this is again because the development is quite long for this cycle.

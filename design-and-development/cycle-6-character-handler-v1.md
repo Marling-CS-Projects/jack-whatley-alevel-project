@@ -26,11 +26,6 @@ There will also be a top down camera mode which will lock the OrbitControls and 
 | j1-j5         | The variables that store the junctions from the test map.                             |
 | freecam       | The variable used to store the boolean for if the free camera mode is enabled or not. |
 
-### Pseudocode
-
-```
-```
-
 ## Development
 
 For this section I will be breaking down the development into multiple parts as there are a number of separate elements which I have to create.
@@ -705,7 +700,6 @@ changeRoom(room, scene) {
         this.setPos(scene);
 
 }
-
 ```
 
 ## Testing
