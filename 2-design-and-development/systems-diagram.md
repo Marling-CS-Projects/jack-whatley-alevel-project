@@ -60,14 +60,35 @@ It is important that the game be easy to learn and intuitive to play as the game
 
 ### Pseudocode for game
 
-text here
+The basic layout for all the code that makes the game and renders it to the HTML page.
 
 ```
+import THREE
+
+scene = new THREE scene()
+camera = new THREE camera()
+
+renderer = new THREE renderer()
+
+define animate() :
+    request animation Frame
+    renderer.render( camera, scene )
+    
+animate()
 ```
 
 ### Pseudocode for a level
 
-text here
+The basic code for creating a scene (level) in THREE.
 
 ```
+scene = new THREE scene()
+
+scene.add( new THREE cube(colour: red) )
+
+define animate() :
+    request animation Frame
+    renderer.render( camera, scene )
+    
+animate()
 ```
