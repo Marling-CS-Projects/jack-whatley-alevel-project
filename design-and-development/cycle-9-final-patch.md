@@ -160,7 +160,7 @@ I also wanted to make the FPS counter optional, as it was earlier, as not all pl
 const stats = new Stats();
 let showStats = false;
 
-/// create panel function
+/// create UI button function
 
 "Show FPS": function() {
 
