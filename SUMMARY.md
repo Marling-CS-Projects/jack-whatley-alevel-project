@@ -26,6 +26,7 @@
 * [CYCLE 7 Separate Screens](design-and-development/cycle-7-separate-screens.md)
 * [CYCLE 8 Game Logic](design-and-development/cycle-8-game-logic.md)
 * [CYCLE 9 Final Patch](design-and-development/cycle-9-final-patch.md)
+* [CYCLE 10 Bonus Patch](design-and-development/cycle-10-bonus-patch.md)
 * [Complete Code](design-and-development/complete-code/README.md)
   * [game.js](design-and-development/complete-code/game.js.md)
   * [game.html](design-and-development/complete-code/game.html.md)
