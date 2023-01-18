@@ -176,6 +176,29 @@ const enemy = new Enemy(MAP.map[4], [createCube([1, 5, 1], material1), createCub
 enemy.changeRoomMap(MAP.map[4], MapView);
 enemy.changeRoom(MAP.scenes[4].room, MAP.scenes[4].scene);
 
+/*const cylinderGeo = new THREE.CylinderGeometry(48,48,1,32);
+const cylinderMat = new THREE.MeshBasicMaterial({color: 0xffff00});
+const cylinder = new THREE.Mesh(cylinderGeo, cylinderMat);
+
+cylinder.position.set(0,5,0);
+
+MapView.add(cylinder);
+
+const cylinderHoleGeo = new THREE.CylinderGeometry(16,16,2,32);*/
+
+let points = [
+    new THREE.Vector3(10,0,80),//top left
+    new THREE.Vector3(25,0,50),//top right
+    new THREE.Vector3(25,0,-50),//bottom right
+    new THREE.Vector3(10,0,-50),//bottom left
+    new THREE.Vector3(10,0,50)//back to top left - close square path
+]
+
+let mesh = new THREE.Mesh( new THREE.LatheGeometry(points), new THREE.MeshLambertMaterial({color: 0x000000}) )
+mesh.position.set(0,5,0);
+
+MapView.add(mesh);
+
 for (let i = 0; i < MAP.scenes.length; i++) {
     domEvent.addEventListener(MAP.map[i].components[0], "click", (e) => {
         if (viewTurn.turn === false) {
@@ -219,13 +242,13 @@ for (let i = 0; i < MAP.scenes.length; i++) {
 camera.position.x = -5;
 camera.position.y = 5;
 
-MapCamera.position.x = 5;
-MapCamera.position.y = 30;
-MapCamera.position.z = 10;
+MapCamera.position.x = 0;
+MapCamera.position.y = 18;
+MapCamera.position.z = 0;
 
 camera.lookAt(0,1,0);
 
-MapCamera.lookAt(5,1,10);
+MapCamera.lookAt(0,0,0);
 
 scene.add( new THREE.AxesHelper(1000) );
 
@@ -342,6 +365,11 @@ function onWindowResize() {
 function animate() {
     
     requestAnimationFrame( animate );
+
+    mesh.position.set(character.mesh[0].position.x, 5, character.mesh[0].position.z);
+    MapCamera.position.set(character.mesh[0].position.x, 18, character.mesh[0].position.z);
+
+    MapCamera.lookAt(character.mesh[0].position.x, 0, character.mesh[0].position.z);
 
     if (enemyTurn.turn == true) {
         let chance = Math.floor(Math.random() * 10);

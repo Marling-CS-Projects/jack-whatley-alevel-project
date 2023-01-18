@@ -1,6 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
 
+@font-face {
+    font-family: "DigitalTech";
+    src: url("/digital-tech-font/Digitaltech-rm0k.otf");
+    font-weight: normal;
+    font-size: normal;
+}
+
 body {
 
     margin: 0px;
@@ -176,4 +183,30 @@ body {
 
     display: none !important;
 
+}
+
+.scan-ui {
+    width: 20rem;
+    height: 10em;
+    background: rgba(0,150,0,0.8);
+    position: absolute;
+    bottom: 0%;
+    left: 0%;
+    z-index: 10000;
+    border: white double 5px;
+    font-family: "DigitalTech";
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.scan-title {
+    width: calc(100% - 9px);
+    margin: 0px;
+    padding: 5px;
+    border-bottom: 5px double white;
+}
+
+.scan-container {
+    flex: 1;
 }
