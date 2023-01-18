@@ -23,21 +23,47 @@
 
         <div class="scan-ui">
             <p class="scan-title">Enemy Scanner</p>
-            <div class="scan-container"></div>
+            <div class="scan-container">
+                <div class="row-1">
+                    <div class="junction-element" id="row-1-1"></div>
+                    <div class="spacer"></div>
+                    <div class="corridor-element" id="row-1-2"></div>
+                    <div class="spacer"></div>
+                    <div class="junction-element" id="row-1-3"></div>
+                    <div class="spacer"></div>
+                    <div class="corridor-element" id="row-1-4"></div>
+                    <div class="spacer"></div>
+                    <div class="corridor-element" id="row-1-5"></div>
+                    <div class="spacer"></div>
+                    <div class="junction-element" id="row-1-6"></div>
+                </div>
+                <div class="row-2">
+                    <div class="vertical-corridor-element" id="row-2-1"></div>
+                    <div class="spacer"></div>
+                    <div class="invisible-junction-element"></div>
+                    <div class="spacer"></div>
+                    <div class="vertical-corridor-element" id="row-2-2"></div>
+                </div>
+                <div class="row-3">
+                    <div class="junction-element" id="row-3-1"></div>
+                    <div class="spacer"></div>
+                    <div class="corridor-element" id="row-3-2"></div>
+                    <div class="spacer"></div>
+                    <div class="junction-element" id="row-3-3"></div>
+                </div>
+                <div class="row-4">
+                    <p class="turn-counter">Turns till next scan<span class="font-change"> :- </span><span class="glitch-text" id="turn-count">1</span></p>
+                    <button class="scan" id="scan-button">Scan</button>
+                </div>
+            </div>
         </div>
 
         <script type="importmap">
-            
             {
-                
                 "imports": {
-                
                     "three": "../build/three.module.js"
-                
                 }
-            
             }
-        
         </script>
 
         <script type="module" src="./game.js"></script>

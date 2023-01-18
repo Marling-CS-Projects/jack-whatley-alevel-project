@@ -29,6 +29,8 @@ let sun2 = new THREE.SpotLight( 0x87ceeb, 5 );
 const controls = new OrbitControls( camera, renderer.domElement );
 let domEvent = new THREEx.DomEvents( MapCamera, renderer.domElement );
 
+const scanButton = document.getElementById("scan-button");
+
 // variables:
 let showStats = false;
 let moveSpeed = 0.075;
@@ -176,16 +178,6 @@ const enemy = new Enemy(MAP.map[4], [createCube([1, 5, 1], material1), createCub
 enemy.changeRoomMap(MAP.map[4], MapView);
 enemy.changeRoom(MAP.scenes[4].room, MAP.scenes[4].scene);
 
-/*const cylinderGeo = new THREE.CylinderGeometry(48,48,1,32);
-const cylinderMat = new THREE.MeshBasicMaterial({color: 0xffff00});
-const cylinder = new THREE.Mesh(cylinderGeo, cylinderMat);
-
-cylinder.position.set(0,5,0);
-
-MapView.add(cylinder);
-
-const cylinderHoleGeo = new THREE.CylinderGeometry(16,16,2,32);*/
-
 let points = [
     new THREE.Vector3(10,0,80),//top left
     new THREE.Vector3(25,0,50),//top right
@@ -251,6 +243,36 @@ camera.lookAt(0,1,0);
 MapCamera.lookAt(0,0,0);
 
 scene.add( new THREE.AxesHelper(1000) );
+
+scanButton.addEventListener("click", () => {
+    /// avaible room list:
+    /// lowerLeftJunction, lowerMiddleJunction
+    /// topLeftJunction, spawnJunction
+
+    if (enemy.room.link.name == "lowerLeftJunction") {
+        document.getElementById("row-3-1").classList.add("enemy");
+        document.getElementById("row-3-3").classList.remove("enemy");
+        document.getElementById("row-1-1").classList.remove("enemy");
+        document.getElementById("row-1-3").classList.remove("enemy");
+    } else if (enemy.room.link.name == "lowerMiddleJunction") {
+        document.getElementById("row-3-3").classList.add("enemy");
+        document.getElementById("row-3-1").classList.remove("enemy");
+        document.getElementById("row-1-1").classList.remove("enemy");
+        document.getElementById("row-1-3").classList.remove("enemy");
+    } else if (enemy.room.link.name == "topLeftJunction") {
+        document.getElementById("row-1-1").classList.add("enemy");
+        document.getElementById("row-3-3").classList.remove("enemy");
+        document.getElementById("row-3-1").classList.remove("enemy");
+        document.getElementById("row-1-3").classList.remove("enemy");
+    } else if (enemy.room.link.name == "spawnJunction") {
+        document.getElementById("row-1-3").classList.add("enemy");
+        document.getElementById("row-3-1").classList.remove("enemy");
+        document.getElementById("row-3-3").classList.remove("enemy");
+        document.getElementById("row-1-1").classList.remove("enemy");
+    } else {
+        return;
+    }
+});
 
 // controls
 controls.enableDamping = true;
