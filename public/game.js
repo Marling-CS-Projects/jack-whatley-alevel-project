@@ -333,8 +333,8 @@ window.addEventListener("keyup", (e) => {
 
 function createPanel() {
 
-    const panel = new GUI( { width: 300 } );
-    const settingFolder = panel.addFolder( "Settings" );
+    /*const panel = new GUI( { width: 300 } );
+    const settingFolder = panel.addFolder( "Settings" );*/
 
     let settings = {
 
@@ -363,12 +363,12 @@ function createPanel() {
         }
     }
 
-    settingFolder.add( settings, "Show FPS" );
+    /*settingFolder.add( settings, "Show FPS" );
     settingFolder.add( settings, "Free Camera" );
     settingFolder.add( settings, "Map Scene" );
     settingFolder.add( settings, "End View Turn" );
 
-    settingFolder.open();
+    settingFolder.open();*/
 
 }
 
