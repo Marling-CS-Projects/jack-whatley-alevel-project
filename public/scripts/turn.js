@@ -1,6 +1,7 @@
 class ViewTurn {
-    constructor(turn) {
+    constructor(turn, count) {
         this.turn = turn;
+        this.count = count;
 
     }
 
@@ -8,7 +9,12 @@ class ViewTurn {
 
     initialise() {
         this.turn = true;
+        this.count = 0;
 
+    }
+
+    iterate() {
+        this.count++;
     }
 
 }
