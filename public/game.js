@@ -34,7 +34,11 @@ const scanButton = document.getElementById("scan-button");
 const tabOne = document.getElementById("tab-1");
 const tabTwo = document.getElementById("tab-2");
 
-const tabCont = document.getElementById("tab-container");
+const tabContOne = document.getElementById("tab-container-1");
+const tabContTwo = document.getElementById("tab-container-2");
+
+const mapButton = document.getElementById("map-button"); // return to map view button
+const viewButton = document.getElementById("view-button"); // end view turn button
 
 // variables:
 let showStats = false;
@@ -203,19 +207,13 @@ for (let i = 0; i < MAP.scenes.length; i++) {
                 character.changeRoomMap(MAP.map[i], MapView);
                 character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
 
-                console.log(MAP.scenes[i]);
-
             } else if (character.room.link.connected[1] === MAP.map[i].link.name) {
                 character.changeRoomMap(MAP.map[i], MapView);
                 character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
 
-                console.log(MAP.scenes[i]);
-
             } else if (character.room.link.connected[2] === MAP.map[i].link.name) {
                 character.changeRoomMap(MAP.map[i], MapView);
                 character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
-
-                console.log(MAP.scenes[i]);
 
             } else {
                 console.log("no match");
@@ -279,6 +277,40 @@ scanButton.addEventListener("click", () => {
     }
 });
 
+/// tabOne/Two - button, tabContOne/Two - container
+
+tabOne.addEventListener("click", () => {
+    if (tabOne.classList.value.includes("tab-button-active")) {
+        return;
+    } else {
+        tabOne.classList.add("tab-button-active");
+        tabTwo.classList.remove("tab-button-active");
+        tabContOne.classList.remove("tab-container-hidden");
+        tabContTwo.classList.add("tab-container-hidden");
+    }
+});
+
+tabTwo.addEventListener("click", () => {
+    if (tabTwo.classList.value.includes("tab-button-active")) {
+        return;
+    } else {
+        tabTwo.classList.add("tab-button-active");
+        tabOne.classList.remove("tab-button-active");
+        tabContOne.classList.add("tab-container-hidden");
+        tabContTwo.classList.remove("tab-container-hidden");
+    }
+});
+
+viewButton.addEventListener("click", () => {
+    viewTurn.turn = false;
+    enemyTurn.turn = false;
+});
+
+mapButton.addEventListener("click", () => {
+    SCENE = MapView;
+    CAMERA = MapCamera;
+});
+
 // controls
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
@@ -336,10 +368,20 @@ window.addEventListener("keyup", (e) => {
     }
 });
 
-function createPanel() {
+document.getElementById("fps-button").addEventListener("click", () => {
+    stats.dom.classList.add("stats-class");
+    document.body.appendChild( stats.dom );
+    showStats = true;
+});
 
-    /*const panel = new GUI( { width: 300 } );
-    const settingFolder = panel.addFolder( "Settings" );*/
+document.getElementById("free-button").addEventListener("click", () => {
+    CAMERA = camera;
+});
+
+/*function createPanel() {
+
+    const panel = new GUI( { width: 300 } );
+    const settingFolder = panel.addFolder( "Settings" );
 
     let settings = {
 
@@ -368,14 +410,14 @@ function createPanel() {
         }
     }
 
-    /*settingFolder.add( settings, "Show FPS" );
+    settingFolder.add( settings, "Show FPS" );
     settingFolder.add( settings, "Free Camera" );
     settingFolder.add( settings, "Map Scene" );
     settingFolder.add( settings, "End View Turn" );
 
-    settingFolder.open();*/
+    settingFolder.open();
 
-}
+}*/
 
 window.addEventListener( "resize", onWindowResize() );
 
@@ -397,6 +439,12 @@ function animate() {
     MapCamera.position.set(character.mesh[0].position.x, 18, character.mesh[0].position.z);
 
     MapCamera.lookAt(character.mesh[0].position.x, 0, character.mesh[0].position.z);
+
+    if (viewTurn.turn) {
+        document.getElementById("current-turn").innerHTML = "View";
+    } else {
+        document.getElementById("current-turn").innerHTML = "Move";
+    }
 
     if (enemyTurn.turn == true) {
         let chance = Math.floor(Math.random() * 10);
@@ -472,4 +520,4 @@ function animate() {
 }
 
 animate();
-createPanel();
+/*createPanel();*/

@@ -341,6 +341,7 @@ font-family: 'Roboto Condensed', sans-serif;
     color: white;
     background: none;
     border: 4px double white;
+    font-family: "DigitalTech";
 }
 
 .tab-button:hover {
@@ -363,4 +364,43 @@ font-family: 'Roboto Condensed', sans-serif;
     border-left: 4px double white;
     border-bottom: 4px double white;
     border-right: 4px double white;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: start;
+}
+
+.tab-container-hidden {
+    display: none !important;
+}
+
+.tab-text {
+    margin: 0px;
+    padding: 0px;
+}
+
+.tab-text-help {
+    font-size: small;
+    margin: 0px;
+    padding: 0px;
+}
+
+.button-cont {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 5px;
+}
+
+.stats-class {
+    position: absolute !important;
+    bottom: 0% !important;
+    left: 0% !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
 }

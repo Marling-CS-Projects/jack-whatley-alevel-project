@@ -65,7 +65,23 @@
                 <button class="tab-button" id="tab-2">Options</button>
                 <div class="filler-element"></div>
             </div>
-            <div class="tab-container" id="tab-container"></div>
+            <div class="tab-container" id="tab-container-1">
+                <p class="tab-text">Current Turn<span class="font-change"> :- </span><span id="current-turn">View</span></p>
+                <p class="tab-text-help">Look around or use the end view turn button to switch to moving your character</p>
+                <div class="button-cont">
+                    <button class="tab-button" id="view-button">End View Turn</button>
+                    <button class="tab-button" id="map-button">Map View</button>
+                </div>
+            </div>
+            <div class="tab-container tab-container-hidden" id="tab-container-2">
+                <p class="tab-text-help">See how long you can evade the enemy using tools like the scanner</p>
+                <p class="tab-text" style="margin-top: 5px;">Options<span class="font-change"> :- </span></p>
+                <div class="button-cont">
+                    <button class="tab-button" onclick="window.location = '/'">Exit Game</button>
+                    <button class="tab-button" id="fps-button">Show FPS</button>
+                    <button class="tab-button" id="free-button">Free Camera</button>
+                </div>
+            </div>
         </div>
 
         <script type="importmap">
