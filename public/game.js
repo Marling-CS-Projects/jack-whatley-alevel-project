@@ -46,6 +46,11 @@ let moveSpeed = 0.075;
 let wKey, aKey, sKey, dKey, shKey;
 let freecam = true;
 
+function hover(element, enter, leave){
+    element.addEventListener('mouseenter', enter)
+    element.addEventListener('mouseleave', leave)
+}
+
 // body appends:
 //document.body.appendChild( stats.dom );
 document.body.appendChild( renderer.domElement );
@@ -220,6 +225,7 @@ for (let i = 0; i < MAP.scenes.length; i++) {
 
             }
             viewTurn.turn = true;
+            viewTurn.iterate();
             enemyTurn.turn = true;
 
         } else if (viewTurn.turn === true) {
@@ -247,31 +253,43 @@ MapCamera.lookAt(0,0,0);
 
 scene.add( new THREE.AxesHelper(1000) );
 
+hover(document.getElementById("turn-counter"), () => {
+    document.getElementById("help-box").classList.remove("hidden");
+    document.getElementById("help-text").innerHTML = "The scanner is only available every even turn and only works in square rooms";
+}, () => {
+    document.getElementById("help-box").classList.add("hidden");
+    document.getElementById("help-text").innerHTML = "";
+});
+
 scanButton.addEventListener("click", () => {
     /// avaible room list:
     /// lowerLeftJunction, lowerMiddleJunction
     /// topLeftJunction, spawnJunction
 
-    if (enemy.room.link.name == "lowerLeftJunction") {
-        document.getElementById("row-3-1").classList.add("enemy");
-        document.getElementById("row-3-3").classList.remove("enemy");
-        document.getElementById("row-1-1").classList.remove("enemy");
-        document.getElementById("row-1-3").classList.remove("enemy");
-    } else if (enemy.room.link.name == "lowerMiddleJunction") {
-        document.getElementById("row-3-3").classList.add("enemy");
-        document.getElementById("row-3-1").classList.remove("enemy");
-        document.getElementById("row-1-1").classList.remove("enemy");
-        document.getElementById("row-1-3").classList.remove("enemy");
-    } else if (enemy.room.link.name == "topLeftJunction") {
-        document.getElementById("row-1-1").classList.add("enemy");
-        document.getElementById("row-3-3").classList.remove("enemy");
-        document.getElementById("row-3-1").classList.remove("enemy");
-        document.getElementById("row-1-3").classList.remove("enemy");
-    } else if (enemy.room.link.name == "spawnJunction") {
-        document.getElementById("row-1-3").classList.add("enemy");
-        document.getElementById("row-3-1").classList.remove("enemy");
-        document.getElementById("row-3-3").classList.remove("enemy");
-        document.getElementById("row-1-1").classList.remove("enemy");
+    if (viewTurn.count % 2 === 0) {
+        if (enemy.room.link.name == "lowerLeftJunction") {
+            document.getElementById("row-3-1").classList.add("enemy");
+            document.getElementById("row-3-3").classList.remove("enemy");
+            document.getElementById("row-1-1").classList.remove("enemy");
+            document.getElementById("row-1-3").classList.remove("enemy");
+        } else if (enemy.room.link.name == "lowerMiddleJunction") {
+            document.getElementById("row-3-3").classList.add("enemy");
+            document.getElementById("row-3-1").classList.remove("enemy");
+            document.getElementById("row-1-1").classList.remove("enemy");
+            document.getElementById("row-1-3").classList.remove("enemy");
+        } else if (enemy.room.link.name == "topLeftJunction") {
+            document.getElementById("row-1-1").classList.add("enemy");
+            document.getElementById("row-3-3").classList.remove("enemy");
+            document.getElementById("row-3-1").classList.remove("enemy");
+            document.getElementById("row-1-3").classList.remove("enemy");
+        } else if (enemy.room.link.name == "spawnJunction") {
+            document.getElementById("row-1-3").classList.add("enemy");
+            document.getElementById("row-3-1").classList.remove("enemy");
+            document.getElementById("row-3-3").classList.remove("enemy");
+            document.getElementById("row-1-1").classList.remove("enemy");
+        } else {
+            return;
+        }
     } else {
         return;
     }
@@ -439,6 +457,8 @@ function animate() {
     MapCamera.position.set(character.mesh[0].position.x, 18, character.mesh[0].position.z);
 
     MapCamera.lookAt(character.mesh[0].position.x, 0, character.mesh[0].position.z);
+
+    document.getElementById("score-count").innerHTML = viewTurn.count;
 
     if (viewTurn.turn) {
         document.getElementById("current-turn").innerHTML = "View";

@@ -16,9 +16,19 @@
     <body>
 
         <div class="text-box hidden" id="view-output">
-            
             <h1 class="text">Game Over</h1>
+        </div>
 
+        <div class="score-cont">
+            <p class="scan-title">Score</p>
+            <div class="score-body">
+                <p class="score-text"><span id="score-count">0</span> turns survived</p>
+            </div>
+        </div>
+
+        <div class="help-box hidden" id="help-box">
+            <p class="scan-title">Help Box</p>
+            <p class="tab-text-help" id="help-text"></p>
         </div>
 
         <div class="scan-ui">
@@ -52,7 +62,7 @@
                     <div class="junction-element" id="row-3-3"></div>
                 </div>
                 <div class="row-4">
-                    <p class="turn-counter">Turns till next scan<span class="font-change"> :- </span><span class="glitch-text" id="turn-count">N/A</span></p>
+                    <p class="turn-counter" id="turn-counter">Turns till next scan<span class="font-change"> :- </span><span class="glitch-text" id="turn-count">0</span></p>
                     <button class="scan" id="scan-button">Scan</button>
                 </div>
             </div>
