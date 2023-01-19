@@ -31,6 +31,11 @@ let domEvent = new THREEx.DomEvents( MapCamera, renderer.domElement );
 
 const scanButton = document.getElementById("scan-button");
 
+const tabOne = document.getElementById("tab-1");
+const tabTwo = document.getElementById("tab-2");
+
+const tabCont = document.getElementById("tab-container");
+
 // variables:
 let showStats = false;
 let moveSpeed = 0.075;

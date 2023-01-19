@@ -323,3 +323,44 @@ font-family: 'Roboto Condensed', sans-serif;
     display: flex;
     flex-direction: column;
 }
+
+.tab-button-cont {
+    width: calc(100% - 9);
+    height: 25px;
+    margin: 0px;
+    /*border-bottom: 5px white double;*/
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: start;
+}
+
+.tab-button {
+    width: max-content;
+    height: 25px;
+    color: white;
+    background: none;
+    border: 4px double white;
+}
+
+.tab-button:hover {
+    cursor: pointer;
+    padding-bottom: -10px;
+    font-weight: bold;
+}
+
+.tab-button-active {
+    border-bottom: none;
+}
+
+.filler-element {
+    flex: 1;
+    border-bottom: 4px double white;
+}
+
+.tab-container {
+    flex: 1;
+    border-left: 4px double white;
+    border-bottom: 4px double white;
+    border-right: 4px double white;
+}
