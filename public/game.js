@@ -200,7 +200,7 @@ let points = [
     new THREE.Vector3(10,0,50)//back to top left - close square path
 ]
 
-let mesh = new THREE.Mesh( new THREE.LatheGeometry(points), new THREE.MeshLambertMaterial({color: 0x000000}) )
+let mesh = new THREE.Mesh( new THREE.LatheGeometry(points), new THREE.MeshLambertMaterial({color: 0xffff00}) )
 mesh.position.set(0,5,0);
 
 MapView.add(mesh);
@@ -256,6 +256,14 @@ scene.add( new THREE.AxesHelper(1000) );
 hover(document.getElementById("turn-counter"), () => {
     document.getElementById("help-box").classList.remove("hidden");
     document.getElementById("help-text").innerHTML = "The scanner is only available every even turn and only works in square rooms";
+}, () => {
+    document.getElementById("help-box").classList.add("hidden");
+    document.getElementById("help-text").innerHTML = "";
+});
+
+hover(document.getElementById("score-board"), () => {
+    document.getElementById("help-box").classList.remove("hidden");
+    document.getElementById("help-text").innerHTML = "Displays the number of turns that have happened since the game started"; 
 }, () => {
     document.getElementById("help-box").classList.add("hidden");
     document.getElementById("help-text").innerHTML = "";
@@ -329,6 +337,16 @@ mapButton.addEventListener("click", () => {
     CAMERA = MapCamera;
 });
 
+document.getElementById("fps-button").addEventListener("click", () => {
+    stats.dom.classList.add("stats-class");
+    document.body.appendChild( stats.dom );
+    showStats = true;
+});
+
+document.getElementById("free-button").addEventListener("click", () => {
+    CAMERA = camera;
+});
+
 // controls
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
@@ -384,16 +402,6 @@ window.addEventListener("keyup", (e) => {
             break;
 
     }
-});
-
-document.getElementById("fps-button").addEventListener("click", () => {
-    stats.dom.classList.add("stats-class");
-    document.body.appendChild( stats.dom );
-    showStats = true;
-});
-
-document.getElementById("free-button").addEventListener("click", () => {
-    CAMERA = camera;
 });
 
 /*function createPanel() {
@@ -459,6 +467,7 @@ function animate() {
     MapCamera.lookAt(character.mesh[0].position.x, 0, character.mesh[0].position.z);
 
     document.getElementById("score-count").innerHTML = viewTurn.count;
+    document.getElementById("turn-count").innerHTML = viewTurn.count % 2;
 
     if (viewTurn.turn) {
         document.getElementById("current-turn").innerHTML = "View";
