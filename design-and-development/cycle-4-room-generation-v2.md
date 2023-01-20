@@ -185,6 +185,6 @@ In Cycle 4 I needed to test that the corridor was generating correctly, that it 
 
 ![A functioning corridor in the z axis (blue).](<../.gitbook/assets/image (7).png>)
 
-![The start of a junction.](<../.gitbook/assets/image (8).png>)
+![The start of a junction.](<../.gitbook/assets/image (8) (2).png>)
 
 ![All of the test rooms generated. They can now be in any place, any size and aligned along the x or z axis.](<../.gitbook/assets/image (5) (1) (2).png>)

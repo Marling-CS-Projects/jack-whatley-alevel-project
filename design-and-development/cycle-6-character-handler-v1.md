@@ -127,7 +127,7 @@ createPanel();
 
 ![The test map that I have created.](<../.gitbook/assets/image (11).png>)
 
-![The locked camera mode, with all the controls disabled.](<../.gitbook/assets/image (4).png>)
+![The locked camera mode, with all the controls disabled.](<../.gitbook/assets/image (4) (2).png>)
 
 **Development Part 2:** Object Click Detection
 

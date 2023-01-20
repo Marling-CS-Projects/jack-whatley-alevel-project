@@ -57,7 +57,7 @@ class Character {
 ```
 {% endcode %}
 
-<figure><img src="../.gitbook/assets/image (12).png" alt=""><figcaption><p>The character on the map view, clicking moves it around.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (12) (2).png" alt=""><figcaption><p>The character on the map view, clicking moves it around.</p></figcaption></figure>
 
 **Development Part 2:** Moving and Viewing Turns
 
