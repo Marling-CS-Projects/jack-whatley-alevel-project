@@ -200,7 +200,7 @@ let points = [
     new THREE.Vector3(10,0,50)//back to top left - close square path
 ]
 
-let mesh = new THREE.Mesh( new THREE.LatheGeometry(points), new THREE.MeshLambertMaterial({color: 0xffff00}) )
+let mesh = new THREE.Mesh( new THREE.LatheGeometry(points), new THREE.MeshLambertMaterial({color: 0x000000}) )
 mesh.position.set(0,5,0);
 
 MapView.add(mesh);
