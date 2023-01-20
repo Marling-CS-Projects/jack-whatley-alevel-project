@@ -36,7 +36,6 @@ function generateJunction(size, colour, position):
         walls.push(wall)
         
     return new Junction(floor, walls)
-
 ```
 
 ## Development
