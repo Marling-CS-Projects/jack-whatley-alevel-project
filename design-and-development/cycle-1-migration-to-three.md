@@ -49,7 +49,7 @@ Then I created an example scene with a rotating cube to demonstrate that THREE w
 {% tab title="server.js" %}
 ```javascript
 // only one line was added here:
-
+// sends three js files to server
 app.use(express.static("node_modules/three"));
 ```
 {% endtab %}
@@ -57,19 +57,13 @@ app.use(express.static("node_modules/three"));
 {% tab title="game.html" %}
 ```html
 <!-- the only thing added was an import map -->
-
-<script type="importmap">
-            
+<!-- this makes importing three easier -->
+<script type="importmap"> 
     {
-                
-        "imports": {
-                
+        "imports": {           
                 "three": "../build/three.module.js"
-                
         }
-            
     }
-        
 </script>
 ```
 {% endtab %}
@@ -78,13 +72,16 @@ app.use(express.static("node_modules/three"));
 ```javascript
 import * as THREE from "three";
 
+// creating camera and scene
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
+// creating renderer
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+// creating a demo cube
 const geometry = new THREE.BoxGeometry(1, 1, 1);
 const material = new THREE.MeshBasicMaterial({color: 0x00ff00});
 const cube = new THREE.Mesh(geometry, material);
@@ -92,8 +89,8 @@ scene.add(cube);
 
 camera.position.z = 5;
 
+// setting up function that runs every frame
 function animate() {
-	
 	requestAnimationFrame(animate);
 	renderer.render(scene, camera);
 

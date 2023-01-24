@@ -64,6 +64,7 @@ import Stats from "./examples/jsm/libs/stats.module.js";
 
 import { OrbitControls, GUI } from "/exports.js";
 
+// setting up parts of scene (including lighting)
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
 const renderer = new THREE.WebGLRenderer( { antialias: false } );
@@ -76,15 +77,18 @@ const controls = new OrbitControls(camera, renderer.domElement);
 let moveSpeed = 0.05;
 let wKey, aKey, sKey, dKey, shKey;
 
+// adding fps counter and renderer to html
 document.body.appendChild( stats.dom );
 document.body.appendChild( renderer.domElement );
 
+// adding elements created above to scene
 scene.add(sun);
 scene.add(backgroundLight);
 scene.add(backgroundLight2);
 
 scene.add( new THREE.AxesHelper(1000) );
 
+// setting up THREE orbit controls
 controls.listenToKeyEvents(window);
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
@@ -94,10 +98,13 @@ controls.maxDistance = 500;
 controls.maxPolarAngle = Math.PI / 2;
 controls.target = moveableCube.position;
 
+// setting up function that runs every frame
 function animate() {
     requestAnimationFrame( animate );
     
+    // setting up directional movement
     if (wKey === true) {
+        // need to move both cube and camera
         moveableCube.position.x += moveSpeed;
         camera.position.x += moveSpeed;
 
@@ -115,6 +122,7 @@ function animate() {
 
     } 
     
+    // setting up faster movement hotkey
     if (shKey === true) {
         moveSpeed = 0.1;
 
@@ -123,6 +131,9 @@ function animate() {
 
     }
 
+    // setting up renderer and fps library
+    
+    
     stats.update();
     composer.render();
 
@@ -132,6 +143,7 @@ function animate() {
 
 {% tab title="exports.js" %}
 ```javascript
+// easier to have long imports in seperate file 
 export { OrbitControls } from "/examples/jsm/controls/OrbitControls.js";
 export { GLTFLoader } from "/examples/jsm/loaders/GLTFLoader.js";
 export { GUI } from '/examples/jsm/libs/lil-gui.module.min.js'
@@ -139,9 +151,9 @@ export { GUI } from '/examples/jsm/libs/lil-gui.module.min.js'
 {% endtab %}
 
 {% tab title="keyupdates (part of game.js)" %}
-```javascript
-window.addEventListener("keydown", (e) => {
-    switch(e.keyCode) {
+<pre class="language-javascript"><code class="lang-javascript"><strong>// listener for keypress on w a s d shift 
+</strong><strong>window.addEventListener("keydown", (e) => {
+</strong>    switch(e.keyCode) {
         case (87):
             wKey = true;
             break;
@@ -162,6 +174,7 @@ window.addEventListener("keydown", (e) => {
 
 });
 
+// same as above but the opposite
 window.addEventListener("keyup", (e) => {
     switch(e.keyCode) {
         case (87):
@@ -184,6 +197,7 @@ window.addEventListener("keyup", (e) => {
 
 });
 
+// function to resize renderer if window size changes
 window.addEventListener( "resize", onWindowResize() );
 
 function onWindowResize() {
@@ -192,7 +206,7 @@ function onWindowResize() {
     renderer.setSize( window.innerWidth, window.innerHeight );
 
 }
-```
+</code></pre>
 {% endtab %}
 
 {% tab title=".gitignore" %}

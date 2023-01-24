@@ -61,23 +61,30 @@ File Structure:
 const express = require("express");
 const app = express();
 
+// allows access to public folder
 app.use(express.static("public"));
 
+// sets up default route: localhost:5000/
 app.get("/", (req, res) => {
+    // redirects user to menu
     res.redirect("/menu");
 
 });
 
+// sets up menu route: localhost:5000/menu
 app.get("/menu", (req, res) => {
+    // sends html file to user
     res.sendFile(__dirname + "/index.html");
 
 });
 
+// sets up game route: localhost:5000/game
 app.get("/game", (req, res) => {
     res.sendFile(__dirname + "/public/game.html");
 
 });
 
+// starts server listening for requests
 app.listen(5000);
 ```
 {% endtab %}

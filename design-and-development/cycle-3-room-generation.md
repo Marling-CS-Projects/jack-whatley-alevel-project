@@ -54,29 +54,34 @@ import Stats from "./examples/jsm/libs/stats.module.js";
 import { OrbitControls, EffectComposer, RenderPass, UnrealBloomPass, GlitchPass, GLTFLoader, GUI } from "/exports.js";
 import { createCube, generateCorridor, Corridor, Junction, degToRad } from "/exports.js";
 
+// creating scene lighting
 const sun = new THREE.SpotLight( 0x87ceeb, 8 );
 const backgroundLight = new THREE.DirectionalLight( 0xffffff, 3 );
 const backgroundLight2 = new THREE.DirectionalLight( 0xffffff, 3 );
 
+// creating scene geome
 const basicCube = createCube([10, 1, 10], 0xfffffff);
 const moveableCube = createCube([1, 1, 1], 0xddff00);
 const room = generateCorridor([5, 1, 5], 0xffffff, [10, 0, 0]);
 
+// adding elements to scene
 scene.add(basicCube);
-
 scene.add(moveableCube);
 
 scene.add(room.floor);
 scene.add(room.wallLeft);
 scene.add(room.wallRight);
 
+// setting positions
 moveableCube.position.set(0, 1, 0);
 
+// testing light shadow
 scene.add(sun);
 sun.position.set(-5, 25, 10);
 sun.lookAt(0,1,0);
 sun.castShadow = true;
 
+// controlling detail of shadow
 sun.shadow.bias = -0.000000000000001;
 sun.shadow.mapSize.width = 2048 * 8;
 sun.shadow.mapSize.height = 2048 * 8;
@@ -97,15 +102,18 @@ backgroundLight2.lookAt(0,1,0);
 ```javascript
 import * as THREE from "three";
 
+// function to generate cubes easily
 function createCube(size, col) {
-
+    // making geometry, material and mesh
     let mesh = new THREE.BoxGeometry(size[0], size[1], size[2]);
     let material = new THREE.MeshStandardMaterial({color: col});
     let shape = new THREE.Mesh(mesh, material);
 
+    // adding shadow functionality to cubes
     shape.castShadow = true;
     shape.receiveShadow = true;
 
+    // returning shape object
     return shape;
 
 }
@@ -121,26 +129,31 @@ import { Corridor, Junction } from "./roomClass.js";
 import { createCube } from "./createCube.js";
 import { Scene } from "three";
 
+// all walls need to be same height for consistency
 const wallHeight = 5;
 
 function generateCorridor(size, colour, position) { // size [1, 10, 1]
-
+    // creating floor cube, setting position and shadow
     let floor = createCube(size, colour);
-    floor.receiveShadow = true;
+    floor.receiveShadow = true; // floor wont be casting shadow
     floor.position.set(position[0], position[1], position[2]);
 
+    // making wall "cube" 
     let wall1 = createCube([size[0], wallHeight, size[1]], 0xffffff);
     wall1.receiveShadow = true;
-    wall1.castShadow = false;
+    wall1.castShadow = false; // ruins visibility if true
     wall1.position.set(position[0], position[1] + (0.5 * wallHeight) - 0.5, position[2] - (size[2] / 2) + .5); // change wallheight to size[0] for reactiveness
 
+    // making other corridor wall
     let wall2 = createCube([size[0], wallHeight, size[1]], 0xffffff);
     wall2.receiveShadow = true;
     wall2.castShadow = false;
     wall2.position.set(position[0], position[1] + (0.5 * wallHeight) - 0.5, position[2] + (size[2] / 2) - .5); // change wallheight to size[0] for reactiveness
 
+    // combining elements into custom corridor class
     let room = new Corridor(floor, wall1, wall2)
 
+    // returing class Corridor
     return room;
 
 }
@@ -170,9 +183,10 @@ export { degToRad } from "/scripts/degToRad.js";
 {% endtab %}
 
 {% tab title="roomClass.js" %}
-```javascript
-class Corridor {
-    constructor(floor, wallLeft, wallRight) {
+<pre class="language-javascript"><code class="lang-javascript"><strong>// storing elements as class makes management easier
+</strong><strong>// also allows tracking of which parts belong to which room
+</strong><strong>class Corridor {
+</strong>    constructor(floor, wallLeft, wallRight) {
         this.floor = floor;
         this.wallLeft = wallLeft;
         this.wallRight = wallRight;
@@ -181,6 +195,7 @@ class Corridor {
 
 }
 
+// junction class only contains floor for this cycle
 class Junction {
     constructor(floor) {
         this.floor = floor;
@@ -190,7 +205,7 @@ class Junction {
 }
 
 export { Corridor, Junction };
-```
+</code></pre>
 {% endtab %}
 {% endtabs %}
 

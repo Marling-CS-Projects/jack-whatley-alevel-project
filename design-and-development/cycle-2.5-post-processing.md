@@ -59,13 +59,17 @@ import Stats from "./examples/jsm/libs/stats.module.js";
 
 import { OrbitControls, EffectComposer, RenderPass, UnrealBloomPass, GlitchPass, GUI } from "/exports.js";
 
+// setting up scene
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
 const renderer = new THREE.WebGLRenderer( { antialias: false } );
+
+// setting up rendering effects
 const composer = new EffectComposer( renderer );
 const renderPass = new RenderPass( scene, camera );
 const stats = new Stats();
 
+// parameters for bloom
 const params = {
     exposure: 1,
     bloomStrength: 5,
@@ -81,21 +85,25 @@ document.body.appendChild( renderer.domElement );
 
 scene.background = new THREE.Color(0x87ceeb);
 
+// setting renderer settings to work with bloom
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.toneMapping = THREE.ReinhardToneMapping;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
+// setting up bloom pass
 const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
 bloomPass.threshold = params.bloomThreshold;
 bloomPass.strength = params.bloomStrength;
 bloomPass.radius = params.bloomRadius;
 
+// adding passes to renderer
 composer.addPass( bloomPass );
 composer.addPass( renderPass );
 //const glitchPass = new GlitchPass();
 //composer.addPass( glitchPass );
 
+// creating UI using built in THREE gui
 function createPanel() {
 
     const panel = new GUI( { width: 310 } );
@@ -130,12 +138,13 @@ function animate() {
 }
 
 animate();
-createPanel();
+createPanel(); // adding panel to html
 ```
 {% endtab %}
 
 {% tab title="exports.js" %}
 ```javascript
+// having long imports in seperate file saves space
 export { OrbitControls } from "/examples/jsm/controls/OrbitControls.js";
 export { GLTFLoader } from "/examples/jsm/loaders/GLTFLoader.js";
 export { EffectComposer } from "/examples/jsm/postprocessing/EffectComposer.js";
