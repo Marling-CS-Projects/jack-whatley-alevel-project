@@ -416,6 +416,41 @@ The part of the main CSS file used to edit the CSS of the stats element.
 
 <figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>The new position of the stats element.</p></figcaption></figure>
 
+**Development Part 4:** Help UI Box
+
+To help players understand the game more I wanted to add a UI element that would only appear when the player hovered over something. This would give them a more detailed explanation. To do this I created a fixed HTML element that would appear only when something is hovered over, it would also have its content changed depending on what is hovered.
+
+{% tabs %}
+{% tab title="game.html" %}
+Part of the game.html file, the CSS used will be included inside the complete code section as it is too long.
+
+<pre class="language-html"><code class="lang-html">&#x3C;!-- part of the body tag -->
+&#x3C;body>
+    &#x3C;div class="help-box hidden" id="help-box">
+        &#x3C;p class="scan-title">Help Box&#x3C;/p>
+        &#x3C;p class="tab-text-help" id="help-text">
+            &#x3C;!-- this text is filled in by the JS -->
+        &#x3C;/p>
+    &#x3C;/div>
+<strong>&#x3C;/body>
+</strong></code></pre>
+{% endtab %}
+
+{% tab title="game.js" %}
+Part of the game.js file that controls the help element.
+
+````javascript
+// i created a function to handle hovering over an element
+```javascript
+function hover(element, enter, leave){
+    element.addEventListener('mouseenter', enter)
+    element.addEventListener('mouseleave', leave)
+}
+```
+````
+{% endtab %}
+{% endtabs %}
+
 ## Testing
 
 As mentioned in Cycle 9 as this is the final final patch it is important to make sure that the features added are working without any major flaws.
