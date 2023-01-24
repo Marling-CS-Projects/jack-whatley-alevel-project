@@ -439,17 +439,41 @@ Part of the game.html file, the CSS used will be included inside the complete co
 {% tab title="game.js" %}
 Part of the game.js file that controls the help element.
 
-````javascript
-// i created a function to handle hovering over an element
 ```javascript
+// custom function to handle hovering over an element
 function hover(element, enter, leave){
     element.addEventListener('mouseenter', enter)
     element.addEventListener('mouseleave', leave)
 }
+
+// hover functionality for the scanner
+hover(document.getElementById("turn-counter"), () => {
+    // function that runs on hover
+    document.getElementById("help-box").classList.remove("hidden");
+    document.getElementById("help-text").innerHTML = "The scanner is only available every even turn and only works in square rooms";
+}, () => {
+    // function that runs when hover stops
+    document.getElementById("help-box").classList.add("hidden");
+    document.getElementById("help-text").innerHTML = "";
+});
+
+// hover functionality for the score board (the no. of turns)
+hover(document.getElementById("score-board"), () => {
+    document.getElementById("help-box").classList.remove("hidden");
+    document.getElementById("help-text").innerHTML = "Displays the number of turns that have happened since the game started"; 
+}, () => {
+    document.getElementById("help-box").classList.add("hidden");
+    document.getElementById("help-text").innerHTML = "";
+});
 ```
-````
 {% endtab %}
 {% endtabs %}
+
+The two images below demonstrate the help function, currently it only works for two parts of the UI but it would be easy to add more.
+
+<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption><p>The mouse hovering over the part of the UI that says "TURNS TILL NEXT SCAN." (Not visible due to screenshot)</p></figcaption></figure>
+
+<figure><img src="../.gitbook/assets/image (8).png" alt=""><figcaption><p>The mouse hovering over the score box. (Not visible due to screenshot)</p></figcaption></figure>
 
 ## Testing
 
@@ -476,3 +500,4 @@ This is the most important feature to test as if it stops working then it can ma
 | The help box appears every time with the right help prompt.         | The help box does appear correctly and with the right text all the time. | Pass        |
 
 ## Video Evidence
+
