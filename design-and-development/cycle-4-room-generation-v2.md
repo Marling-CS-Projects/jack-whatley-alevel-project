@@ -65,11 +65,16 @@ import { createCube, generateCorridor, generateJunction, Corridor, Junction, deg
 
 const basicCube = createCube([10, 1, 10], 0xfffffff);
 const moveableCube = createCube([1, 1, 1], 0xddff00);
+
+// testing new rotation functionality, can parse direction into function now
+// otherwise it defaults to x
 const room = generateCorridor([8, 1, 5], 0xffffff, [12, 0, 0], "x");
 const roomzexample = generateCorridor([5, 1, 5], 0xff1111, [0, 0, 10], "z");
 
+// beginning work on junction generation and class
 const junction = generateJunction([5, 1, 5], 0x11ff11, [20, 0, 0])
 
+// adding generated elements to scene
 scene.add(basicCube);
 
 scene.add(moveableCube);
@@ -93,34 +98,42 @@ import { Corridor, Junction } from "./roomClass.js";
 import { createCube } from "./createCube.js";
 import { degToRad } from "./degToRad.js";
 
+// all walls need to be same height for consistency
 const wallHeight = 5;
 
 function generateCorridor(size, colour, position, rotation) { // size [1, 10, 1]
+    // creating floor cube, setting position and shadow
     let floor = createCube(size, colour);
-    floor.receiveShadow = true;
+    floor.receiveShadow = true; // floor wont be casting shadow
     floor.position.set(position[0], position[1], position[2]);
 
+    // making wall "cube" 
     let wall1 = createCube([size[0], wallHeight, size[1]], colour);
     wall1.receiveShadow = true;
-    wall1.castShadow = false;
+    wall1.castShadow = false; // ruins visibility if true
     wall1.position.set(position[0], position[1] + (0.5 * wallHeight) - 0.5, position[2] - (size[2] / 2) + .5); // change wallheight to size[0] for reactiveness
 
+    // making wall "cube" 
     let wall2 = createCube([size[0], wallHeight, size[1]], colour);
     wall2.receiveShadow = true;
-    wall2.castShadow = false;
+    wall2.castShadow = false; // ruins visibility if true
     wall2.position.set(position[0], position[1] + (0.5 * wallHeight) - 0.5, position[2] + (size[2] / 2) - .5); // change wallheight to size[0] for reactiveness
 
+    // handling z rotation of corridors
     if (rotation === "z") {
-
+        // rotating 90 deg on y axis
+        // three js only works on radians
         floor.rotation.y = degToRad(90);
         wall1.rotation.y = degToRad(90);
         wall2.rotation.y = degToRad(90);
 
+        // repositioning walls as rotating moves them
         wall1.position.set(floor.position.x + (size[2] / 2), wall1.position.y, floor.position.z);
         wall2.position.set(floor.position.x - (size[2] / 2), wall2.position.y, floor.position.z);
 
     }
 
+    // combining elements into custom corridor class
     let room = new Corridor(floor, wall1, wall2)
 
     return room;
@@ -128,10 +141,12 @@ function generateCorridor(size, colour, position, rotation) { // size [1, 10, 1]
 }
 
 function generateJunction(size, colour, position) {
+    // creating junction floor
     let floor = createCube(size, colour);
     floor.receiveShadow = true;
     floor.position.set(position[0], position[1], position[2]);
 
+    // adding to junction class
     let room = new Junction(floor);
 
     return room;
