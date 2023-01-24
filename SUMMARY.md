@@ -27,20 +27,7 @@
 * [CYCLE 8 Game Logic](design-and-development/cycle-8-game-logic.md)
 * [CYCLE 9 Final Patch](design-and-development/cycle-9-final-patch.md)
 * [CYCLE 10 Bonus Patch](design-and-development/cycle-10-bonus-patch.md)
-* [Complete Code](design-and-development/complete-code/README.md)
-  * [game.js](design-and-development/complete-code/game.js.md)
-  * [game.html](design-and-development/complete-code/game.html.md)
-  * [style.css](design-and-development/complete-code/style.css.md)
-  * [Scripts](design-and-development/complete-code/scripts/README.md)
-    * [characterClasses.js](design-and-development/complete-code/scripts/characterclasses.js.md)
-    * [createCube.js](design-and-development/complete-code/scripts/createcube.js.md)
-    * [degToRad.js](design-and-development/complete-code/scripts/degtorad.js.md)
-    * [generateRoom.js](design-and-development/complete-code/scripts/generateroom.js.md)
-    * [mapClass.js](design-and-development/complete-code/scripts/mapclass.js.md)
-    * [roomClass.js](design-and-development/complete-code/scripts/roomclass.js.md)
-    * [turn.js](design-and-development/complete-code/scripts/turn.js.md)
-  * [exports.js](design-and-development/complete-code/exports.js.md)
-  * [server.js](design-and-development/complete-code/server.js.md)
+* [Complete Code](design-and-development/complete-code.md)
 
 ## Testing
 
