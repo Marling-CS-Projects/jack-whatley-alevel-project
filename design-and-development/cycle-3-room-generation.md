@@ -221,7 +221,7 @@ Updated File Structure:
 
 One of my main issues was getting the walls to line up with the corridor, and on my first attempt for a function I got the wall positions wrong and they were either too far away or out of position on the X or Y axis.
 
-![An example screenshot of when I got the positioning wrong for the Y axis.](<../.gitbook/assets/image (6) (1).png>)
+![An example screenshot of when I got the positioning wrong for the Y axis.](<../.gitbook/assets/image (6) (1) (1).png>)
 
 ## Testing
 

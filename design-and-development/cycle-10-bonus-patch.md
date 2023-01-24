@@ -11,6 +11,7 @@ Cycle 10 is a bonus patch to add more features to the game and make the UI bette
 * [x] Make enemy only visible when close to player.
 * [x] Make turn counter.
 * [x] Customise control menu CSS.
+* [x] Help UI element to explain features to players.
 
 ### Key Variables
 
@@ -25,7 +26,7 @@ Cycle 10 is a bonus patch to add more features to the game and make the UI bette
 
 The easiest way to make the enemy only visible when in the adjacent rooms was to create a flat donut shape that follows the player around. This works because it only allows the camera to see a small section of the map. To make this shape I used a `THREE.LatheGeometry` and a custom set of coordinates to build a shape.
 
-<pre class="language-javascript" data-title="game.js [part of]" data-overflow="wrap" data-line-numbers><code class="lang-javascript"><strong>// shape coordinates
+<pre class="language-javascript" data-title="game.js [part of]" data-overflow="wrap"><code class="lang-javascript"><strong>// shape coordinates
 </strong><strong>let points = [
 </strong>    new THREE.Vector3(10,0,80), //top left
     new THREE.Vector3(25,0,50), //top right
@@ -44,7 +45,7 @@ MapView.add(mesh);
 
 I also had to make sure that the shape would follow the player around when they moved, to do this I added a line into the animate function (that runs every frame). This function updates the position of the shape relative to that of the player.
 
-{% code title="game.js [part of]" overflow="wrap" lineNumbers="true" %}
+{% code title="game.js [part of]" overflow="wrap" %}
 ```javascript
 function animate() {
     // setting mesh (shape) position to that of character class
@@ -61,7 +62,7 @@ animate()
 
 In the pictures below I have edited the colour of the shape to make it more visible, however the normal colour is black.
 
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>Demonstration of the shape placed over the map, as viewed from the free camera.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption><p>Demonstration of the shape placed over the map, as viewed from the free camera.</p></figcaption></figure>
 
 {% embed url="https://youtu.be/BoCx1MvfcUU" %}
 Demonstration of how the enemy cover looks in game, except the colour is changed for easier viewing.
@@ -75,7 +76,7 @@ To create the room scanner: I first started by making the UI, this involved most
 {% tab title="game.html" %}
 Part of the game.html file, the CSS used will be included inside the complete code section as it is too long.
 
-{% code overflow="wrap" lineNumbers="true" %}
+{% code overflow="wrap" %}
 ```html
 <!-- part of the body tag -->
 <body>
@@ -129,7 +130,7 @@ Part of the game.html file, the CSS used will be included inside the complete co
 {% tab title="game.js" %}
 Part of the game.js file.
 
-{% code overflow="wrap" lineNumbers="true" %}
+{% code overflow="wrap" %}
 ```javascript
 // this function runs every time the "scan" button is pressed
 scanButton.addEventListener("click", () => {
@@ -178,7 +179,7 @@ function animate() {
 {% tab title="turn.js" %}
 Part of the turn.js file.
 
-{% code overflow="wrap" lineNumbers="true" %}
+{% code overflow="wrap" %}
 ```javascript
 class ViewTurn {
     constructor(turn, count) {
@@ -213,7 +214,7 @@ I also wanted to add a turn counter to let the player know how long they had sur
 {% tab title="game.html" %}
 Part of the game.html file, the CSS used will be included inside the complete code section as it is too long.
 
-{% code overflow="wrap" lineNumbers="true" %}
+{% code overflow="wrap" %}
 ```html
 <!-- part of the body tag -->
 <body>
@@ -234,7 +235,7 @@ Part of the game.html file, the CSS used will be included inside the complete co
 {% tab title="game.js" %}
 Part of the game.js file.
 
-{% code overflow="wrap" lineNumbers="true" %}
+{% code overflow="wrap" %}
 ```javascript
 /// Part of the animate function
 function animate() {
@@ -254,8 +255,189 @@ function animate() {
 
 For the last part of the Cycle I wanted to create a better looking version of the default UI that comes as part of THREE.js. This was important to keep the theme of the game; it also meant I could add an options menu and a help box popup.
 
+To do this I used the same CSS from before to make a brand new options menu from HTML this time, instead of from THREE's built in library. To do this I made a container div and then put inside the title element, the tab buttons and the tab box; then using Javascript I made using the buttons switch between tabs.
 
+{% tabs %}
+{% tab title="game.html" %}
+Part of the game.html file, the CSS used will be included inside the complete code section as it is too long.
+
+<pre class="language-html"><code class="lang-html">&#x3C;!-- part of the body tag -->
+&#x3C;body>
+<strong>    &#x3C;div class="button-panel">
+</strong>        &#x3C;p class="scan-title">Controls Menu&#x3C;/p>
+        &#x3C;div class="tab-button-cont">
+            &#x3C;button class="tab-button tab-button-active" id="tab-1">
+                Controls
+            &#x3C;/button>
+            &#x3C;button class="tab-button" id="tab-2">Options&#x3C;/button>
+            &#x3C;div class="filler-element">&#x3C;/div>
+        &#x3C;/div>
+        &#x3C;div class="tab-container" id="tab-container-1">
+            &#x3C;p class="tab-text">
+                Current Turn
+                &#x3C;span class="font-change"> :- &#x3C;/span>
+                &#x3C;span id="current-turn">View&#x3C;/span>
+            &#x3C;/p>
+            &#x3C;p class="tab-text-help">
+                Look around or use the end view turn button to switch to 
+                moving your character
+            &#x3C;/p>
+            &#x3C;div class="button-cont">
+                &#x3C;button class="tab-button" id="view-button">
+                    End View Turn
+                &#x3C;/button>
+                &#x3C;button class="tab-button" id="map-button">Map View&#x3C;/button>
+            &#x3C;/div>
+        &#x3C;/div>
+        &#x3C;div class="tab-container tab-container-hidden" id="tab-container-2">
+            &#x3C;p class="tab-text-help">
+                See how long you can evade the enemy using tools like the 
+                scanner
+            &#x3C;/p>
+            &#x3C;p class="tab-text" style="margin-top: 5px;">
+                Options
+                &#x3C;span class="font-change"> :- &#x3C;/span>
+            &#x3C;/p>
+            &#x3C;div class="button-cont">
+                &#x3C;button class="tab-button" onclick="window.location = '/'">
+                    Exit Game
+                &#x3C;/button>
+                &#x3C;button class="tab-button" id="fps-button">Show FPS&#x3C;/button>
+                &#x3C;button class="tab-button" id="free-button">
+                    Free Camera
+                &#x3C;/button>
+            &#x3C;/div>
+        &#x3C;/div>
+    &#x3C;/div>
+&#x3C;/body>
+</code></pre>
+{% endtab %}
+
+{% tab title="game.js" %}
+Part of the game.js file.
+
+```javascript
+// the tab buttons
+const tabOne = document.getElementById("tab-1");
+const tabTwo = document.getElementById("tab-2");
+
+// the tab containers
+const tabContOne = document.getElementById("tab-container-1");
+const tabContTwo = document.getElementById("tab-container-2");
+
+// click event for buttons
+tabOne.addEventListener("click", () => {
+    // check if button clicked is current active one
+    // if not then it switches
+    if (tabOne.classList.value.includes("tab-button-active")) {
+        return;
+    } else {
+        tabOne.classList.add("tab-button-active");
+        tabTwo.classList.remove("tab-button-active");
+        tabContOne.classList.remove("tab-container-hidden");
+        tabContTwo.classList.add("tab-container-hidden");
+    }
+});
+
+tabTwo.addEventListener("click", () => {
+    if (tabTwo.classList.value.includes("tab-button-active")) {
+        return;
+    } else {
+        tabTwo.classList.add("tab-button-active");
+        tabOne.classList.remove("tab-button-active");
+        tabContOne.classList.add("tab-container-hidden");
+        tabContTwo.classList.remove("tab-container-hidden");
+    }
+});
+
+// the buttons for the options menu:
+viewButton.addEventListener("click", () => {
+    viewTurn.turn = false;
+    enemyTurn.turn = false;
+});
+
+mapButton.addEventListener("click", () => {
+    SCENE = MapView;
+    CAMERA = MapCamera;
+});
+
+document.getElementById("fps-button").addEventListener("click", () => {
+    stats.dom.classList.add("stats-class");
+    document.body.appendChild( stats.dom );
+    showStats = true;
+});
+
+document.getElementById("free-button").addEventListener("click", () => {
+    CAMERA = camera;
+});
+```
+{% endtab %}
+{% endtabs %}
+
+This code creates the two images below, one is for each tab state.
+
+![](<../.gitbook/assets/image (1).png>)![](<../.gitbook/assets/image (6).png>)
+
+I also changed the CSS of the FPS counter as it was interfering with the position of the scanner UI so I had to use the `!important` keyword in CSS to overwrite it. I also had to add a class to it otherwise if I was just to use the `canvas` CSS property I would also change the style of the renderer.
+
+{% tabs %}
+{% tab title="game.js" %}
+Part of the game.js file that controls the stats element.
+
+```javascript
+// same code as earlier
+document.getElementById("fps-button").addEventListener("click", () => {
+    // adding a class to the stats element
+    stats.dom.classList.add("stats-class");
+    // appending stats.dom to body tag
+    document.body.appendChild( stats.dom );
+    showStats = true;
+});
+```
+{% endtab %}
+
+{% tab title="style.css" %}
+The part of the main CSS file used to edit the CSS of the stats element.
+
+```css
+.stats-class {
+    /* moving container to bottom left */
+    position: absolute !important;
+    bottom: 0% !important;
+    left: 0% !important;
+    /* forcing canvas elements to align bottom left */
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+```
+{% endtab %}
+{% endtabs %}
+
+<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>The new position of the stats element.</p></figcaption></figure>
 
 ## Testing
+
+As mentioned in Cycle 9 as this is the final final patch it is important to make sure that the features added are working without any major flaws.
+
+**Test 1:** Enemy Visibility
+
+This is the most important feature to test as if it stops working then it can make the game unplayable for the player.
+
+| What I expect                                                              | What happened                                                               | Pass / Fail |
+| -------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ----------- |
+| The player can only see the connecting rooms to the one they are in.       | The players vision of the whole map is obscured, only nearby rooms visible. | Pass        |
+| When the player moves the element blocking their vision will move as well. | When the player moves their vision moves with them.                         | Pass        |
+| The enemy should be visible when in a connected room.                      | The enemy can only be seen when in a room that is connected.                | Pass        |
+
+**Test 2:** New UI Elements
+
+| What I expect                                                       | What happened                                                            | Pass / Fail |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------------ | ----------- |
+| The scanner will work every even turn and show the enemy correctly. | The scanner only works every two turns and shows the enemy correctly.    | Pass        |
+| The score counter will incease every turn.                          | The score counter increments correctly.                                  | Pass        |
+| The tabs in the controls menu switch correctly.                     | The tabs function correctly every button press.                          | Pass        |
+| The buttons inside the tabs function correctly.                     | The buttons in the tabs work correctly even after switching tabs.        | Pass        |
+| The help box appears every time with the right help prompt.         | The help box does appear correctly and with the right text all the time. | Pass        |
 
 ## Video Evidence
