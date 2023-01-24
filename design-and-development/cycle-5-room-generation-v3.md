@@ -57,31 +57,38 @@ import Stats from "./examples/jsm/libs/stats.module.js";
 import { OrbitControls, EffectComposer, RenderPass, UnrealBloomPass, GlitchPass, GLTFLoader, GUI } from "/exports.js";
 import { createCube, generateCorridor, generateJunction, Corridor, Junction, degToRad } from "/exports.js";
 
+// creating environment and moveable cube
 const basicCube = createCube([10, 1, 10], 0xfffffff);
 const moveableCube = createCube([1, 1, 1], 0xddff00);
 
 const room = generateCorridor([10, 1, 5], 0x1111ff, [11, 0, 0], "x");
 const roomzexample = generateCorridor([5, 1, 5], 0xff1111, [0, 0, 10], "z");
 
+// using new junction generation function
 const junction = generateJunction([5, 1, 5], 0x11ff11, [20, 0, 0]);
 
+// adding elements to scene
 scene.add(basicCube);
 
 scene.add(moveableCube);
 
 scene.add(junction.floor)
 
+// adding room elements seperately as a test
 scene.add(room.floor);
 scene.add(room.wallLeft);
 scene.add(room.wallRight);
 
+// adding junction elements seperately, but walls through for loop
 scene.add(junction.floor);
 for(let i=0; i < junction.walls.length; i++){scene.add(junction.walls[i])};
 
+// adding z axis corridor to scene
 scene.add(roomzexample.floor);
 scene.add(roomzexample.wallLeft);
 scene.add(roomzexample.wallRight);
 
+// adding another test junction
 const junction2 = generateJunction([10, 1, 10], 0x11ff11, [0, 0, 20]);
 
 scene.add(junction2.floor);
@@ -235,7 +242,7 @@ To do this test I wanted to put down as many corridors as possible in both diffe
 | Corridor will generate in any size on the z axis with correct alignment. | The corridor generates too wide when generated in the z axis. | Fail      |
 | Corridors will generate with the correct colour.                         | The corridors colour displays correctly.                      | Pass      |
 
-![Spawning two identical (except rotation) corridors inside each other with only the axis changes proves that z axis corridors generate incorrectly.](<../.gitbook/assets/image (4) (1).png>)
+![Spawning two identical (except rotation) corridors inside each other with only the axis changed proves that z axis corridors generate incorrectly.](<../.gitbook/assets/image (4) (1).png>)
 
 **Test 2:** Junctions
 
