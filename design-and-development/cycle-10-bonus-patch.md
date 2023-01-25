@@ -509,7 +509,7 @@ This is the most important feature to test as if it stops working then it can ma
 | What I expect                                                       | What happened                                                            | Pass / Fail |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------------ | ----------- |
 | The scanner will work every even turn and show the enemy correctly. | The scanner only works every two turns and shows the enemy correctly.    | Pass        |
-| The score counter will incease every turn.                          | The score counter increments correctly.                                  | Pass        |
+| The score counter will increase every turn.                         | The score counter increments correctly.                                  | Pass        |
 | The tabs in the controls menu switch correctly.                     | The tabs function correctly every button press.                          | Pass        |
 | The buttons inside the tabs function correctly.                     | The buttons in the tabs work correctly even after switching tabs.        | Pass        |
 | The help box appears every time with the right help prompt.         | The help box does appear correctly and with the right text all the time. | Pass        |
