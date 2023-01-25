@@ -14,6 +14,8 @@ In Cycle 1 I wanted to change my library that I was using for game development a
 
 ### Usability Features
 
+There are no new usability features to be changed or added in this cycle.
+
 ### Key Variables
 
 | Variable Name | Usage                                                       |

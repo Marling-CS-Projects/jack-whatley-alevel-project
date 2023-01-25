@@ -9,6 +9,10 @@ In Cycle 9, the final patch, I wanted to polish the game to the point where all 
 * [x] Fix Character / Enemy mesh issues.
 * [x] Make FPS counter optional.
 
+### Usability Features
+
+* Error Tolerance - Fixing the character/enemy mesh issues makes the game less buggy and it also helps with the clarity of game visuals as the player. This is because the player before the issue is fixed would be confused by the mesh missing when they clicked in the room.
+
 ### Key Variables
 
 | Variable Name    | Usage                                                                                     |

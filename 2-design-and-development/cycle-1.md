@@ -13,6 +13,8 @@ In Cycle 0 I wanted to make sure that the game was able to be run from my own co
 
 ### Usability Features
 
+* URL - The route names should be simple so as to make it easier for users to navigate the game meaning that it should be simple like: /menu or /game.
+
 ### Key Variables
 
 | Variable Name | Usage                                                                               |

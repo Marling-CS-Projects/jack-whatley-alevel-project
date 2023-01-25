@@ -12,6 +12,10 @@ I also had to create the basis of the generateJunction() function which would al
 * [x] Test that it is working with multiple examples.
 * [x] Begin work on the generateJunction() function.
 
+### Usability Features
+
+There are no new usability features to be changed or added in this cycle.
+
 ### Key Variables
 
 | Variable Name      | Usage                                                          |

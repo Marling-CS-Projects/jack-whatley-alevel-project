@@ -14,6 +14,10 @@ The class will also be much useful later as it will allow me to control what uni
 * [ ] Make the corridor function work on both axis.
 * [x] Organise everything above into separate javascript files, and export them.&#x20;
 
+### Usability Features
+
+* Environment Interaction - The environment should be interactable and where the player can interact should be clear. This means that where the player can move should be made clear through design.
+
 ### Key Variables
 
 | Variable Name | Usage                                                                                                                             |

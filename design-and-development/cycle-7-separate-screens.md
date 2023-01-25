@@ -14,6 +14,11 @@ I also wanted the game to be able to handle new features in the future like proc
 * [x] Create a function that generates all the individual room scenes.
 * [x] Make the map screen simple looking.
 
+### Usability Features
+
+* Error Tolerance - The game introduction of many different scenes might cause errors if not done properly and make the game unplayable; therefore it will be important to test that the features added are functioning correctly.
+* Controls - The buttons to switch between scenes should be clearly labelled and describe what they do. The UI should also be clear as that is how the game controls.
+
 ### Key Variables
 
 | Variable Name       | Usage                                                          |

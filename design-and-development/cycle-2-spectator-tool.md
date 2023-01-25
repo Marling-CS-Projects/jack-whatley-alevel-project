@@ -11,6 +11,10 @@ In Cycle 2 I wanted to create a basic spectator tool and a lit up environment to
 * [x] Apply Orbit Controls to the Cube.
 * [x] Add in a movement system using WASD.
 
+### Usability Features
+
+* Controls - The controls need to be simple and there needs to be a list of controls in the settings menu. They will be using common buttons that the majority of PC games use so it should be easy to pick up for people who play on a PC.
+
 ### Key Variables
 
 | Variable Name                 | Usage                                                                                   |

@@ -13,6 +13,10 @@ I also wanted to make sure that I have tested everything I have worked on so far
 * [x] Test the corridor generation function for all possibilities.
 * [x] Make sure everything made so far works.
 
+### Usability Features
+
+* Environment Interaction - The changes to room generation in this cycle should be in line with the aims set out in the design frame. This means that where the player can move should be clear and they should engage the player.
+
 ### Key Variables
 
 | Variable Name       | Usage                                                                       |

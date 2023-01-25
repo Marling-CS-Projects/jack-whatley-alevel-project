@@ -18,6 +18,10 @@ There will also be a top down camera mode which will lock the OrbitControls and 
 * [x] Create classes for characters.
 * [ ] Create an update function at the end of game.js.
 
+### Usability Features
+
+* Enemy Behaviour - To engage the player it will be important that the enemy seems to have some logical behaviour such as patrolling or&#x20;
+
 ### Key Variables
 
 | Variable Name | Usage                                                                                 |

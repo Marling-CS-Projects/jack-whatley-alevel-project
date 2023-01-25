@@ -11,6 +11,10 @@ In Cycle 8 I want to make sure the key game logic is in place; this means implem
 * [x] Make rooms store data about which room is connected.
 * [x] Add simple movement to enemy.
 
+### Usability Features
+
+* Enemy Behaviour - The enemy needs to feel like it is patrolling to make that the player is engaged, this means they should be limited to part of the map and also that part of the map should be safe to give the player down time.
+
 ### Key Variables
 
 | Variable Name    | Usage                                                                            |

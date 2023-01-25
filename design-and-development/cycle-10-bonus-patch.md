@@ -13,6 +13,12 @@ Cycle 10 is a bonus patch to add more features to the game and make the UI bette
 * [x] Customise control menu CSS.
 * [x] Help UI element to explain features to players.
 
+### Usability Features
+
+* Controls & UI - The controls and UI are adjusted to make sure they are more consistent, moreover there will be help and tutorials written in to the options menu.
+* Easy to Learn - The addition of tutorial boxes that appear when the player hovers over certain parts of the UI will help them understand how to play. They will also make sure that buttons describe what they do and provide a list of controls.
+* Game Aims - The addition of tutorials will also provide help with the aim of the game, furthermore the turn counter will provide a goal for the player. This will also engage players as it will be a challenge to get the highest score.
+
 ### Key Variables
 
 | Variable Name                         | Usage                                                                                                                 |

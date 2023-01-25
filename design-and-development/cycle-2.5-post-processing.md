@@ -11,6 +11,10 @@ In Cycle 2.5 I wanted to experiment with post-processing effects before I got to
 * [x] Import and set up GlitchPass.
 * [x] Change renderer to work with Bloom and integrate composer.
 
+### Usability Features
+
+* Visuals - The game visuals need to be clear and concise but they also should fit with the atmosphere of the game.
+
 ### Key Variables
 
 | Variable Name | Usage                                                                                       |
