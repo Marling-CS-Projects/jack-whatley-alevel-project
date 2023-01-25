@@ -34,6 +34,7 @@ class Character {
 
     }
 
+    // updated setpos to work with new methods: changeRoom, changeRoomMap
     setPos(scene, pos) {
         scene.add(this.mesh);
         if (pos) { // it defaults to pos 0,0,0 in rooms, but cant for the map
@@ -67,6 +68,7 @@ To do this I created an object that handles which turn it is and what can be don
 
 {% code title="turn.js" overflow="wrap" %}
 ```javascript
+// using a class for turn to allow for methods
 class ViewTurn {
     constructor(turn) {
         this.turn = turn;
@@ -87,8 +89,12 @@ This is then processed when I create the DomEvents for each separate cube on the
 
 {% code title="game.js" overflow="wrap" %}
 ```javascript
+// looping for every part of the map scene
 for (let i = 0; i < MAP.scenes.length; i++) {
+    // registering a domeven for each part
     domEvent.addEventListener(MAP.map[i].components[0], "click", (e) => {
+        // putting the logic for turns inside of the domevent
+        // this means it runs every time a button is pressed
         if (viewTurn.turn === false) {
             character.changeRoomMap(MAP.map[i], MapView);
             character.changeRoom(MAP.scenes[i].room, MAP.scenes[i].scene);
@@ -115,20 +121,24 @@ Due to how much time it would take to make a proper solution to sort out how roo
 
 {% tabs %}
 {% tab title="domevents" %}
-{% code title="game.js" overflow="wrap" %}
+{% code title="game.js" %}
 ```javascript
+// updated domevents for loop 
+// still looping through cubes on map scene
 for (let i = 0; i < MAP.scenes.length; i++) {
+    // creating domevents for each cube, linking their logic to them
     domEvent.addEventListener(MAP.map[i].components[0], "click", (e) => {
         if (viewTurn.turn === false) {
+            // using if to check if the rooms are connected
             if (character.room.link.connected[0] === MAP.map[i].link.name) {
                 character.changeRoomMap(MAP.map[i], MapView);
-
+            // checking link 2
             } else if (character.room.link.connected[1] === MAP.map[i].link.name) {
                 character.changeRoomMap(MAP.map[i], MapView);
-
+            // checking link 3 (only applies in one place)
             } else if (character.room.link.connected[2] === MAP.map[i].link.name) {
                 character.changeRoomMap(MAP.map[i], MapView);
-
+            // error handling
             } else {
                 console.log("no match");
 
@@ -139,7 +149,7 @@ for (let i = 0; i < MAP.scenes.length; i++) {
         } else if (viewTurn.turn === true) {
             SCENE = MAP.scenes[i].scene;
             CAMERA = MAP.scenes[i].camera[0];
-
+            // turn is ended by ui
         } 
     });
 }
@@ -147,9 +157,12 @@ for (let i = 0; i < MAP.scenes.length; i++) {
 {% endcode %}
 {% endtab %}
 
-{% tab title="Second Tab" %}
+{% tab title="room links" %}
 {% code title="game.js" %}
 ```javascript
+// the code that defines the link between rooms
+// due to the way three js works it is easier to hard code this
+// or come up with a better solution in the future of the game
 spawnJunction.connected.push(middleUpperCorridor.name, middleCorridor.name, longCorridorLeft.name);
 middleUpperCorridor.connected.push(spawnJunction.name, topLeftJunction.name);
 topLeftJunction.connected.push(middleUpperCorridor.name, middleLeftCorridor.name);
@@ -176,18 +189,27 @@ To do this I made an object for handling whether it was the enemies turn to move
 {% tab title="game.js" %}
 ```javascript
 if (enemyTurn.turn == true) {
+        // chance of enemy moving
         let chance = Math.floor(Math.random() * 10);
+        // no. between 1 and 2 to prevent enemy going down long corridor
         let random = Math.floor(Math.random() * 2);
 
+        // defining chance
         if (chance > 6) {
-            let room = MAP.map.findIndex((MapRoom) => MapRoom.link.name === enemy.room.link.connected[random])
+            // finding index of connected room
+            let room = MAP.map.findIndex((MapRoom) => MapRoom.link.name === enemy.room.link.connected[random]);
+            // changing room to that of the selected index
             enemy.changeRoomMap(MAP.map[room], MapView);
 
         }
+        // even if the enemy isnt moved the turn is changed
         enemyTurn.turn = false;
     }
 
 if (enemy.room.link.name === character.room.link.name) {
+    // revealing game over text if the player is caught
+    // the game over text has a higher z-index and covers the screen
+    // making sure the game is over
     document.getElementById("view-output").classList.remove("hidden");
 
 }
@@ -198,24 +220,18 @@ if (enemy.room.link.name === character.room.link.name) {
 ```html
 <body>
 
+    <!-- game over text covers screen -->
     <div class="text-box hidden" id="view-output">
-            
+        <!-- game over title text -->
         <h1 class="text">Game Over</h1>
-        
     </div>
 
     <script type="importmap">
-            
-        {
-                
+        {  
             "imports": {
-                
                 "three": "../build/three.module.js"
-                
             }
-            
         }
-        
     </script>
 
     <script type="module" src="./game.js"></script>
