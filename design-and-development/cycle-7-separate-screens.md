@@ -59,7 +59,6 @@ function createPanel() {
     const settingFolder = panel.addFolder( "Settings" );
 
     let settings = {
-
         "Use the show stats button to see stats.": "0",
         "Show Stats": function() {
             document.body.appendChild( stats.dom ); // adding stats
@@ -282,19 +281,27 @@ I then also created a loop that would create all the individual scenes and push 
 {% tab title="Scene Creation Loop" %}
 {% code title="game.js scene loop" overflow="wrap" %}
 ```javascript
+// creating invdividual room scenes
 for (let i = 0; i < MAP.scenes.length; i++) {
+    // creating components: camera, light, room
     let room;
-    let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 100 );
+    let camera = new THREE.PerspectiveCamera( 
+        75, window.innerWidth / window.innerHeight, 1, 100 );
     let roomlight = new THREE.SpotLight( 0x87ceeb, 10 );
     roomlight.target.position.set(-10, 0, 10);
     roomlight.position.set(-10, 50, 10);
     
+    // logic for corridor
     if (MAP.scenes[i].room.constructor.name === "Corridor") {
-        room = generateCorridor(MAP.scenes[i].room.size, 0xff11ff, [0,0,0], MAP.scenes[i].room.rotation);
+        room = generateCorridor(
+            MAP.scenes[i].room.size, 0xff11ff, [0,0,0], 
+            MAP.scenes[i].room.rotation);
         camera.position.set(-5,10,0);
         camera.lookAt(0,1,0);
 
     }
+    
+    // logic for junction
     if (MAP.scenes[i].room.constructor.name === "Junction") {
         room = generateJunction(MAP.scenes[i].room.size, 0xffffff, [0,0,0]);
         camera.position.set(-5,15,0);
@@ -302,6 +309,7 @@ for (let i = 0; i < MAP.scenes.length; i++) {
 
     }
     
+    // adding to scene
     room.add(MAP.scenes[i].scene);
     MAP.scenes[i].scene.add(camera);
     MAP.scenes[i].scene.add(roomlight);
@@ -314,6 +322,7 @@ for (let i = 0; i < MAP.scenes.length; i++) {
 {% tab title="Updated Classes" %}
 {% code title="mapClass.js" overflow="wrap" %}
 ```javascript
+// updated class for individual room scenes
 class RoomScene {
     constructor(name, scene, room) {
         this.name = name;
@@ -321,13 +330,13 @@ class RoomScene {
         this.room = room;
 
     }
-
 }
 ```
 {% endcode %}
 
 {% code title="roomClass.js" overflow="wrap" %}
 ```javascript
+// updated corridor class
 class Corridor {
     constructor(size, components, position, orientation) {
         this.size = size;
@@ -342,9 +351,7 @@ class Corridor {
             scene.add(this.components[i]);
 
         }
-
     }
-
 }
 ```
 {% endcode %}
@@ -354,14 +361,12 @@ class Corridor {
 {% code title="game.js ui code" overflow="wrap" %}
 ```javascript
 function createPanel() {
-
     const panel = new GUI( { width: 300 } );
 
     const helpFolder = panel.addFolder( "Help" );
     const settingFolder = panel.addFolder( "Settings" );
 
     let settings = {
-
         "Use the show stats button to see stats.": "0",
         "Show Stats": function() {
 
@@ -394,6 +399,7 @@ function createPanel() {
             CAMERA = camera;
 
         },
+        // the new function to switch to a room scene
         "Switch Scene Test": function() {
 
             SCENE = MAP.scenes[0].scene;
@@ -429,7 +435,9 @@ To link everything it was surprisingly simple as all I had to do was add another
 
 {% code title="game.js domevent loop" overflow="wrap" %}
 ```javascript
+// looping throguh all map scenes
 for (let i = 0; i < MAP.scenes.length; i++) {
+    // setting the domevent for the current map scene
     domEvent.addEventListener(MAP.map[i].components[0], "click", (e) => {
         SCENE = MAP.scenes[i].scene;
         CAMERA = MAP.scenes[i].camera[0];
