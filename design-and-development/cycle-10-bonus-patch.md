@@ -15,10 +15,10 @@ Cycle 10 is a bonus patch to add more features to the game and make the UI bette
 
 ### Key Variables
 
-| Variable Name | Usage |
-| ------------- | ----- |
-|               |       |
-|               |       |
+| Variable Name                         | Usage                                                                                                                 |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| tabOne, tabTwo, mapButton, viewButton | Variables that refer to parts of the HTML to make it so that it only has to be written out once.                      |
+| viewTurn                              | Class used to keep track of which view turn it is as well as keeping track of the number of turns that have happened. |
 
 ## Development
 
@@ -26,9 +26,11 @@ Cycle 10 is a bonus patch to add more features to the game and make the UI bette
 
 The easiest way to make the enemy only visible when in the adjacent rooms was to create a flat donut shape that follows the player around. This works because it only allows the camera to see a small section of the map. To make this shape I used a `THREE.LatheGeometry` and a custom set of coordinates to build a shape.
 
-<pre class="language-javascript" data-title="game.js [part of]" data-overflow="wrap"><code class="lang-javascript"><strong>// shape coordinates
-</strong><strong>let points = [
-</strong>    new THREE.Vector3(10,0,80), //top left
+{% code title="game.js [part of]" overflow="wrap" %}
+```javascript
+// shape coordinates
+let points = [
+    new THREE.Vector3(10,0,80), //top left
     new THREE.Vector3(25,0,50), //top right
     new THREE.Vector3(25,0,-50), //bottom right
     new THREE.Vector3(10,0,-50), //bottom left
@@ -41,7 +43,8 @@ mesh.position.set(0,5,0);
 
 // adding mesh to map screen
 MapView.add(mesh);
-</code></pre>
+```
+{% endcode %}
 
 I also had to make sure that the shape would follow the player around when they moved, to do this I added a line into the animate function (that runs every frame). This function updates the position of the shape relative to that of the player.
 
@@ -97,6 +100,7 @@ Part of the game.html file, the CSS used will be included inside the complete co
                 <div class="spacer"></div>
                 <div class="junction-element" id="row-1-6"></div>
             </div>
+            <!-- row 2 of map -->
             <div class="row-2">
                 <div class="vertical-corridor-element" id="row-2-1"></div>
                 <div class="spacer"></div>
@@ -104,6 +108,7 @@ Part of the game.html file, the CSS used will be included inside the complete co
                 <div class="spacer"></div>
                 <div class="vertical-corridor-element" id="row-2-2"></div>
             </div>
+            <!-- row 3 of map -->
             <div class="row-3">
                 <div class="junction-element" id="row-3-1"></div>
                 <div class="spacer"></div>
@@ -111,6 +116,7 @@ Part of the game.html file, the CSS used will be included inside the complete co
                 <div class="spacer"></div>
                 <div class="junction-element" id="row-3-3"></div>
             </div>
+            <!-- row 4 of map containing text and button -->
             <div class="row-4">
                 <p class="turn-counter" id="turn-counter">
                     Turns till next scan
@@ -261,56 +267,61 @@ To do this I used the same CSS from before to make a brand new options menu from
 {% tab title="game.html" %}
 Part of the game.html file, the CSS used will be included inside the complete code section as it is too long.
 
-<pre class="language-html"><code class="lang-html">&#x3C;!-- part of the body tag -->
-&#x3C;body>
-<strong>    &#x3C;div class="button-panel">
-</strong>        &#x3C;p class="scan-title">Controls Menu&#x3C;/p>
-        &#x3C;div class="tab-button-cont">
-            &#x3C;button class="tab-button tab-button-active" id="tab-1">
+```html
+<!-- part of the body tag -->
+<body>
+    <div class="button-panel">
+        <p class="scan-title">Controls Menu</p>
+        <!-- container for tab buttons -->
+        <div class="tab-button-cont">
+            <!-- tab buttons and filler element (with border) -->
+            <button class="tab-button tab-button-active" id="tab-1">
                 Controls
-            &#x3C;/button>
-            &#x3C;button class="tab-button" id="tab-2">Options&#x3C;/button>
-            &#x3C;div class="filler-element">&#x3C;/div>
-        &#x3C;/div>
-        &#x3C;div class="tab-container" id="tab-container-1">
-            &#x3C;p class="tab-text">
+            </button>
+            <button class="tab-button" id="tab-2">Options</button>
+            <div class="filler-element"></div>
+        </div>
+        <!-- tab container 1 -->
+        <div class="tab-container" id="tab-container-1">
+            <p class="tab-text">
                 Current Turn
-                &#x3C;span class="font-change"> :- &#x3C;/span>
-                &#x3C;span id="current-turn">View&#x3C;/span>
-            &#x3C;/p>
-            &#x3C;p class="tab-text-help">
+                <span class="font-change"> :- </span>
+                <span id="current-turn">View</span>
+            </p>
+            <p class="tab-text-help">
                 Look around or use the end view turn button to switch to 
                 moving your character
-            &#x3C;/p>
-            &#x3C;div class="button-cont">
-                &#x3C;button class="tab-button" id="view-button">
+            </p>
+            <div class="button-cont">
+                <button class="tab-button" id="view-button">
                     End View Turn
-                &#x3C;/button>
-                &#x3C;button class="tab-button" id="map-button">Map View&#x3C;/button>
-            &#x3C;/div>
-        &#x3C;/div>
-        &#x3C;div class="tab-container tab-container-hidden" id="tab-container-2">
-            &#x3C;p class="tab-text-help">
+                </button>
+                <button class="tab-button" id="map-button">Map View</button>
+            </div>
+        </div>
+        <!-- tab container 2 (starts hidden) -->
+        <div class="tab-container tab-container-hidden" id="tab-container-2">
+            <p class="tab-text-help">
                 See how long you can evade the enemy using tools like the 
                 scanner
-            &#x3C;/p>
-            &#x3C;p class="tab-text" style="margin-top: 5px;">
+            </p>
+            <p class="tab-text" style="margin-top: 5px;">
                 Options
-                &#x3C;span class="font-change"> :- &#x3C;/span>
-            &#x3C;/p>
-            &#x3C;div class="button-cont">
-                &#x3C;button class="tab-button" onclick="window.location = '/'">
+                <span class="font-change"> :- </span>
+            </p>
+            <div class="button-cont">
+                <button class="tab-button" onclick="window.location = '/'">
                     Exit Game
-                &#x3C;/button>
-                &#x3C;button class="tab-button" id="fps-button">Show FPS&#x3C;/button>
-                &#x3C;button class="tab-button" id="free-button">
+                </button>
+                <button class="tab-button" id="fps-button">Show FPS</button>
+                <button class="tab-button" id="free-button">
                     Free Camera
-                &#x3C;/button>
-            &#x3C;/div>
-        &#x3C;/div>
-    &#x3C;/div>
-&#x3C;/body>
-</code></pre>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+```
 {% endtab %}
 
 {% tab title="game.js" %}
@@ -351,22 +362,26 @@ tabTwo.addEventListener("click", () => {
 });
 
 // the buttons for the options menu:
+// these are from the old three js ui element
 viewButton.addEventListener("click", () => {
     viewTurn.turn = false;
     enemyTurn.turn = false;
 });
 
+// switching the camera and scene to the mapview
 mapButton.addEventListener("click", () => {
     SCENE = MapView;
     CAMERA = MapCamera;
 });
 
+// enabling fps tracker
 document.getElementById("fps-button").addEventListener("click", () => {
     stats.dom.classList.add("stats-class");
     document.body.appendChild( stats.dom );
     showStats = true;
 });
 
+// activating free camera
 document.getElementById("free-button").addEventListener("click", () => {
     CAMERA = camera;
 });
@@ -405,7 +420,7 @@ The part of the main CSS file used to edit the CSS of the stats element.
     position: absolute !important;
     bottom: 0% !important;
     left: 0% !important;
-    /* forcing canvas elements to align bottom left */
+    /* forcing canvas elements (fps tracker) to align bottom left */
     display: flex;
     flex-direction: column;
     justify-content: end;
@@ -442,8 +457,8 @@ Part of the game.js file that controls the help element.
 ```javascript
 // custom function to handle hovering over an element
 function hover(element, enter, leave){
-    element.addEventListener('mouseenter', enter)
-    element.addEventListener('mouseleave', leave)
+    element.addEventListener('mouseenter', enter) // function on hover
+    element.addEventListener('mouseleave', leave) // function when hover stops
 }
 
 // hover functionality for the scanner
