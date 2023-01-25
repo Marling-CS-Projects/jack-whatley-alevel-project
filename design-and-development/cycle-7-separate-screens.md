@@ -32,14 +32,17 @@ To allow me to have a map screen and also a room screen; I needed to create a me
 
 {% code title="game.js" overflow="wrap" %}
 ```javascript
+// setting up seperate scenes
 const scene = new THREE.Scene();
 const MapView = new THREE.Scene();
 
 let SCENE = scene; // sets to default scene (test map)
 
+// setting up two cameras to switch between
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 100 );
 const MapCamera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 100 );
 
+// CAMERA variable is used in renderer function which can then be switched
 let CAMERA = camera; // sets to default camera (test map camera)
 ```
 {% endcode %}
@@ -48,8 +51,8 @@ To actually test this out, I had to implement a way to switch scenes while the g
 
 {% code title="game.js" overflow="wrap" %}
 ```javascript
+// updating gui to include camera and scene switching
 function createPanel() {
-
     const panel = new GUI( { width: 300 } );
 
     const helpFolder = panel.addFolder( "Help" );
@@ -59,32 +62,34 @@ function createPanel() {
 
         "Use the show stats button to see stats.": "0",
         "Show Stats": function() {
-
-            document.body.appendChild( stats.dom );
+            document.body.appendChild( stats.dom ); // adding stats
 
         },
+        // fixing camera above map function
         "Lock Camera": function() {
-
             camera.position.set(-10, 40, 10);
             camera.lookAt(-10, 0, 10);
             freecam = false;
 
         },
+        // switch to orbit controls camera
         "Free Camera": function() {
-
-            camera.position.set(moveableCube.position.x - 5, moveableCube.position.y + 5, moveableCube.position.z);
+            camera.position.set(
+                moveableCube.position.x - 5, 
+                moveableCube.position.y + 5, 
+                moveableCube.position.z);
             camera.lookAt(moveableCube.position);
             freecam = true;
 
         },
+        // switching to map scene
         "Map Scene": function() {
-
             SCENE = MapView;
             CAMERA = MapCamera;
 
         },
+        // switching to test scene
         "Test Scene": function() {
-
             SCENE = scene;
             CAMERA = camera;
 
@@ -108,14 +113,14 @@ function animate() { // not the full animate function
     
     requestAnimationFrame( animate );
 
-    stats.update();
+    stats.update(); // running stats elemenet
 
     renderer.render( SCENE, CAMERA ); // these variables can be changed to change
                                       // the scene and camera
 }
 
 animate();
-createPanel();
+createPanel(); // adding panel to page
 ```
 {% endcode %}
 
@@ -131,6 +136,7 @@ To begin with I started by working on interpreting the data and then adding them
 ```javascript
 // the updated map class
 class Map {
+    // map class needs to keep track of everything in scene
     constructor(characters, enemy, rooms, map, scenes) {
         this.characters = characters;
         this.enemy = enemy;
@@ -148,19 +154,39 @@ class Map {
 
     }
 
-    createMapScreen() { // this creates the map scene
+    createMapScreen() { // this creates the map scene by looping through rooms
         for (let i = 0; i < this.rooms.length; i++) {
+            // default black material
             let material = new THREE.MeshStandardMaterial({color: 0x000000});
-            let outlineMaterial = new THREE.MeshBasicMaterial({color: 0xffffff, side: THREE.BackSide});
+            // special outline material
+            let outlineMaterial = 
+                new THREE.MeshBasicMaterial({color: 0xffffff, side: THREE.BackSide});
 
-            let component = createCube([this.rooms[i].size[0] - 1.5, 1, this.rooms[i].size[2] - 1.5], material);
-            let outline = createCube([this.rooms[i].size[0] - 1.5, 1, this.rooms[i].size[2] - 1.5], outlineMaterial);
+            // creating map cube
+            let component = createCube(
+                [this.rooms[i].size[0] - 1.5, 
+                1, 
+                this.rooms[i].size[2] - 1.5], material);
+            // creating outline cube
+            let outline = createCube(
+                [this.rooms[i].size[0] - 1.5, 
+                1, 
+                this.rooms[i].size[2] - 1.5], outlineMaterial);
 
-            component.position.set(this.rooms[i].position[0], 1, this.rooms[i].position[2]);
-            outline.position.set(this.rooms[i].position[0], 1, this.rooms[i].position[2]);
+            // sets position of room (in map)
+            component.position.set(
+                this.rooms[i].position[0], 
+                1, 
+                this.rooms[i].position[2]);
+            outline.position.set(
+                this.rooms[i].position[0], 
+                1, 
+                this.rooms[i].position[2]);
 
+            // increasing outline scale to create effect
             outline.scale.set(1.05,1.05,1.05);
             
+            // rotating if corridor
             if (this.rooms[i].constructor.name === "Corridor") {
                 if (this.rooms[i].orientation === "z") {
                     component.rotation.y = degToRad(90);
@@ -170,6 +196,7 @@ class Map {
 
             }
 
+            // adding to the map class
             let mapRoom = new MapRoom([component, outline], this.rooms[i]);
             this.map.push(mapRoom);
 
@@ -197,6 +224,7 @@ I also needed to create two more classes so as to be able to store the scene dat
 
 {% code title="mapClass.js" %}
 ```javascript
+// class for the rooms in the map scene
 class MapRoom {
     constructor(components, link) {
         this.components = components;
@@ -206,6 +234,7 @@ class MapRoom {
 
 }
 
+// class for each individual scene that appears when clicking on room
 class RoomScene {
     constructor(name, scene, room) {
         this.name = name;
@@ -232,11 +261,15 @@ To begin with I had to complete the final part of the diagram above; meaning tha
 ```javascript
 // this part takes all the data from the map creation scene
 let MAP = new Map([], [], [spawnJunction, c1, c2, c3, c4, c5, c6, j1, j2, j3, j4], [], []);
-MAP.createScene(scene);
+MAP.createScene(scene); // creating scenes
 MAP.createMap(MapView); // creating the map screen
 
 for (let i = 0; i < MAP.rooms.length; i++) {
-    let roomScene = new RoomScene(`${MAP.rooms[i].constructor.name}${i}`, new THREE.Scene, MAP.rooms[i]);
+    // creating individual scenes
+    let roomScene = new RoomScene(
+        `${MAP.rooms[i].constructor.name}${i}`, 
+        new THREE.Scene, 
+        MAP.rooms[i]);
     MAP.scenes.push(roomScene);
 
 }

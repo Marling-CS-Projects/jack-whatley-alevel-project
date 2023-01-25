@@ -41,6 +41,7 @@ I also removed the bit of code that meant the background was a blue colour as wi
 {% tabs %}
 {% tab title="Map Code" %}
 ```javascript
+// using generate functions to make map
 const spawnJunction = generateJunction([10, 1, 10], 0xffffff, [0, 0, 0]);
 spawnJunction.add(scene);
 
@@ -78,15 +79,15 @@ j4.add(scene);
 
 {% tab title="Camera Code" %}
 ```javascript
+// creating three ui
 function createPanel() {
-
     const panel = new GUI( { width: 310 } );
 
     const helpFolder = panel.addFolder( "Help" );
     const settingFolder = panel.addFolder( "Settings" );
 
+    // creating buttons
     let settings = {
-
         "Use the show stats button to see stats.": "SIUUUUUUUUUUUUU",
         "Show Stats": function() {
 
@@ -110,6 +111,7 @@ function createPanel() {
 
     }
 
+    // adding to ui
     helpFolder.add( settings, "Use the show stats button to see stats." );
     settingFolder.add( settings, "Show Stats" );
     settingFolder.add( settings, "Lock Camera" );
@@ -141,17 +143,18 @@ Once I had managed to import it without any errors I had to play around to get i
 {% tab title="domevent (game.js)" %}
 This part only shows the bits used for the domevent, not the whole file.
 
-```javascript
-import { THREEx } from "./exports.js";
+<pre class="language-javascript"><code class="lang-javascript">import { THREEx } from "./exports.js";
 
-let domEvent = new THREEx.DomEvents( camera, renderer.domElement );
-
+<strong>// creating THREEx variable
+</strong><strong>let domEvent = new THREEx.DomEvents( camera, renderer.domElement );
+</strong>
+// setting up click event using THREEx library
 domEvent.addEventListener(spawnJunction.components[0], "click", (e) => {
-
+    // using an alert to test functionality
     alert("Test");
 
 });
-```
+</code></pre>
 {% endtab %}
 
 {% tab title="exports.js" %}
@@ -171,6 +174,7 @@ export { Corridor, Junction } from "/scripts/roomClass.js";
 export { degToRad } from "/scripts/degToRad.js";
 export { Enemy } from "/scripts/characterClasses.js";
 
+// adding THREEx to imports file
 export { THREEx } from "/threex-domevents/threex.domevents.js";
 ```
 {% endtab %}
@@ -180,6 +184,8 @@ Warning long file.
 
 ```javascript
 import * as THREE from "three"; // added by me
+
+// not my code, annotated by author
 
 /** @namespace */
 var THREEx		= THREEx 		|| {};
@@ -620,14 +626,16 @@ character.setPos(scene);
 {% endtab %}
 
 {% tab title="characterClasses.js" %}
-```javascript
-class Enemy {
-    constructor(room, mesh) {
+<pre class="language-javascript"><code class="lang-javascript"><strong>// basic enemy class
+</strong><strong>class Enemy {
+</strong><strong>    // enemy class needs to store room and mesh
+</strong>    constructor(room, mesh) {
         this.room = room;
         this.mesh = mesh;
 
     }
 
+    // function that sets position of mesh
     setPos(scene) {
         scene.add(this.mesh);
         this.mesh.position.set(this.room.components[0].position.x, this.room.components[0].position.y /*+ (this.mesh.height / 2)*/, this.room.components[0].position.z);
@@ -636,7 +644,9 @@ class Enemy {
 
 }
 
+// basic character class
 class Character {
+    // class needs to store current room, mesh and inventory
     constructor(room, mesh, inventory) {
         this.room = room;
         this.mesh = mesh;
@@ -644,6 +654,7 @@ class Character {
 
     }
 
+    // character class position setting function
     setPos(scene) {
         scene.add(this.mesh);
         this.mesh.position.set(this.room.components[0].position.x, this.room.components[0].position.y /*+ (this.mesh.height / 2)*/, this.room.components[0].position.z);
@@ -653,7 +664,7 @@ class Character {
 }
 
 export { Enemy, Character }
-```
+</code></pre>
 {% endtab %}
 {% endtabs %}
 
@@ -661,7 +672,7 @@ To test out whether the characters could move around the rooms; I used the DomEv
 
 ```javascript
 // domevents from game.js
-
+// setting it up for all of the junctions
 domEvent.addEventListener(spawnJunction.components[0], "click", (e) => {
     enemy.changeRoom(spawnJunction, scene);
 
@@ -692,10 +703,9 @@ A video demonstrating everything that has been added this cycle.
 It was annoying and inefficient to have to change the room value and also to then have to call the setPos() function again. To fix this I added another function to combine both the functions; it changes the room and also updates the position.
 
 ```javascript
-// this is the update function (part of the class)
-
+// this is the update function (part of the character class)
+// this moves the position of the mesh to a new room
 changeRoom(room, scene) {
-
         this.room = room;
         this.setPos(scene);
 

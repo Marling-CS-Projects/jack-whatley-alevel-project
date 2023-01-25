@@ -103,14 +103,16 @@ import { Corridor, Junction } from "./roomClass.js";
 import { createCube } from "./createCube.js";
 import { degToRad } from "./degToRad.js";
 
+// consistent height
 const wallHeight = 5;
 
 function generateCorridor(size, colour, position, rotation) { // size [1, 10, 1]
-
+    // creating floor
     let floor = createCube(size, colour);
     floor.receiveShadow = true;
     floor.position.set(position[0], position[1], position[2]);
 
+    // creating walls
     let wall1 = createCube([size[0], wallHeight, size[1]], colour);
     wall1.receiveShadow = true;
     wall1.castShadow = false;
@@ -121,6 +123,7 @@ function generateCorridor(size, colour, position, rotation) { // size [1, 10, 1]
     wall2.castShadow = false;
     wall2.position.set(position[0], position[1] + (0.5 * wallHeight) - 0.5, position[2] + (size[2] / 2) - .5); // change wallheight to size[0] for reactiveness
 
+    // rotation handler
     if (rotation === "z") {
 
         floor.rotation.y = degToRad(90);
@@ -132,18 +135,19 @@ function generateCorridor(size, colour, position, rotation) { // size [1, 10, 1]
 
     }
 
+    // using corridor class
     let room = new Corridor(floor, wall1, wall2)
-
     return room;
 
 }
 
 function generateJunction(size, colour, position) {
-
+    // creating junction floor
     let floor = createCube(size, colour);
     floor.receiveShadow = true;
     floor.position.set(position[0], position[1], position[2]);
 
+    // creating wall array
     let walls = [];
 
     let wall1 = createCube([size[0] / 3, wallHeight, size[1]], colour);
@@ -180,12 +184,12 @@ function generateJunction(size, colour, position) {
 
     /*for (let i = 0; i < 8; i++) {
 
-
+        // create walls in for loop later
 
     }*/
 
+    // using junction class
     let room = new Junction(floor, walls);
-
     return room;
 
 }
@@ -196,6 +200,7 @@ export { generateCorridor, generateJunction }
 
 {% tab title="roomClass.js" %}
 ```javascript
+// new classes with all elements included
 class Corridor {
     constructor(floor, wallLeft, wallRight) {
         this.floor = floor;
@@ -206,6 +211,7 @@ class Corridor {
 
 }
 
+// junction class featuring walls array
 class Junction {
     constructor(floor, walls) {
         this.floor = floor;
@@ -297,6 +303,7 @@ When making the junctions I had an array to hold all of the walls and I was able
 This is not the whole file just the updated methodology for adding all the parts of a junction or corridor to the scene.
 
 ```javascript
+// using generate function is more efficient then old method
 const junction = generateJunction([10, 1, 10], 0x11ff11, [15, 0, 0]);
 const corridor = generateCorridor([10, 1, 5], 0xff11ff, [0, 0, 15], "z");
 
@@ -314,6 +321,8 @@ import { createCube } from "./createCube.js";
 import { degToRad } from "./degToRad.js";
 
 const wallHeight = 5;
+
+// annotations visible above
 
 function generateCorridor(size, colour, position, rotation) { // size [1, 10, 1]
 
@@ -428,12 +437,14 @@ corridor.add(scene);
 
 {% tab title="roomClass.js" %}
 ```javascript
+// using new components element to store all parts of room
 class Corridor {
     constructor(components) {
         this.components = components;
 
     }
 
+    // functions to add components to scene
     add(scene) {
         for (let i = 0; i < this.components.length; i++) {
             scene.add(this.components[i]);
